@@ -1,0 +1,182 @@
+[gd_scene load_steps=19 format=3 uid="uid://5ih0ql0ybs0i"]
+
+[ext_resource type="Script" path="res://entity.gd" id="1_iydk2"]
+[ext_resource type="Script" path="res://init.gd" id="1_luxnj"]
+[ext_resource type="Texture2D" uid="uid://hcg4aepu4faa" path="res://resources/maps/outputs/mao.png" id="1_oe6ch"]
+[ext_resource type="Texture2D" uid="uid://dt2526tmettx0" path="res://resources/entities/player.png" id="2_8pxho"]
+[ext_resource type="Script" path="res://position_lock.gd" id="5_i3cw1"]
+[ext_resource type="Script" path="res://entity_engine.gd" id="5_xuxgv"]
+[ext_resource type="AudioStream" uid="uid://c73u0o8pybvy5" path="res://resources/sounds/pew.ogg" id="6_gxym7"]
+[ext_resource type="Script" path="res://bulletAI.gd" id="7_5ybsd"]
+[ext_resource type="Theme" uid="uid://bwxqrmtl8e37m" path="res://main_theme.tres" id="8_rkti2"]
+[ext_resource type="Texture2D" uid="uid://cg8tnbb5k18m7" path="res://resources/entities/stell.png" id="10_24r3v"]
+[ext_resource type="Script" path="res://units/stell.gd" id="10_aym84"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nsfxj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_8pxho")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_umibw"]
+radius = 20.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oaopq"]
+bg_color = Color(1, 1, 1, 1)
+skew = Vector2(0.4, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sq6kt"]
+bg_color = Color(1, 0.501961, 0.258824, 1)
+skew = Vector2(0.4, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ygedk"]
+bg_color = Color(0.52549, 0.803922, 0.917647, 1)
+skew = Vector2(0.4, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ygxin"]
+bg_color = Color(0.545098, 0.678431, 0.309804, 1)
+skew = Vector2(0.4, 0)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ixoh2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_24r3v")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="world" type="Node2D"]
+script = ExtResource("1_luxnj")
+
+[node name="map" type="Sprite2D" parent="."]
+z_index = -1
+scale = Vector2(5, 5)
+texture = ExtResource("1_oe6ch")
+metadata/_edit_lock_ = true
+
+[node name="player" type="RigidBody2D" parent="."]
+position = Vector2(312, 96)
+gravity_scale = 0.0
+linear_damp = 1.2
+script = ExtResource("1_iydk2")
+playerControlled = true
+
+[node name="texture" type="AnimatedSprite2D" parent="player"]
+sprite_frames = SubResource("SpriteFrames_nsfxj")
+
+[node name="engine" type="Node2D" parent="player/texture"]
+z_index = -1
+z_as_relative = false
+position = Vector2(0, 29)
+script = ExtResource("5_xuxgv")
+
+[node name="bulletSpawner" type="Node2D" parent="player/texture"]
+position = Vector2(0, -23)
+
+[node name="asp" type="AudioStreamPlayer2D" parent="player/texture/bulletSpawner"]
+stream = ExtResource("6_gxym7")
+
+[node name="hitbox" type="CollisionShape2D" parent="player"]
+shape = SubResource("CircleShape2D_umibw")
+
+[node name="camera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("5_i3cw1")
+target = NodePath("../player")
+
+[node name="ui" type="Panel" parent="camera"]
+visibility_layer = 2
+offset_left = -640.0
+offset_top = 248.0
+offset_right = -319.0
+offset_bottom = 360.0
+theme = ExtResource("8_rkti2")
+
+[node name="health" type="ProgressBar" parent="camera/ui"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 90.0
+offset_right = 91.0
+offset_bottom = 103.0
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_oaopq")
+value = 50.0
+allow_greater = true
+
+[node name="slag" type="ProgressBar" parent="camera/ui"]
+offset_left = 91.0
+offset_top = 90.0
+offset_right = 169.0
+offset_bottom = 103.0
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_sq6kt")
+value = 50.0
+allow_greater = true
+
+[node name="coolant" type="ProgressBar" parent="camera/ui"]
+offset_left = 169.0
+offset_top = 90.0
+offset_right = 247.0
+offset_bottom = 103.0
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_ygedk")
+value = 50.0
+allow_greater = true
+
+[node name="coolant2" type="ProgressBar" parent="camera/ui"]
+offset_left = 18.0
+offset_top = 81.0
+offset_right = 252.0
+offset_bottom = 86.0
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_ygxin")
+value = 50.0
+allow_greater = true
+
+[node name="projectiles" type="Node2D" parent="."]
+position = Vector2(50, 50)
+
+[node name="basicBullet" type="Area2D" parent="projectiles"]
+script = ExtResource("7_5ybsd")
+
+[node name="texture" type="Polygon2D" parent="projectiles/basicBullet"]
+color = Color(0.953079, 0.822954, 0.62124, 1)
+polygon = PackedVector2Array(0, 0, 5, 5, 5, 20, 0, 25, -5, 20, -5, 5)
+
+[node name="sub" type="Polygon2D" parent="projectiles/basicBullet/texture"]
+polygon = PackedVector2Array(0, 3, 5, 8, 5, 17, 0, 22, -5, 17, -5, 8)
+
+[node name="hitbox" type="CollisionPolygon2D" parent="projectiles/basicBullet"]
+visible = false
+polygon = PackedVector2Array(0, 0, 5, 5, 5, 20, 0, 25, -5, 20, -5, 5)
+
+[node name="units" type="Node2D" parent="."]
+position = Vector2(-50, 50)
+
+[node name="stell" type="RigidBody2D" parent="units"]
+gravity_scale = 0.0
+linear_damp = 1.2
+script = ExtResource("10_aym84")
+
+[node name="texture" type="AnimatedSprite2D" parent="units/stell"]
+sprite_frames = SubResource("SpriteFrames_ixoh2")
+
+[node name="bulletSpawner" type="Node2D" parent="units/stell/texture"]
+position = Vector2(0, -23)
+
+[node name="asp" type="AudioStreamPlayer2D" parent="units/stell/texture/bulletSpawner"]
+stream = ExtResource("6_gxym7")
+
+[node name="hitbox" type="CollisionShape2D" parent="units/stell"]
+shape = SubResource("CircleShape2D_umibw")

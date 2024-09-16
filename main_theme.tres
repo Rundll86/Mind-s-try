@@ -1,0 +1,13 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://bwxqrmtl8e37m"]
+
+[ext_resource type="StyleBox" uid="uid://8uilwa8aha4y" path="res://styles/box.tres" id="1_vciyo"]
+[ext_resource type="StyleBox" uid="uid://dlcu084akon5r" path="res://styles/progress_front.tres" id="2_oxkq7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_082vr"]
+bg_color = Color(0, 0, 0, 0.27451)
+skew = Vector2(0.4, 0)
+
+[resource]
+Panel/styles/panel = ExtResource("1_vciyo")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_082vr")
+ProgressBar/styles/fill = ExtResource("2_oxkq7")
