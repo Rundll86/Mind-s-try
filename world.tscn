@@ -1,33 +1,127 @@
-[gd_scene load_steps=19 format=3 uid="uid://5ih0ql0ybs0i"]
+[gd_scene load_steps=50 format=3 uid="uid://5ih0ql0ybs0i"]
 
 [ext_resource type="Script" path="res://entity.gd" id="1_iydk2"]
 [ext_resource type="Script" path="res://init.gd" id="1_luxnj"]
-[ext_resource type="Texture2D" uid="uid://hcg4aepu4faa" path="res://resources/maps/outputs/mao.png" id="1_oe6ch"]
-[ext_resource type="Texture2D" uid="uid://dt2526tmettx0" path="res://resources/entities/player.png" id="2_8pxho"]
+[ext_resource type="Texture2D" uid="uid://colwpkkhtfsn7" path="res://resources/maps/outputs/mao.png" id="1_oe6ch"]
+[ext_resource type="Texture2D" uid="uid://cmysaicq16xdm" path="res://resources/entities/player.png" id="2_8pxho"]
 [ext_resource type="Script" path="res://position_lock.gd" id="5_i3cw1"]
 [ext_resource type="Script" path="res://entity_engine.gd" id="5_xuxgv"]
-[ext_resource type="AudioStream" uid="uid://c73u0o8pybvy5" path="res://resources/sounds/pew.ogg" id="6_gxym7"]
+[ext_resource type="AudioStream" uid="uid://d1k4dhw1w7nv6" path="res://resources/sounds/pew.ogg" id="6_gxym7"]
 [ext_resource type="Script" path="res://bulletAI.gd" id="7_5ybsd"]
-[ext_resource type="Theme" uid="uid://bwxqrmtl8e37m" path="res://main_theme.tres" id="8_rkti2"]
-[ext_resource type="Texture2D" uid="uid://cg8tnbb5k18m7" path="res://resources/entities/stell.png" id="10_24r3v"]
+[ext_resource type="Theme" uid="uid://bwxqrmtl8e37m" path="res://main_theme.tres" id="8_o1hbj"]
+[ext_resource type="Texture2D" uid="uid://blmax3m4ykm8r" path="res://resources/ui/entry.png" id="9_2kgq0"]
+[ext_resource type="Script" path="res://bgbar_lock.gd" id="9_5t185"]
+[ext_resource type="Texture2D" uid="uid://chru5vv0fx5f7" path="res://resources/entities/stell.png" id="10_24r3v"]
 [ext_resource type="Script" path="res://units/stell.gd" id="10_aym84"]
+[ext_resource type="Texture2D" uid="uid://jm23i21pba33" path="res://resources/ui/inventory.png" id="10_rrgif"]
+[ext_resource type="Texture2D" uid="uid://dqlx1nor34veu" path="res://resources/ui/copper.png" id="11_058tn"]
+[ext_resource type="Texture2D" uid="uid://b25t24qyj3636" path="res://resources/items/copper.png" id="11_fh18r"]
+[ext_resource type="Script" path="res://item.gd" id="11_tf7be"]
+[ext_resource type="Texture2D" uid="uid://byma77bc8iex1" path="res://resources/ui/silicon.png" id="12_8ftri"]
+[ext_resource type="Texture2D" uid="uid://bma1ay1mdm4y8" path="res://resources/ui/graphite.png" id="13_rx1pe"]
+[ext_resource type="Texture2D" uid="uid://vfdehbcg20i1" path="res://resources/ui/wolfram.png" id="14_a13hj"]
+[ext_resource type="Texture2D" uid="uid://cnfem17nkruif" path="res://resources/ui/steel.png" id="15_nxvoo"]
+[ext_resource type="Texture2D" uid="uid://boansk7jcfwon" path="res://resources/ui/alloy.png" id="16_7jkwn"]
+[ext_resource type="Script" path="res://units/dagger.gd" id="20_h1nwg"]
+[ext_resource type="Texture2D" uid="uid://28rfpus4e4ya" path="res://resources/entities/dagger.png" id="21_dbapv"]
+[ext_resource type="Script" path="res://units/mace.gd" id="23_4s4uw"]
+[ext_resource type="Texture2D" uid="uid://bwxvdaplk2l6h" path="res://resources/entities/mace.png" id="23_opgie"]
+[ext_resource type="Texture2D" uid="uid://bxl2a8vif1d6" path="res://resources/items/coolant.png" id="24_ea7p7"]
+[ext_resource type="Texture2D" uid="uid://bwh1ndqbeou3q" path="res://resources/items/oil.png" id="25_rloqp"]
+[ext_resource type="Texture2D" uid="uid://q7b65ed3k08u" path="res://resources/entities/crawler.png" id="25_w6eu4"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_nsfxj"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_8pxho")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[sub_resource type="Animation" id="Animation_a37q6"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.8, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.8, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:self_modulate:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.8, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_18g4q"]
+resource_name = "hit"
+length = 0.6
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.5, -0.25, 0, 0.25, 0, 1, -0.15, 0, 0.15, 0, 0.8, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3, 0.6)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.5, -0.25, 0, 0.25, 0, 1, -0.15, 0, 0.15, 0, 0.8, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3, 0.6)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:self_modulate:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.5, -0.25, 0, 0.25, 0, 1, -0.15, 0, 0.15, 0, 0.8, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3, 0.6)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dpl8o"]
+_data = {
+"RESET": SubResource("Animation_a37q6"),
+"hit": SubResource("Animation_18g4q")
+}
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_umibw"]
 radius = 20.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oaopq"]
 bg_color = Color(1, 1, 1, 1)
+skew = Vector2(0.4, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2h1of"]
+bg_color = Color(0, 0, 0, 0.196078)
+skew = Vector2(0.4, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b4q68"]
+bg_color = Color(0.999996, 0.455024, 0.439615, 1)
 skew = Vector2(0.4, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sq6kt"]
@@ -42,19 +136,78 @@ skew = Vector2(0.4, 0)
 bg_color = Color(0.545098, 0.678431, 0.309804, 1)
 skew = Vector2(0.4, 0)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ixoh2"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("10_24r3v")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[sub_resource type="Animation" id="Animation_1jlns"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_o4l1j"]
+resource_name = "show"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s0aqy"]
+_data = {
+"RESET": SubResource("Animation_1jlns"),
+"show": SubResource("Animation_o4l1j")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mon7o"]
+size = Vector2(60, 20)
+
+[sub_resource type="Curve" id="Curve_c6ojo"]
+_data = [Vector2(0.724528, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_obo6v"]
+curve = SubResource("Curve_c6ojo")
+
+[sub_resource type="Gradient" id="Gradient_r70o8"]
+offsets = PackedFloat32Array(0, 0.493671, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.629899, 0, 1, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_x6nji"]
+gradient = SubResource("Gradient_r70o8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_skcgb"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 20.0
+angle_min = -45.0
+angle_max = 45.0
+direction = Vector3(0, -1, 0)
+spread = 17.877
+initial_velocity_max = 445.18
+scale_min = 10.0
+scale_max = 20.0
+color_ramp = SubResource("GradientTexture1D_x6nji")
+alpha_curve = SubResource("CurveTexture_obo6v")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ttkq2"]
+radius = 32.249
 
 [node name="world" type="Node2D"]
 script = ExtResource("1_luxnj")
+metadata/_edit_horizontal_guides_ = [351.0, 356.0, 253.0, 258.0, 317.0, 293.0, -80.0, 20.0]
+metadata/_edit_vertical_guides_ = [-379.0, -617.0, -564.0, -511.0]
 
 [node name="map" type="Sprite2D" parent="."]
 z_index = -1
@@ -62,15 +215,25 @@ scale = Vector2(5, 5)
 texture = ExtResource("1_oe6ch")
 metadata/_edit_lock_ = true
 
-[node name="player" type="RigidBody2D" parent="."]
-position = Vector2(312, 96)
+[node name="player" type="RigidBody2D" parent="." node_paths=PackedStringArray("drops")]
+z_index = 1
+position = Vector2(432, 216)
+collision_layer = 2
+collision_mask = 2
 gravity_scale = 0.0
 linear_damp = 1.2
 script = ExtResource("1_iydk2")
+enableAi = true
 playerControlled = true
+healthMax = 200.0
+damageFromPlayer = true
+drops = [NodePath("../items/copper")]
+dropCounts = Array[float]([5.0])
+useGodMode = true
 
-[node name="texture" type="AnimatedSprite2D" parent="player"]
-sprite_frames = SubResource("SpriteFrames_nsfxj")
+[node name="texture" type="Sprite2D" parent="player"]
+self_modulate = Color(0.8, 0.8, 0.8, 1)
+texture = ExtResource("2_8pxho")
 
 [node name="engine" type="Node2D" parent="player/texture"]
 z_index = -1
@@ -84,10 +247,16 @@ position = Vector2(0, -23)
 [node name="asp" type="AudioStreamPlayer2D" parent="player/texture/bulletSpawner"]
 stream = ExtResource("6_gxym7")
 
+[node name="animator" type="AnimationPlayer" parent="player/texture"]
+libraries = {
+"": SubResource("AnimationLibrary_dpl8o")
+}
+
 [node name="hitbox" type="CollisionShape2D" parent="player"]
 shape = SubResource("CircleShape2D_umibw")
 
 [node name="camera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+z_index = 10
 script = ExtResource("5_i3cw1")
 target = NodePath("../player")
 
@@ -97,7 +266,7 @@ offset_left = -640.0
 offset_top = 248.0
 offset_right = -319.0
 offset_bottom = 360.0
-theme = ExtResource("8_rkti2")
+theme = ExtResource("8_o1hbj")
 
 [node name="health" type="ProgressBar" parent="camera/ui"]
 layout_mode = 0
@@ -108,46 +277,202 @@ offset_bottom = 103.0
 theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_font_sizes/font_size = 1
 theme_override_styles/fill = SubResource("StyleBoxFlat_oaopq")
-value = 50.0
+value = 70.0
 allow_greater = true
 
+[node name="ignore_bgbar_myBgbar" type="ProgressBar" parent="camera/ui/health"]
+z_index = -1
+layout_mode = 0
+offset_right = 78.0
+offset_bottom = 13.0
+theme_override_styles/background = SubResource("StyleBoxFlat_2h1of")
+theme_override_styles/fill = SubResource("StyleBoxFlat_b4q68")
+value = 80.0
+script = ExtResource("9_5t185")
+
 [node name="slag" type="ProgressBar" parent="camera/ui"]
-offset_left = 91.0
+layout_mode = 0
+offset_left = 95.0
 offset_top = 90.0
-offset_right = 169.0
+offset_right = 173.0
 offset_bottom = 103.0
 theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_font_sizes/font_size = 1
 theme_override_styles/fill = SubResource("StyleBoxFlat_sq6kt")
-value = 50.0
 allow_greater = true
 
 [node name="coolant" type="ProgressBar" parent="camera/ui"]
-offset_left = 169.0
+layout_mode = 0
+offset_left = 177.0
 offset_top = 90.0
-offset_right = 247.0
+offset_right = 255.0
 offset_bottom = 103.0
 theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_font_sizes/font_size = 1
 theme_override_styles/fill = SubResource("StyleBoxFlat_ygedk")
-value = 50.0
+value = 100.0
 allow_greater = true
 
-[node name="coolant2" type="ProgressBar" parent="camera/ui"]
+[node name="oil" type="ProgressBar" parent="camera/ui"]
+layout_mode = 0
 offset_left = 18.0
 offset_top = 81.0
-offset_right = 252.0
+offset_right = 260.0
 offset_bottom = 86.0
 theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_font_sizes/font_size = 1
 theme_override_styles/fill = SubResource("StyleBoxFlat_ygxin")
-value = 50.0
+value = 100.0
 allow_greater = true
+
+[node name="infos" type="TabBar" parent="camera/ui"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 10.0
+offset_right = 302.0
+offset_bottom = 32.0
+current_tab = 0
+tab_count = 2
+tab_0/title = "词条"
+tab_0/icon = ExtResource("9_2kgq0")
+tab_1/title = "仓储"
+tab_1/icon = ExtResource("10_rrgif")
+
+[node name="inventory" type="Control" parent="camera/ui/infos"]
+anchors_preset = 0
+offset_left = 10.0
+offset_top = 22.0
+offset_right = 252.0
+offset_bottom = 71.0
+
+[node name="copper" type="Node2D" parent="camera/ui/infos/inventory"]
+position = Vector2(4, 13)
+
+[node name="texture" type="Sprite2D" parent="camera/ui/infos/inventory/copper"]
+position = Vector2(10, 0)
+texture = ExtResource("11_058tn")
+
+[node name="Label" type="Label" parent="camera/ui/infos/inventory/copper"]
+offset_left = 24.0
+offset_top = -8.0
+offset_right = 238.0
+offset_bottom = 8.0
+theme_override_font_sizes/font_size = 11
+text = "0"
+
+[node name="silicon" type="Node2D" parent="camera/ui/infos/inventory"]
+position = Vector2(4, 37)
+
+[node name="texture" type="Sprite2D" parent="camera/ui/infos/inventory/silicon"]
+position = Vector2(10, 0)
+texture = ExtResource("12_8ftri")
+
+[node name="Label" type="Label" parent="camera/ui/infos/inventory/silicon"]
+offset_left = 24.0
+offset_top = -8.0
+offset_right = 238.0
+offset_bottom = 8.0
+theme_override_font_sizes/font_size = 11
+text = "0"
+
+[node name="graphite" type="Node2D" parent="camera/ui/infos/inventory"]
+position = Vector2(57, 13)
+
+[node name="texture" type="Sprite2D" parent="camera/ui/infos/inventory/graphite"]
+position = Vector2(10, 0)
+texture = ExtResource("13_rx1pe")
+
+[node name="Label" type="Label" parent="camera/ui/infos/inventory/graphite"]
+offset_left = 24.0
+offset_top = -8.0
+offset_right = 238.0
+offset_bottom = 8.0
+theme_override_font_sizes/font_size = 11
+text = "0"
+
+[node name="wolfram" type="Node2D" parent="camera/ui/infos/inventory"]
+position = Vector2(57, 37)
+
+[node name="texture" type="Sprite2D" parent="camera/ui/infos/inventory/wolfram"]
+position = Vector2(10, 0)
+texture = ExtResource("14_a13hj")
+
+[node name="Label" type="Label" parent="camera/ui/infos/inventory/wolfram"]
+offset_left = 24.0
+offset_top = -8.0
+offset_right = 238.0
+offset_bottom = 8.0
+theme_override_font_sizes/font_size = 11
+text = "0"
+
+[node name="steel" type="Node2D" parent="camera/ui/infos/inventory"]
+position = Vector2(110, 13)
+
+[node name="texture" type="Sprite2D" parent="camera/ui/infos/inventory/steel"]
+position = Vector2(10, 0)
+texture = ExtResource("15_nxvoo")
+
+[node name="Label" type="Label" parent="camera/ui/infos/inventory/steel"]
+offset_left = 24.0
+offset_top = -8.0
+offset_right = 238.0
+offset_bottom = 8.0
+theme_override_font_sizes/font_size = 11
+text = "0"
+
+[node name="alloy" type="Node2D" parent="camera/ui/infos/inventory"]
+position = Vector2(110, 37)
+
+[node name="texture" type="Sprite2D" parent="camera/ui/infos/inventory/alloy"]
+position = Vector2(10, 0)
+texture = ExtResource("16_7jkwn")
+
+[node name="Label" type="Label" parent="camera/ui/infos/inventory/alloy"]
+offset_left = 24.0
+offset_top = -8.0
+offset_right = 238.0
+offset_bottom = 8.0
+theme_override_font_sizes/font_size = 11
+text = "0"
+
+[node name="gameoverLay" type="ColorRect" parent="camera"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 0, 0.27451)
+metadata/_edit_lock_ = true
+
+[node name="label" type="Label" parent="camera/gameoverLay"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+theme_override_font_sizes/font_size = 121
+text = "游戏结束"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="animator" type="AnimationPlayer" parent="camera/gameoverLay"]
+libraries = {
+"": SubResource("AnimationLibrary_s0aqy")
+}
 
 [node name="projectiles" type="Node2D" parent="."]
 position = Vector2(50, 50)
 
 [node name="basicBullet" type="Area2D" parent="projectiles"]
+collision_layer = 0
+collision_mask = 3
 script = ExtResource("7_5ybsd")
 
 [node name="texture" type="Polygon2D" parent="projectiles/basicBullet"]
@@ -158,19 +483,38 @@ polygon = PackedVector2Array(0, 0, 5, 5, 5, 20, 0, 25, -5, 20, -5, 5)
 polygon = PackedVector2Array(0, 3, 5, 8, 5, 17, 0, 22, -5, 17, -5, 8)
 
 [node name="hitbox" type="CollisionPolygon2D" parent="projectiles/basicBullet"]
-visible = false
 polygon = PackedVector2Array(0, 0, 5, 5, 5, 20, 0, 25, -5, 20, -5, 5)
+
+[node name="fireScan" type="Area2D" parent="projectiles"]
+position = Vector2(-100, -23)
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("7_5ybsd")
+lifeTime = 250
+damage = 7
+
+[node name="texture" type="Polygon2D" parent="projectiles/fireScan"]
+visible = false
+polygon = PackedVector2Array(-30, 10, 30, 10, 30, -10, -30, -10)
+
+[node name="hitbox" type="CollisionShape2D" parent="projectiles/fireScan"]
+shape = SubResource("RectangleShape2D_mon7o")
 
 [node name="units" type="Node2D" parent="."]
 position = Vector2(-50, 50)
 
-[node name="stell" type="RigidBody2D" parent="units"]
+[node name="stell" type="RigidBody2D" parent="units" node_paths=PackedStringArray("drops")]
 gravity_scale = 0.0
 linear_damp = 1.2
 script = ExtResource("10_aym84")
+moveSpeed = 0.2
+healthMax = 150.0
+drops = [NodePath("../../items/copper"), NodePath("../../items/coolant")]
+dropCounts = Array[float]([50.0, 30.0])
 
-[node name="texture" type="AnimatedSprite2D" parent="units/stell"]
-sprite_frames = SubResource("SpriteFrames_ixoh2")
+[node name="texture" type="Sprite2D" parent="units/stell"]
+self_modulate = Color(0.8, 0.8, 0.8, 1)
+texture = ExtResource("10_24r3v")
 
 [node name="bulletSpawner" type="Node2D" parent="units/stell/texture"]
 position = Vector2(0, -23)
@@ -178,5 +522,170 @@ position = Vector2(0, -23)
 [node name="asp" type="AudioStreamPlayer2D" parent="units/stell/texture/bulletSpawner"]
 stream = ExtResource("6_gxym7")
 
+[node name="animator" type="AnimationPlayer" parent="units/stell/texture"]
+libraries = {
+"": SubResource("AnimationLibrary_dpl8o")
+}
+
 [node name="hitbox" type="CollisionShape2D" parent="units/stell"]
 shape = SubResource("CircleShape2D_umibw")
+
+[node name="healthBar" type="ProgressBar" parent="units/stell"]
+offset_left = -35.0
+offset_top = -40.0
+offset_right = 35.0
+offset_bottom = -34.0
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 1
+value = 100.0
+
+[node name="dagger" type="RigidBody2D" parent="units" node_paths=PackedStringArray("drops")]
+gravity_scale = 0.0
+linear_damp = 1.2
+script = ExtResource("20_h1nwg")
+moveSpeed = 0.2
+attackLimit = 500.0
+healthMax = 60.0
+drops = [NodePath("../../items/copper"), NodePath("../../items/oil")]
+dropCounts = Array[float]([50.0, 40.0])
+
+[node name="texture" type="Sprite2D" parent="units/dagger"]
+self_modulate = Color(0.8, 0.8, 0.8, 1)
+texture = ExtResource("21_dbapv")
+
+[node name="bulletSpawner" type="Node2D" parent="units/dagger/texture"]
+position = Vector2(0, -23)
+
+[node name="asp" type="AudioStreamPlayer2D" parent="units/dagger/texture/bulletSpawner"]
+stream = ExtResource("6_gxym7")
+
+[node name="animator" type="AnimationPlayer" parent="units/dagger/texture"]
+libraries = {
+"": SubResource("AnimationLibrary_dpl8o")
+}
+
+[node name="hitbox" type="CollisionShape2D" parent="units/dagger"]
+shape = SubResource("CircleShape2D_umibw")
+
+[node name="healthBar" type="ProgressBar" parent="units/dagger"]
+offset_left = -35.0
+offset_top = -40.0
+offset_right = 35.0
+offset_bottom = -34.0
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 1
+value = 100.0
+
+[node name="mace" type="RigidBody2D" parent="units"]
+gravity_scale = 0.0
+linear_damp = 1.2
+script = ExtResource("23_4s4uw")
+moveSpeed = 0.4
+attackLimit = 200.0
+shootOffset = 30.0
+healthMax = 200.0
+
+[node name="texture" type="Sprite2D" parent="units/mace"]
+self_modulate = Color(0.8, 0.8, 0.8, 1)
+texture = ExtResource("23_opgie")
+
+[node name="bulletSpawner" type="Node2D" parent="units/mace/texture"]
+position = Vector2(0, -23)
+
+[node name="asp" type="AudioStreamPlayer2D" parent="units/mace/texture/bulletSpawner"]
+stream = ExtResource("6_gxym7")
+
+[node name="parts" type="GPUParticles2D" parent="units/mace/texture/bulletSpawner"]
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_skcgb")
+speed_scale = 2.0
+
+[node name="animator" type="AnimationPlayer" parent="units/mace/texture"]
+libraries = {
+"": SubResource("AnimationLibrary_dpl8o")
+}
+
+[node name="hitbox" type="CollisionShape2D" parent="units/mace"]
+shape = SubResource("CircleShape2D_umibw")
+
+[node name="healthBar" type="ProgressBar" parent="units/mace"]
+offset_left = -35.0
+offset_top = -40.0
+offset_right = 35.0
+offset_bottom = -34.0
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 1
+value = 100.0
+
+[node name="crawler" type="RigidBody2D" parent="units" node_paths=PackedStringArray("drops")]
+gravity_scale = 0.0
+linear_damp = 1.2
+script = ExtResource("1_iydk2")
+moveSpeed = 0.8
+attackLimit = 500.0
+healthMax = 60.0
+drops = [NodePath("../../items/copper"), NodePath("../../items/oil")]
+dropCounts = Array[float]([50.0, 40.0])
+
+[node name="texture" type="Sprite2D" parent="units/crawler"]
+self_modulate = Color(0.8, 0.8, 0.8, 1)
+texture = ExtResource("25_w6eu4")
+
+[node name="bulletSpawner" type="Node2D" parent="units/crawler/texture"]
+position = Vector2(0, -23)
+
+[node name="asp" type="AudioStreamPlayer2D" parent="units/crawler/texture/bulletSpawner"]
+stream = ExtResource("6_gxym7")
+
+[node name="animator" type="AnimationPlayer" parent="units/crawler/texture"]
+libraries = {
+"": SubResource("AnimationLibrary_dpl8o")
+}
+
+[node name="hitbox" type="CollisionShape2D" parent="units/crawler"]
+shape = SubResource("CircleShape2D_umibw")
+
+[node name="healthBar" type="ProgressBar" parent="units/crawler"]
+offset_left = -35.0
+offset_top = -40.0
+offset_right = 35.0
+offset_bottom = -34.0
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 1
+value = 100.0
+
+[node name="items" type="Node2D" parent="."]
+position = Vector2(216, 64)
+
+[node name="copper" type="Area2D" parent="items"]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("11_tf7be")
+
+[node name="texture" type="Sprite2D" parent="items/copper"]
+texture = ExtResource("11_fh18r")
+
+[node name="hitbox" type="CollisionShape2D" parent="items/copper"]
+shape = SubResource("CircleShape2D_ttkq2")
+
+[node name="coolant" type="Area2D" parent="items"]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("11_tf7be")
+
+[node name="texture" type="Sprite2D" parent="items/coolant"]
+texture = ExtResource("24_ea7p7")
+
+[node name="hitbox" type="CollisionShape2D" parent="items/coolant"]
+shape = SubResource("CircleShape2D_ttkq2")
+
+[node name="oil" type="Area2D" parent="items"]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("11_tf7be")
+
+[node name="texture" type="Sprite2D" parent="items/oil"]
+texture = ExtResource("25_rloqp")
+
+[node name="hitbox" type="CollisionShape2D" parent="items/oil"]
+shape = SubResource("CircleShape2D_ttkq2")
