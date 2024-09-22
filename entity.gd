@@ -167,5 +167,5 @@ func hit(damage:int):
 func PRESETAI_followPlayer():
 	if init.isPlayerAlive:
 		var target=rad_to_deg(playerEntity.position.angle_to_point(position))-90
-		texture.rotation_degrees += (target - texture.rotation_degrees) * animationSpeed*0.3
+		texture.rotation_degrees += (target - texture.rotation_degrees) * animationSpeed*0.15
 		moveForward()

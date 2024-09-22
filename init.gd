@@ -4,7 +4,7 @@ var enemyCount = 0;
 static var isPlayerAlive: bool = true;
 static var inventory = {};
 static var waves = [
-	[["mace", "dagger", "stell","crawler","elude"], [0.5, 0.5, 0.5,0.5,0.5]]
+	[["mace", "dagger", "stell", "crawler", "elude"], [0.5, 0.5, 0.5, 0.5, 0.5]]
 ];
 static var animationSpeed = [0.8, 0.01];
 static var wave = 0;
@@ -36,6 +36,10 @@ func _process(_delta):
 			bar.name = "ignore_bgbar_myBgbar"
 			i.add_child(bar)
 			print("added bar " + i.name)
+	if not isPlayerAlive:
+		if Input.is_action_just_pressed("reload"):
+			OS.execute("Mind's try.exe", [])
+			get_tree().quit()
 func generateUnit(target: String, pos: Vector2):
 	var unit = get_node("units/" + target).duplicate() as entity
 	unit.position = pos
