@@ -4,9 +4,7 @@ var enemyCount = 0;
 static var isPlayerAlive: bool = true;
 static var inventory = {};
 static var waves = [
-	[["dagger"], [0.5]],
-	[["stell"], [0.5]],
-	[["mace"], [0.5]]
+	[["mace", "dagger", "stell","crawler","elude"], [0.5, 0.5, 0.5,0.5,0.5]]
 ];
 static var animationSpeed = [0.8, 0.01];
 static var wave = 0;

@@ -19,6 +19,7 @@ var coolant:float;
 var oilMax:float=100;
 var oil:float;
 var lastOilDamageTime=0;
+var damageLabel:damageNode;
 @export var enableAi:bool=false;
 @export var playerControlled:bool = false;
 @export var animationSpeed:float = 0.2;
@@ -31,7 +32,9 @@ var lastOilDamageTime=0;
 @export var dropCounts:Array[float]=[]
 @export var dropRange:float=100;
 @export var useGodMode:bool=false;
+@export var rotateSpeedMax:float=-1;
 func _ready():
+	damageLabel=$/root/world/damage as damageNode
 	z_index=2
 	texture = $texture
 	hitbox = $hitbox
@@ -135,6 +138,14 @@ func CustomAi():
 func hit(damage:int):
 	animator.play("hit")
 	health -= damage
+	var currentDamageLabel=damageLabel.duplicate() as damageNode
+	currentDamageLabel.isSubstance=false
+	currentDamageLabel.get_node("label").text=str(damage)
+	currentDamageLabel.global_position=global_position+Vector2(
+		randf_range(-50,50),
+		randf_range(-50,50)
+	)
+	get_node("/root/world").add_child(currentDamageLabel)
 	if health<=0:
 		if playerControlled:
 			($/root/world/camera/gameoverLay as ColorRect).show()
@@ -153,3 +164,8 @@ func hit(damage:int):
 				)
 				get_node("/root/world").add_child(drop)
 		queue_free()
+func PRESETAI_followPlayer():
+	if init.isPlayerAlive:
+		var target=rad_to_deg(playerEntity.position.angle_to_point(position))-90
+		texture.rotation_degrees += (target - texture.rotation_degrees) * animationSpeed*0.3
+		moveForward()

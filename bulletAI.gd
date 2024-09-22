@@ -6,7 +6,7 @@ var launcher: RigidBody2D;
 @export var enable = false;
 @export var lifeTime = 700;
 @export var damage = 10;
-@export var damageFromPlayer:bool=false;
+@export var damageFromPlayer: bool = false;
 func _ready():
 	startPosition = position;
 	body_entered.connect(Callable(self, "hitCheck"))
@@ -26,5 +26,5 @@ func hitCheck(body: entity):
 	else:
 		if !damageFromPlayer:
 			return
-	body.hit(damage)
+	body.hit(ceil(damage * (1 + randf_range(-0.5, 0.5))))
 	queue_free()
