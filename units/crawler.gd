@@ -1,6 +1,6 @@
 extends entity;
 func attack():
-	launchBullet("selfDestruct")
+	launchWeapon()
 	queue_free()
 func CustomAi():
 	PRESETAI_followPlayer()
