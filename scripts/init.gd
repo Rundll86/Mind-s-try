@@ -7,6 +7,7 @@ static var wave = 0;
 static var staticFuncCaller;
 static var readWaves: Array[waveDefine] = [];
 static var isSelectingBuff: bool = false;
+static var enemyCount = 0;
 var bossBar: ProgressBar;
 var bossAvatar: TextureRect;
 var bossName: Label;
@@ -55,7 +56,6 @@ func _process(_delta):
 			userData.currentWeapon = 0
 	if Input.is_action_just_pressed("pause"):
 		get_tree().paused = true
-	var enemyCount = 0;
 	for i in inventory.values():
 		i["label"].text = str(i["count"])
 	enemyCount = 0
@@ -63,11 +63,12 @@ func _process(_delta):
 		if i.name.begins_with("enemy_"):
 			enemyCount += 1
 	if enemyCount == 0 and not isSelectingBuff:
-		wave += 1
+		waveTip.get_node("panel/bar/title").text = "Wave " + str(wave + 1) + " Cleared!"
 		isSelectingBuff = true
 		for i in buffsShow.get_children():
 			buffsShow.remove_child(i)
-		for i in buff.collections:
+		buff.collections.shuffle()
+		for i in buff.collections.slice(0, 3):
 			var entries = ""
 			if i.healthMax > 0:
 				entries += "生命值上限+" + str(i.healthMax) + "\n"
@@ -94,17 +95,6 @@ func _process(_delta):
 			currentSelectButton.add_child(clonedI)
 			buffsShow.add_child(currentBuff)
 		waveTip.get_node("animator").play("show")
-	if enemyCount == 0 and not isSelectingBuff:
-		for i in readWaves:
-			if wave >= i.fromWave and (i.toWave < 1 or wave <= i.toWave) and i.enable:
-				var count = shrimpRate(i.rateBoost, i.maxCount)
-				if i.spawnAsBoss:
-					count = 1
-				for j in range(count):
-					generateUnit(i.target.name, Vector2(
-						randf_range(-i.spawnRandomPosition.x, i.spawnRandomPosition.x),
-						randf_range(-i.spawnRandomPosition.y, i.spawnRandomPosition.y),
-					), i.spawnAsBoss)
 	for i in get_all_progress_bars(self):
 		var current = i.get_node_or_null("ignore_bgbar_myBgbar")
 		if not current:
@@ -120,14 +110,14 @@ func _process(_delta):
 		bossAvatar.texture = currentBoss.texture.texture
 		bossName.text = currentBoss.displayName
 		bossValue.text = str(int(currentBoss.health)) + "/" + str(int(currentBoss.healthMax))
-func generateUnit(target: String, pos: Vector2, boss: bool = false):
-	var unit = get_node("units/" + target).duplicate() as entity
+static func generateUnit(target: String, pos: Vector2, boss: bool = false):
+	var unit = staticFuncCaller.get_node("units/" + target).duplicate() as entity
 	unit.position = pos
 	unit.enableAi = true
 	unit.isBoss = boss
-	unit.name = "enemy_" + target + str(randi_range(100, 999999))
+	unit.name = "enemy_" + target + str(randi_range(100, 999999)) + str(randi_range(100, 999999))
 	unit.level = wave * 2 + randi_range(0, 10)
-	add_child(unit)
+	staticFuncCaller.add_child(unit)
 func get_all_progress_bars(node):
 	var progress_bars = []
 	if node is ProgressBar and not node.name.begins_with("ignore_bgbar_"):

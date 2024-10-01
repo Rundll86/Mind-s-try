@@ -57,7 +57,7 @@ var playerEntity:entity;
 @export var attackDamage:float = 1;
 @export var moveSpeedBoost:float = 0;
 func _ready():
-	healthMax+=level*randi_range(10,20)
+	healthMax+=level*randi_range(15,25)
 	damageLabel=$/root/world/damage as damageNode
 	z_index=2
 	texture = $texture
@@ -66,8 +66,8 @@ func _ready():
 	lock_rotation = true
 	playerEntity = get_node("/root/world/player")
 	if useGodMode:
-		healthMax*=10
-		attackLimit/=1
+		healthMax*=20
+		attackSpeed*=3
 	health=healthMax
 	healthBar=get_node_or_null("healthBar")
 	if playerControlled:
@@ -144,7 +144,7 @@ func _process(_delta):
 		launchBullet(
 			currentWeapon.bullet,
 			currentWeapon,
-			(slag/slagMax if currentWeapon.bullet==readBullet("fireScan")else 0.0)*(oil/oilMax)+attackDamage-1
+			(slag/slagMax if currentWeapon.bullet.myDamageType==damageType.Enums.HIGH_T else 0.0)*(oil/oilMax)+attackDamage-1
 		)
 		currentWeapon.audioPlayer.play()
 		if currentWeapon.shootEffect:

@@ -1,10 +1,12 @@
 extends Button
 var myAttrs: buff;
 var player: entity;
+var myCard;
 func _ready():
     connect("pressed", pressed)
     myAttrs = $attrs
     player = $/root/world/player
+    myCard=get_parent().get_parent()
 func pressed():
     player.healthMax += myAttrs.healthMax
     player.attackSpeed += myAttrs.attackSpeed * 0.01
@@ -13,5 +15,4 @@ func pressed():
     player.critRate += myAttrs.critRate * 0.01
     player.critDamageBoost += myAttrs.critDamage * 0.01
     player.evasion += myAttrs.evasion * 0.01
-    get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().get_node("animator").play("hide")
-    init.isSelectingBuff = false
+    myCard.queue_free()
