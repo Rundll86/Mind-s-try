@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=4 uid="uid://5ih0ql0ybs0i"]
+[gd_scene load_steps=94 format=4 uid="uid://5ih0ql0ybs0i"]
 
 [ext_resource type="Script" path="res://scripts/entity.gd" id="1_iydk2"]
 [ext_resource type="Script" path="res://scripts/init.gd" id="1_luxnj"]
@@ -45,11 +45,13 @@
 [ext_resource type="Script" path="res://units/elude.gd" id="28_qwxqq"]
 [ext_resource type="Texture2D" uid="uid://fgnnbaewxui6" path="res://resources/weapon-icons/duo-preview.png" id="28_s7ifl"]
 [ext_resource type="Texture2D" uid="uid://b5iml48qa1lrh" path="res://resources/weapon-icons/hail.png" id="29_d7t5f"]
+[ext_resource type="Script" path="res://effects/thunder.gd" id="30_rhbpo"]
 [ext_resource type="Texture2D" uid="uid://c643y24itetr3" path="res://resources/weapon-icons/scorch.png" id="30_rljy7"]
 [ext_resource type="Texture2D" uid="uid://juku3prxtywy" path="res://resources/weapon-icons/arc.png" id="31_d38fh"]
 [ext_resource type="Script" path="res://scripts/damageNode.gd" id="34_gam8l"]
 [ext_resource type="Script" path="res://scripts/effectAuto.gd" id="35_loevs"]
 [ext_resource type="Texture2D" uid="uid://b2ekkteufkksd" path="res://resources/ui/boost.png" id="36_j0qbd"]
+[ext_resource type="Script" path="res://scripts/adaptiver.gd" id="40_g0l7s"]
 [ext_resource type="Script" path="res://scripts/nextWave.gd" id="49_ebsap"]
 [ext_resource type="Script" path="res://scripts/buffSelect.gd" id="49_odgue"]
 
@@ -172,6 +174,11 @@ scale_min = 10.0
 scale_max = 20.0
 color_ramp = SubResource("GradientTexture1D_x6nji")
 alpha_curve = SubResource("CurveTexture_obo6v")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_iepq3"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+color = Color(1, 1, 1, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oaopq"]
 bg_color = Color(1, 1, 1, 1)
@@ -724,7 +731,7 @@ drops = [NodePath("../../items/copper"), NodePath("../../items/oil")]
 dropCounts = Array[float]([50.0, 40.0])
 weapons = [NodePath("texture/leftW"), NodePath("texture/rightW")]
 displayName = "尖刀"
-healthMax = 60.0
+healthMax = 50.0
 moveSpeed = 0.2
 
 [node name="texture" type="Sprite2D" parent="units/dagger"]
@@ -824,7 +831,6 @@ drops = [NodePath("../../items/copper"), NodePath("../../items/oil")]
 dropCounts = Array[float]([50.0, 40.0])
 weapons = [NodePath("texture/bulletSpawner")]
 displayName = "爬虫"
-healthMax = 60.0
 moveSpeed = 0.8
 
 [node name="texture" type="Sprite2D" parent="units/crawler"]
@@ -868,7 +874,7 @@ drops = [NodePath("../../items/coolant"), NodePath("../../items/oil")]
 dropCounts = Array[float]([80.0, 80.0])
 weapons = [NodePath("texture/bulletSpawner")]
 displayName = "挣脱"
-healthMax = 600.0
+healthMax = 1000.0
 shootOffset = 180.0
 moveSpeed = 0.5
 
@@ -954,6 +960,12 @@ speed_scale = 2.0
 explosiveness = 0.5
 script = ExtResource("35_loevs")
 
+[node name="thunder" type="GPUParticles2D" parent="effects"]
+position = Vector2(64, 48)
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_iepq3")
+script = ExtResource("30_rhbpo")
+
 [node name="map" type="Sprite2D" parent="."]
 z_index = -1
 scale = Vector2(5, 5)
@@ -1021,9 +1033,10 @@ icon = ExtResource("30_rljy7")
 [node name="asp" type="AudioStreamPlayer2D" parent="player/texture/centerW/scorch"]
 stream = ExtResource("21_fft66")
 
-[node name="arc" type="Node2D" parent="player/texture/centerW" node_paths=PackedStringArray("bullet")]
+[node name="arc" type="Node2D" parent="player/texture/centerW" node_paths=PackedStringArray("bullet", "shootEffect")]
 script = ExtResource("6_l6cvj")
 bullet = NodePath("../../../../projectiles/tracingBullet")
+shootEffect = NodePath("../../../../effects/thunder")
 displayName = "电弧"
 icon = ExtResource("31_d38fh")
 
@@ -1058,6 +1071,8 @@ offset_top = 248.0
 offset_right = -319.0
 offset_bottom = 360.0
 theme = ExtResource("8_o1hbj")
+script = ExtResource("40_g0l7s")
+keepingSize = true
 metadata/_edit_use_anchors_ = true
 
 [node name="health" type="ProgressBar" parent="camera/ui"]
@@ -1254,6 +1269,7 @@ offset_bottom = 360.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 0, 0, 0.27451)
+script = ExtResource("40_g0l7s")
 metadata/_edit_lock_ = true
 
 [node name="label" type="Label" parent="camera/gameoverLay"]
@@ -1282,6 +1298,7 @@ offset_top = -328.0
 offset_right = 350.0
 offset_bottom = -298.0
 value = 100.0
+script = ExtResource("40_g0l7s")
 
 [node name="avatar" type="TextureRect" parent="camera/bossHealth"]
 layout_mode = 0
@@ -1349,6 +1366,7 @@ offset_top = -360.0
 offset_right = 640.0
 offset_bottom = 360.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_d8txv")
+script = ExtResource("40_g0l7s")
 metadata/_edit_lock_ = true
 
 [node name="bar" type="VBoxContainer" parent="camera/waveTip/panel"]
@@ -1357,6 +1375,7 @@ offset_right = 1280.0
 offset_bottom = 720.0
 theme_override_constants/separation = 50
 alignment = 1
+script = ExtResource("40_g0l7s")
 metadata/_edit_lock_ = true
 
 [node name="title" type="Label" parent="camera/waveTip/panel/bar"]
@@ -1374,6 +1393,7 @@ offset_bottom = 55.31
 text = "选择一项增益..."
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("40_g0l7s")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="camera/waveTip/panel/bar"]
 layout_mode = 2
@@ -1447,6 +1467,7 @@ offset_left = -624.0
 offset_top = 74.0
 offset_right = -520.0
 offset_bottom = 232.0
+script = ExtResource("40_g0l7s")
 
 [node name="weapons" type="VBoxContainer" parent="camera/mamba-out"]
 layout_mode = 2

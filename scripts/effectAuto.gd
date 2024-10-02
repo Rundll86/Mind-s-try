@@ -5,3 +5,7 @@ func _ready():
 func _process(_delta):
     if not emitting:
         queue_free()
+func _draw():
+    emitter()
+func emitter():
+    pass

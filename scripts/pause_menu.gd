@@ -1,4 +1,4 @@
-extends Panel
+extends adaptiver
 var tree;
 func _ready():
     tree = get_tree()
