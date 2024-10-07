@@ -1,4 +1,4 @@
-[gd_scene load_steps=94 format=4 uid="uid://5ih0ql0ybs0i"]
+[gd_scene load_steps=107 format=4 uid="uid://5ih0ql0ybs0i"]
 
 [ext_resource type="Script" path="res://scripts/entity.gd" id="1_iydk2"]
 [ext_resource type="Script" path="res://scripts/init.gd" id="1_luxnj"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scripts/buff.gd" id="4_n3crq"]
 [ext_resource type="Script" path="res://scripts/position_lock.gd" id="5_i3cw1"]
 [ext_resource type="Script" path="res://scripts/entity_engine.gd" id="5_xuxgv"]
+[ext_resource type="Texture2D" uid="uid://dvi4bgnad2s1b" path="res://resources/ui/copper-wall-large.png" id="6_dem2e"]
 [ext_resource type="AudioStream" uid="uid://drbjija4r10xv" path="res://resources/sounds/pew.ogg" id="6_gxym7"]
 [ext_resource type="Script" path="res://scripts/weapon.gd" id="6_l6cvj"]
 [ext_resource type="Script" path="res://scripts/bulletAI.gd" id="7_5ybsd"]
@@ -19,9 +20,11 @@
 [ext_resource type="Script" path="res://units/stell.gd" id="10_aym84"]
 [ext_resource type="Texture2D" uid="uid://dmtlttawt87pk" path="res://resources/ui/inventory.png" id="10_rrgif"]
 [ext_resource type="Texture2D" uid="uid://2o6o4hmg4c1l" path="res://resources/ui/copper.png" id="11_058tn"]
+[ext_resource type="Texture2D" uid="uid://b3tclkr3wnqel" path="res://resources/ui/liquid-container-merged.png" id="11_cmhkf"]
 [ext_resource type="Texture2D" uid="uid://dnq0rdqs2lrto" path="res://resources/items/copper.png" id="11_fh18r"]
 [ext_resource type="Script" path="res://scripts/item.gd" id="11_tf7be"]
 [ext_resource type="Texture2D" uid="uid://dcm3pxcuxhxwu" path="res://resources/ui/silicon.png" id="12_8ftri"]
+[ext_resource type="Texture2D" uid="uid://cva0a4keelbh" path="res://resources/ui/liquid-tank-merged.png" id="12_j4gxp"]
 [ext_resource type="Texture2D" uid="uid://on23ffsdhjyb" path="res://resources/ui/graphite.png" id="13_rx1pe"]
 [ext_resource type="Texture2D" uid="uid://87dusu46ulvm" path="res://resources/ui/wolfram.png" id="14_a13hj"]
 [ext_resource type="Texture2D" uid="uid://d4l4s85psg2go" path="res://resources/ui/steel.png" id="15_nxvoo"]
@@ -34,9 +37,7 @@
 [ext_resource type="Texture2D" uid="uid://dgpbu7j5428ro" path="res://resources/ui/overdrive_dome.png" id="23_f85n3"]
 [ext_resource type="Texture2D" uid="uid://c3g2f66xatfj8" path="res://resources/entities/mace.png" id="23_opgie"]
 [ext_resource type="Texture2D" uid="uid://bjfu3norvwimu" path="res://resources/ui/copper_wall.png" id="24_56s8g"]
-[ext_resource type="Texture2D" uid="uid://ushsxcblbsup" path="res://resources/items/coolant.png" id="24_ea7p7"]
 [ext_resource type="Texture2D" uid="uid://db65twm3fun0v" path="res://resources/ui/micro-processor.png" id="25_cbmmq"]
-[ext_resource type="Texture2D" uid="uid://c16aj0dfitgxt" path="res://resources/items/oil.png" id="25_rloqp"]
 [ext_resource type="Texture2D" uid="uid://ci0bcioojckr6" path="res://resources/entities/crawler.png" id="25_w6eu4"]
 [ext_resource type="Script" path="res://units/crawler.gd" id="26_rcrdu"]
 [ext_resource type="Texture2D" uid="uid://tk71uft6u71g" path="res://resources/ui/logic-processor.png" id="26_uve1e"]
@@ -54,6 +55,7 @@
 [ext_resource type="Script" path="res://scripts/adaptiver.gd" id="40_g0l7s"]
 [ext_resource type="Script" path="res://scripts/nextWave.gd" id="49_ebsap"]
 [ext_resource type="Script" path="res://scripts/buffSelect.gd" id="49_odgue"]
+[ext_resource type="Script" path="res://scripts/reset_buffs.gd" id="50_wrfji"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mon7o"]
 size = Vector2(60, 20)
@@ -145,6 +147,18 @@ _data = {
 radius = 20.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ttkq2"]
+radius = 32.249
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2yaoi"]
+radius = 32.249
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3mw0q"]
+radius = 32.249
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xecqq"]
+radius = 32.25
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d4fdl"]
 radius = 32.249
 
 [sub_resource type="Curve" id="Curve_c6ojo"]
@@ -247,11 +261,106 @@ sampling_rate = 44100.0
 packet_sequence = SubResource("OggPacketSequence_bnjpq")
 loop = true
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e546l"]
+content_margin_left = 10.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_srxn2"]
 bg_color = Color(0, 0, 0, 0.5)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d8txv"]
 bg_color = Color(0, 0, 0, 0.5)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_334o1"]
+content_margin_top = 10.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_14tri"]
+content_margin_top = 50.0
+
+[sub_resource type="Animation" id="Animation_w1aso"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../blank:theme_override_styles/panel:content_margin_top")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(50, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.125, 0, 0.125, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_yy7ca"]
+resource_name = "hide"
+length = 0.25
+step = 0.05
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.125, 0, 0.125, 0, 0, -0.125, 0, 0.125, 0),
+"times": PackedFloat32Array(0, 0.25)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../blank:theme_override_styles/panel:content_margin_top")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-1, -0.125, 0, 0.125, 0, 50, -0.125, 0, 0.125, 0),
+"times": PackedFloat32Array(0, 0.25)
+}
+
+[sub_resource type="Animation" id="Animation_2fhkd"]
+resource_name = "show"
+length = 0.25
+step = 0.05
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../blank:theme_override_styles/panel:content_margin_top")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(50, -0.25, 0, 0.25, 0, -1, -0.125, 0, 0.125, 0),
+"times": PackedFloat32Array(0, 0.25)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.125, 0, 0.125, 0, 1, -0.125, 0, 0.125, 0),
+"times": PackedFloat32Array(0, 0.25)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ipudi"]
+_data = {
+"RESET": SubResource("Animation_w1aso"),
+"hide": SubResource("Animation_yy7ca"),
+"show": SubResource("Animation_2fhkd")
+}
 
 [sub_resource type="Animation" id="Animation_w4idu"]
 length = 0.001
@@ -514,9 +623,12 @@ _data = {
 "jump": SubResource("Animation_20lxu")
 }
 
-[node name="world" type="Node2D"]
+[node name="world" type="Node2D" node_paths=PackedStringArray("initItems")]
 process_mode = 1
+process_priority = -1
 script = ExtResource("1_luxnj")
+initItems = [NodePath("items/copper"), NodePath("items/silicon"), NodePath("items/graphite"), NodePath("items/wolfram"), NodePath("items/steel"), NodePath("items/alloy")]
+initItemCounts = Array[int]([40, 40, 40, 40, 40, 40])
 metadata/_edit_horizontal_guides_ = [351.0, 356.0, 253.0, 258.0, 317.0, 293.0, -80.0, 20.0, -288.0, -263.0]
 metadata/_edit_vertical_guides_ = [-379.0, -617.0, -564.0, -511.0, 0.0, 4.0, 32.0, 36.0, -344.0]
 
@@ -526,55 +638,71 @@ startWeapons = [NodePath("../player/texture/centerW/duo"), NodePath("../player/t
 
 [node name="waves" type="Node" parent="."]
 
-[node name="1" type="Node" parent="waves" node_paths=PackedStringArray("target")]
+[node name="1" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/stell")
 rateBoost = 0.3
 
-[node name="2" type="Node" parent="waves" node_paths=PackedStringArray("target")]
+[node name="2" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/dagger")
 rateBoost = 0.3
 
-[node name="3" type="Node" parent="waves" node_paths=PackedStringArray("target")]
+[node name="3" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/mace")
 rateBoost = 0.25
 
-[node name="4" type="Node" parent="waves" node_paths=PackedStringArray("target")]
+[node name="4" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/elude")
 spawnAsBoss = true
 
-[node name="5" type="Node" parent="waves" node_paths=PackedStringArray("target")]
+[node name="5" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/crawler")
 rateBoost = 0.25
 
 [node name="buffs" type="Node" parent="."]
 
-[node name="copperWall" type="Node" parent="buffs"]
+[node name="copperWall" type="Node" parent="buffs" node_paths=PackedStringArray("costItems")]
 script = ExtResource("4_n3crq")
 displayName = "小型铜墙"
 texture = ExtResource("24_56s8g")
+healthMax = 30.0
+costItems = [NodePath("../../items/copper"), NodePath("../../items/graphite")]
+costCounts = Array[int]([30, 5])
 
-[node name="overdriveDome" type="Node" parent="buffs"]
+[node name="bigCopperWall" type="Node" parent="buffs" node_paths=PackedStringArray("costItems")]
+script = ExtResource("4_n3crq")
+displayName = "大型铜墙"
+texture = ExtResource("6_dem2e")
+healthMax = 55.0
+evasion = 0.8
+costItems = [NodePath("../../items/copper"), NodePath("../../items/graphite")]
+costCounts = Array[int]([60, 20])
+
+[node name="overdriveDome" type="Node" parent="buffs" node_paths=PackedStringArray("costItems")]
 script = ExtResource("4_n3crq")
 displayName = "超速穹顶"
 texture = ExtResource("23_f85n3")
 healthMax = 0.0
 attackSpeed = 10.0
 movementSpeed = 2.0
+costItems = [NodePath("../../items/copper"), NodePath("../../items/silicon")]
+costCounts = Array[int]([30, 10])
 
-[node name="processor1" type="Node" parent="buffs"]
+[node name="processor1" type="Node" parent="buffs" node_paths=PackedStringArray("costItems")]
 script = ExtResource("4_n3crq")
 displayName = "微核处理器"
 texture = ExtResource("25_cbmmq")
 healthMax = 0.0
 critRate = 1.8
 evasion = 0.2
+costItems = [NodePath("../../items/copper"), NodePath("../../items/silicon")]
+costCounts = Array[int]([10, 20])
 
-[node name="processor2" type="Node" parent="buffs"]
+[node name="processor2" type="Node" parent="buffs" node_paths=PackedStringArray("costItems")]
 script = ExtResource("4_n3crq")
 displayName = "中级处理器"
 texture = ExtResource("26_uve1e")
@@ -582,8 +710,10 @@ healthMax = 0.0
 critRate = 3.4
 critDamage = 6.0
 evasion = 0.8
+costItems = [NodePath("../../items/copper"), NodePath("../../items/silicon")]
+costCounts = Array[int]([15, 30])
 
-[node name="processor3" type="Node" parent="buffs"]
+[node name="processor3" type="Node" parent="buffs" node_paths=PackedStringArray("costItems")]
 script = ExtResource("4_n3crq")
 displayName = "超级处理器"
 texture = ExtResource("27_yd85k")
@@ -591,6 +721,46 @@ healthMax = 0.0
 critRate = 5.0
 critDamage = 3.0
 evasion = 2.0
+costItems = [NodePath("../../items/copper"), NodePath("../../items/silicon"), NodePath("../../items/graphite"), NodePath("../../items/wolfram")]
+costCounts = Array[int]([20, 40, 15, 5])
+
+[node name="container-lt" type="Node" parent="buffs" node_paths=PackedStringArray("costItems")]
+script = ExtResource("4_n3crq")
+displayName = "低温液体容器"
+texture = ExtResource("11_cmhkf")
+healthMax = 0.0
+costItems = [NodePath("../../items/copper"), NodePath("../../items/wolfram")]
+costCounts = Array[int]([40, 20])
+coolant = 10.0
+
+[node name="container-ht" type="Node" parent="buffs" node_paths=PackedStringArray("costItems")]
+script = ExtResource("4_n3crq")
+displayName = "高温液体容器"
+texture = ExtResource("11_cmhkf")
+healthMax = 0.0
+costItems = [NodePath("../../items/copper"), NodePath("../../items/wolfram"), NodePath("../../items/silicon")]
+costCounts = Array[int]([40, 30, 13])
+slag = 5.0
+
+[node name="container-res" type="Node" parent="buffs" node_paths=PackedStringArray("costItems")]
+script = ExtResource("4_n3crq")
+displayName = "抗腐蚀液体容器"
+texture = ExtResource("11_cmhkf")
+healthMax = 0.0
+costItems = [NodePath("../../items/copper"), NodePath("../../items/wolfram"), NodePath("../../items/silicon"), NodePath("../../items/steel")]
+costCounts = Array[int]([60, 40, 10, 20])
+oil = 15.0
+
+[node name="tank" type="Node" parent="buffs" node_paths=PackedStringArray("costItems")]
+script = ExtResource("4_n3crq")
+displayName = "通用液体储罐"
+texture = ExtResource("12_j4gxp")
+healthMax = 0.0
+costItems = [NodePath("../../items/copper"), NodePath("../../items/wolfram"), NodePath("../../items/silicon"), NodePath("../../items/steel")]
+costCounts = Array[int]([150, 60, 80, 40])
+coolant = 30.0
+oil = 20.0
+slag = 15.0
 
 [node name="projectiles" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
@@ -614,9 +784,9 @@ polygon = PackedVector2Array(0, 0, 5, 5, 5, 20, 0, 25, -5, 20, -5, 5)
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
-damage = 4
-tracingCount = 20
-tracingSpeed = 2.0
+lifeTime = 1000
+tracingTime = 1500.0
+tracingSpeed = 3.0
 myDamageType = 7
 
 [node name="texture" type="Polygon2D" parent="projectiles/tracingBullet"]
@@ -634,7 +804,7 @@ polygon = PackedVector2Array(0, 0, 5, 5, 5, 20, 0, 25, -5, 20, -5, 5)
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
-speed = 2
+speed = 2.0
 lifeTime = 1200
 damage = 20
 
@@ -654,7 +824,7 @@ position = Vector2(-100, -23)
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
-speed = 2
+speed = 2.0
 lifeTime = 300
 damage = 15
 penetrate = 1.0
@@ -687,10 +857,11 @@ linear_damp = 1.2
 script = ExtResource("10_aym84")
 attackLimit = 500.0
 drops = [NodePath("../../items/copper"), NodePath("../../items/coolant")]
-dropCounts = Array[float]([50.0, 30.0])
+dropMinCounts = Array[int]([2, 0])
+dropMaxCounts = Array[int]([5, 3])
 weapons = [NodePath("texture/bulletSpawner")]
 displayName = "围护"
-healthMax = 150.0
+healthMax = 20.0
 moveSpeed = 0.2
 
 [node name="texture" type="Sprite2D" parent="units/stell"]
@@ -713,25 +884,17 @@ libraries = {
 scale = Vector2(1e-05, 1e-05)
 shape = SubResource("CircleShape2D_umibw")
 
-[node name="healthBar" type="ProgressBar" parent="units/stell"]
-offset_left = -35.0
-offset_top = -40.0
-offset_right = 35.0
-offset_bottom = -34.0
-theme_override_colors/font_color = Color(0, 0, 0, 0)
-theme_override_font_sizes/font_size = 1
-value = 100.0
-
 [node name="dagger" type="RigidBody2D" parent="units" node_paths=PackedStringArray("drops", "weapons")]
 gravity_scale = 0.0
 linear_damp = 1.2
 script = ExtResource("20_h1nwg")
 attackLimit = 500.0
 drops = [NodePath("../../items/copper"), NodePath("../../items/oil")]
-dropCounts = Array[float]([50.0, 40.0])
+dropMinCounts = Array[int]([1, 2])
+dropMaxCounts = Array[int]([3, 4])
 weapons = [NodePath("texture/leftW"), NodePath("texture/rightW")]
 displayName = "尖刀"
-healthMax = 50.0
+healthMax = 10.0
 moveSpeed = 0.2
 
 [node name="texture" type="Sprite2D" parent="units/dagger"]
@@ -762,26 +925,20 @@ libraries = {
 scale = Vector2(1e-05, 1e-05)
 shape = SubResource("CircleShape2D_umibw")
 
-[node name="healthBar" type="ProgressBar" parent="units/dagger"]
-offset_left = -35.0
-offset_top = -40.0
-offset_right = 35.0
-offset_bottom = -34.0
-theme_override_colors/font_color = Color(0, 0, 0, 0)
-theme_override_font_sizes/font_size = 1
-value = 100.0
-
-[node name="mace" type="RigidBody2D" parent="units" node_paths=PackedStringArray("weapons")]
+[node name="mace" type="RigidBody2D" parent="units" node_paths=PackedStringArray("drops", "weapons")]
 gravity_scale = 0.0
 linear_damp = 1.2
 script = ExtResource("23_4s4uw")
 attackLimit = 600.0
 weaponLaunchLimit = 200.0
+drops = [NodePath("../../items/copper"), NodePath("../../items/graphite"), NodePath("../../items/oil")]
+dropMinCounts = Array[int]([1, 5, 1])
+dropMaxCounts = Array[int]([5, 10, 3])
 weapons = [NodePath("texture/leftW"), NodePath("texture/rightW")]
 displayName = "战锤"
-healthMax = 200.0
+healthMax = 25.0
 shootOffset = 30.0
-moveSpeed = 0.4
+moveSpeed = 0.25
 
 [node name="texture" type="Sprite2D" parent="units/mace"]
 texture = ExtResource("23_opgie")
@@ -813,24 +970,17 @@ libraries = {
 scale = Vector2(1e-05, 1e-05)
 shape = SubResource("CircleShape2D_umibw")
 
-[node name="healthBar" type="ProgressBar" parent="units/mace"]
-offset_left = -35.0
-offset_top = -40.0
-offset_right = 35.0
-offset_bottom = -34.0
-theme_override_colors/font_color = Color(0, 0, 0, 0)
-theme_override_font_sizes/font_size = 1
-value = 100.0
-
 [node name="crawler" type="RigidBody2D" parent="units" node_paths=PackedStringArray("drops", "weapons")]
 gravity_scale = 0.0
 linear_damp = 1.2
 script = ExtResource("26_rcrdu")
 attackLimit = 0.0
-drops = [NodePath("../../items/copper"), NodePath("../../items/oil")]
-dropCounts = Array[float]([50.0, 40.0])
+drops = [NodePath("../../items/copper"), NodePath("../../items/oil"), NodePath("../../items/silicon"), NodePath("../../items/wolfram")]
+dropMinCounts = Array[int]([0, 0, 2, 1])
+dropMaxCounts = Array[int]([5, 2, 5, 3])
 weapons = [NodePath("texture/bulletSpawner")]
 displayName = "爬虫"
+healthMax = 40.0
 moveSpeed = 0.8
 
 [node name="texture" type="Sprite2D" parent="units/crawler"]
@@ -853,28 +1003,19 @@ libraries = {
 scale = Vector2(1e-05, 1e-05)
 shape = SubResource("CircleShape2D_umibw")
 
-[node name="healthBar" type="ProgressBar" parent="units/crawler"]
-offset_left = -35.0
-offset_top = -40.0
-offset_right = 35.0
-offset_bottom = -34.0
-theme_override_colors/font_color = Color(0, 0, 0, 0)
-theme_override_font_sizes/font_size = 1
-value = 100.0
-
 [node name="elude" type="RigidBody2D" parent="units" node_paths=PackedStringArray("drops", "weapons")]
 collision_layer = 2
 collision_mask = 2
 gravity_scale = 0.0
 linear_damp = 1.2
 script = ExtResource("28_qwxqq")
-attackLimit = 100.0
-weaponLaunchLimit = 0.0
-drops = [NodePath("../../items/coolant"), NodePath("../../items/oil")]
-dropCounts = Array[float]([80.0, 80.0])
-weapons = [NodePath("texture/bulletSpawner")]
+attackLimit = 800.0
+drops = [NodePath("../../items/copper"), NodePath("../../items/silicon"), NodePath("../../items/wolfram"), NodePath("../../items/steel"), NodePath("../../items/oil"), NodePath("../../items/coolant")]
+dropMinCounts = Array[int]([5, 6, 2, 0, 2, 1])
+dropMaxCounts = Array[int]([10, 15, 7, 3, 4, 3])
+weapons = [NodePath("texture/bulletSpawner"), NodePath("texture/bulletSpawner")]
 displayName = "挣脱"
-healthMax = 1000.0
+healthMax = 35.0
 shootOffset = 180.0
 moveSpeed = 0.5
 
@@ -903,7 +1044,7 @@ color = Color(0.952941, 0.34902, 0.34902, 1)
 scale = Vector2(1e-05, 1e-05)
 shape = SubResource("CircleShape2D_umibw")
 
-[node name="healthBar" type="ProgressBar" parent="units/elude"]
+[node name="healthBar" type="ProgressBar" parent="units"]
 offset_left = -35.0
 offset_top = -40.0
 offset_right = 35.0
@@ -911,9 +1052,34 @@ offset_bottom = -34.0
 theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_font_sizes/font_size = 1
 value = 100.0
+show_percentage = false
+
+[node name="level" type="Label" parent="units/healthBar"]
+layout_mode = 0
+offset_top = -17.0
+offset_right = 70.0
+theme_override_font_sizes/font_size = 13
+text = "Lv.10"
+horizontal_alignment = 1
 
 [node name="items" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
+
+[node name="coolant" type="Area2D" parent="items"]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("11_tf7be")
+
+[node name="hitbox" type="CollisionShape2D" parent="items/coolant"]
+shape = SubResource("CircleShape2D_ttkq2")
+
+[node name="oil" type="Area2D" parent="items"]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("11_tf7be")
+
+[node name="hitbox" type="CollisionShape2D" parent="items/oil"]
+shape = SubResource("CircleShape2D_ttkq2")
 
 [node name="copper" type="Area2D" parent="items"]
 collision_layer = 0
@@ -924,29 +1090,57 @@ script = ExtResource("11_tf7be")
 texture = ExtResource("11_fh18r")
 
 [node name="hitbox" type="CollisionShape2D" parent="items/copper"]
-shape = SubResource("CircleShape2D_ttkq2")
+shape = SubResource("CircleShape2D_2yaoi")
 
-[node name="coolant" type="Area2D" parent="items"]
-collision_layer = 0
-collision_mask = 3
+[node name="silicon" type="Area2D" parent="items"]
+position = Vector2(4, 37)
 script = ExtResource("11_tf7be")
 
-[node name="texture" type="Sprite2D" parent="items/coolant"]
-texture = ExtResource("24_ea7p7")
+[node name="texture" type="Sprite2D" parent="items/silicon"]
+texture = ExtResource("12_8ftri")
 
-[node name="hitbox" type="CollisionShape2D" parent="items/coolant"]
-shape = SubResource("CircleShape2D_ttkq2")
+[node name="hitbox" type="CollisionShape2D" parent="items/silicon"]
+shape = SubResource("CircleShape2D_3mw0q")
 
-[node name="oil" type="Area2D" parent="items"]
-collision_layer = 0
-collision_mask = 3
+[node name="graphite" type="Area2D" parent="items"]
+position = Vector2(57, 13)
 script = ExtResource("11_tf7be")
 
-[node name="texture" type="Sprite2D" parent="items/oil"]
-texture = ExtResource("25_rloqp")
+[node name="texture" type="Sprite2D" parent="items/graphite"]
+texture = ExtResource("13_rx1pe")
 
-[node name="hitbox" type="CollisionShape2D" parent="items/oil"]
-shape = SubResource("CircleShape2D_ttkq2")
+[node name="hitbox" type="CollisionShape2D" parent="items/graphite"]
+shape = SubResource("CircleShape2D_xecqq")
+
+[node name="wolfram" type="Area2D" parent="items"]
+position = Vector2(57, 37)
+script = ExtResource("11_tf7be")
+
+[node name="texture" type="Sprite2D" parent="items/wolfram"]
+texture = ExtResource("14_a13hj")
+
+[node name="hitbox" type="CollisionShape2D" parent="items/wolfram"]
+shape = SubResource("CircleShape2D_d4fdl")
+
+[node name="steel" type="Area2D" parent="items"]
+position = Vector2(110, 13)
+script = ExtResource("11_tf7be")
+
+[node name="texture" type="Sprite2D" parent="items/steel"]
+texture = ExtResource("15_nxvoo")
+
+[node name="hitbox" type="CollisionShape2D" parent="items/steel"]
+shape = SubResource("CircleShape2D_d4fdl")
+
+[node name="alloy" type="Area2D" parent="items"]
+position = Vector2(110, 37)
+script = ExtResource("11_tf7be")
+
+[node name="texture" type="Sprite2D" parent="items/alloy"]
+texture = ExtResource("16_7jkwn")
+
+[node name="hitbox" type="CollisionShape2D" parent="items/alloy"]
+shape = SubResource("CircleShape2D_d4fdl")
 
 [node name="effects" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
@@ -1067,9 +1261,9 @@ target = NodePath("../player")
 [node name="ui" type="Panel" parent="camera"]
 visibility_layer = 2
 offset_left = -640.0
-offset_top = 248.0
+offset_top = -360.0
 offset_right = -319.0
-offset_bottom = 360.0
+offset_bottom = -248.0
 theme = ExtResource("8_o1hbj")
 script = ExtResource("40_g0l7s")
 keepingSize = true
@@ -1293,10 +1487,12 @@ volume_db = -10.0
 autoplay = true
 
 [node name="bossHealth" type="ProgressBar" parent="camera"]
-offset_left = -350.0
+offset_left = 293.0
 offset_top = -328.0
-offset_right = 350.0
+offset_right = 598.0
 offset_bottom = -298.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
 value = 100.0
 script = ExtResource("40_g0l7s")
 
@@ -1319,12 +1515,14 @@ vertical_alignment = 1
 
 [node name="value" type="Label" parent="camera/bossHealth"]
 layout_mode = 0
-offset_right = 700.0
+offset_left = -2.0
+offset_right = 698.0
 offset_bottom = 30.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_e546l")
 text = "100/100"
-horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("40_g0l7s")
 
 [node name="pauseMenu" type="Panel" parent="camera"]
 process_mode = 2
@@ -1374,43 +1572,62 @@ layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 theme_override_constants/separation = 50
-alignment = 1
 script = ExtResource("40_g0l7s")
 metadata/_edit_lock_ = true
 
-[node name="title" type="Label" parent="camera/waveTip/panel/bar"]
+[node name="blankT" type="PanelContainer" parent="camera/waveTip/panel/bar"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_334o1")
+
+[node name="title" type="VBoxContainer" parent="camera/waveTip/panel/bar"]
+layout_mode = 2
+
+[node name="title" type="Label" parent="camera/waveTip/panel/bar/title"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Wave 1 Cleared!"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="waveText" type="Label" parent="camera/waveTip/panel/bar/title"]
 layout_mode = 2
-offset_top = 38.31
-offset_right = 1280.0
-offset_bottom = 55.31
-text = "选择一项增益..."
+text = "合成增益载荷..."
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("40_g0l7s")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="camera/waveTip/panel/bar"]
+[node name="tools" type="HBoxContainer" parent="camera/waveTip/panel/bar"]
 layout_mode = 2
 alignment = 1
 
-[node name="Button" type="Button" parent="camera/waveTip/panel/bar/HBoxContainer"]
+[node name="nextWave" type="Button" parent="camera/waveTip/panel/bar/tools"]
 layout_mode = 2
 focus_mode = 0
 text = "开启下一波"
 script = ExtResource("49_ebsap")
 
-[node name="Button2" type="Button" parent="camera/waveTip/panel/bar/HBoxContainer"]
+[node name="resetBuffs" type="Button" parent="camera/waveTip/panel/bar/tools"]
 layout_mode = 2
 focus_mode = 0
 text = "重置增益列表"
+script = ExtResource("50_wrfji")
+
+[node name="copper" type="TextureRect" parent="camera/waveTip/panel/bar/tools"]
+layout_mode = 2
+texture = ExtResource("11_fh18r")
+expand_mode = 3
+stretch_mode = 3
+
+[node name="cost" type="Label" parent="camera/waveTip/panel/bar/tools"]
+layout_mode = 2
+text = "-1"
+
+[node name="blank" type="PanelContainer" parent="camera/waveTip/panel/bar"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_14tri")
 
 [node name="buffs" type="HBoxContainer" parent="camera/waveTip/panel/bar"]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
@@ -1425,7 +1642,7 @@ theme_override_constants/separation = 10
 
 [node name="select" type="Button" parent="camera/waveTip/panel/bar/buffs/example/content"]
 layout_mode = 2
-text = "选择"
+text = "合成"
 script = ExtResource("49_odgue")
 
 [node name="attrs" type="Node" parent="camera/waveTip/panel/bar/buffs/example/content/select"]
@@ -1454,6 +1671,29 @@ ENTRY+VALUE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="costs" type="GridContainer" parent="camera/waveTip/panel/bar/buffs/example/content"]
+layout_mode = 2
+columns = 2
+
+[node name="example" type="HBoxContainer" parent="camera/waveTip/panel/bar/buffs/example/content/costs"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="avatar" type="TextureRect" parent="camera/waveTip/panel/bar/buffs/example/content/costs/example"]
+layout_mode = 2
+texture = ExtResource("11_fh18r")
+expand_mode = 2
+
+[node name="count" type="Label" parent="camera/waveTip/panel/bar/buffs/example/content/costs/example"]
+layout_mode = 2
+text = "50"
+
+[node name="animator" type="AnimationPlayer" parent="camera/waveTip/panel/bar/buffs"]
+libraries = {
+"": SubResource("AnimationLibrary_ipudi")
+}
+
 [node name="animator" type="AnimationPlayer" parent="camera/waveTip"]
 root_node = NodePath("../panel")
 libraries = {
@@ -1464,9 +1704,9 @@ libraries = {
 z_index = 8
 z_as_relative = false
 offset_left = -624.0
-offset_top = 74.0
+offset_top = 186.0
 offset_right = -520.0
-offset_bottom = 232.0
+offset_bottom = 344.0
 script = ExtResource("40_g0l7s")
 
 [node name="weapons" type="VBoxContainer" parent="camera/mamba-out"]

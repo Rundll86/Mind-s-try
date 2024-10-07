@@ -1,22 +1,24 @@
 extends Area2D
 class_name bulletAI
-var startPosition;
+var startPosition: Vector2;
+var startTime: int;
 var launcher: entity;
 var myTracingTarget: entity;
 var damageBooster: float;
-@export var speed = 1;
+@export var speed: float = 1.0;
 @export var enable = false;
 @export var lifeTime = 700;
 @export var damage = 10;
 @export var damageFromPlayer = false;
 @export var penetrate: float = 0;
-@export var tracingCount: int = 0;
+@export var tracingTime: float = 0;
 @export var tracingSpeed: float = 1;
 @export var myDamageType: damageType.Enums = damageType.Enums.COLLITE;
 func _ready():
 	startPosition = position;
+	startTime = Time.get_ticks_msec()
 	body_entered.connect(Callable(self, "hitCheck"))
-	if enable and tracingCount > 0:
+	if enable and canTrace():
 		var target
 		var enemies = init.getAllEnemies()
 		if len(enemies) > 0:
@@ -31,7 +33,7 @@ func _process(_delta):
 		queue_free();
 	if not enable:
 		return
-	if tracingCount > 0 and is_instance_valid(myTracingTarget):
+	if canTrace() and is_instance_valid(myTracingTarget):
 		var targetRotation = rad_to_deg(myTracingTarget.global_position.angle_to_point(global_position))
 		var rotationDiff = global_rotation_degrees - targetRotation
 		if rotationDiff > 180:
@@ -65,3 +67,5 @@ func hitCheck(body: entity):
 	if randf() < penetrate:
 		return
 	queue_free()
+func canTrace():
+	return Time.get_ticks_msec() - startTime < tracingTime

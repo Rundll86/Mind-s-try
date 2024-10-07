@@ -16,6 +16,7 @@ var damageLabel:damageNode;
 var currentWeaponIndex=-1;
 #数值显示条
 var healthBar:ProgressBar;
+var levelLabel:Label;
 var slagBar:ProgressBar;
 var coolantBar:ProgressBar;
 var oilBar:ProgressBar;
@@ -25,6 +26,9 @@ var lastOilDamageTime=0;
 var lastWeaponLaunchTime=0;
 #常量
 var playerEntity:entity;
+#已储存的数值基质
+var healthMaxSaved:float=0;
+var attackDamageSaved:float=0;
 #---
 #选项
 @export var enableAi:bool=false;
@@ -39,8 +43,9 @@ var playerEntity:entity;
 @export var animationSpeed:float = 0.2;
 @export var rotateSpeedMax:float=-1;
 #掉落物
-@export var drops:Array[item]=[]
-@export var dropCounts:Array[float]=[]
+@export var drops:Array[item]=[];
+@export var dropMinCounts:Array[int]=[];
+@export var dropMaxCounts:Array[int]=[];
 @export var dropRange:float=100;
 #武器
 @export var weapons:Array[weapon];
@@ -57,7 +62,9 @@ var playerEntity:entity;
 @export var attackDamage:float = 1;
 @export var moveSpeedBoost:float = 0;
 func _ready():
-	healthMax+=level*randi_range(15,25)
+	healthMaxSaved=healthMax
+	attackDamageSaved=attackDamage
+	setLevel(level)
 	damageLabel=$/root/world/damage as damageNode
 	z_index=2
 	texture = $texture
@@ -70,6 +77,8 @@ func _ready():
 		attackSpeed*=3
 	health=healthMax
 	healthBar=get_node_or_null("healthBar")
+	if healthBar:
+		levelLabel=healthBar.get_node("level")
 	if playerControlled:
 		healthBar = get_node("/root/world/camera/ui/health")
 		slagBar = get_node("/root/world/camera/ui/slag")
@@ -80,8 +89,11 @@ func _ready():
 	if enableAi:
 		hitbox.scale=Vector2(1,1)
 func _process(_delta):
-	healthBar.value+=(health-healthBar.value)*(init.animationSpeed[0])
-	healthBar.max_value=healthMax
+	hitbox.disabled = not enableAi
+	if healthBar:
+		healthBar.value+=(health-healthBar.value)*(init.animationSpeed[0])
+		healthBar.max_value=healthMax
+		if levelLabel:levelLabel.text="Lv."+str(level)
 	health=min(health,healthMax)
 	if playerControlled:
 		slag=min(slag,slagMax)
@@ -93,43 +105,44 @@ func _process(_delta):
 		coolantBar.max_value=coolantMax
 		oilBar.value+=(oil-oilBar.value)*(init.animationSpeed[0])
 		oilBar.max_value=oilMax
-		var movingUp = Input.is_action_pressed("moveup")
-		var movingDown = Input.is_action_pressed("movedown")
-		var movingLeft = Input.is_action_pressed("moveleft")
-		var movingRight = Input.is_action_pressed("moveright")
-		var moved = Input.is_action_pressed("moving")
-		if moved:
-			if movingUp and movingLeft:
-				texture.rotation_degrees += (-45 - texture.rotation_degrees) * animationSpeed
-			elif movingUp and movingRight:
-				texture.rotation_degrees += (45 - texture.rotation_degrees) * animationSpeed
-			elif movingDown and movingLeft:
-				texture.rotation_degrees += (-135 - texture.rotation_degrees) * animationSpeed
-			elif movingDown and movingRight:
-				texture.rotation_degrees += (135 - texture.rotation_degrees) * animationSpeed
-			elif movingUp:
-				texture.rotation_degrees += (0 - texture.rotation_degrees) * animationSpeed
-			elif movingDown:
-				texture.rotation_degrees += (180 - texture.rotation_degrees) * animationSpeed
-			elif movingLeft:
-				texture.rotation_degrees += (-90 - texture.rotation_degrees) * animationSpeed
-			elif movingRight:
-				texture.rotation_degrees += (90 - texture.rotation_degrees) * animationSpeed
-			moveForward()
-		elif Input.is_action_pressed("attack"):
-			texture.rotation_degrees += (
-				rad_to_deg(get_local_mouse_position().angle_to_point(Vector2.ZERO))
-				 - 90
-				 - texture.rotation_degrees
-				) * animationSpeed;
-			attackChecked()
-		if Input.is_action_pressed("heal")and health<healthMax:
-			health+=healthMax*0.01
-			slag+=1
-		if Input.is_action_pressed("cool")and slag>0 and coolant>0:
-			slag-=1
-			coolant-=1
-			oil+=0.4
+		if not init.isSelectingBuff:
+			var movingUp = Input.is_action_pressed("moveup")
+			var movingDown = Input.is_action_pressed("movedown")
+			var movingLeft = Input.is_action_pressed("moveleft")
+			var movingRight = Input.is_action_pressed("moveright")
+			var moved = Input.is_action_pressed("moving")
+			if moved:
+				if movingUp and movingLeft:
+					texture.rotation_degrees += (-45 - texture.rotation_degrees) * animationSpeed
+				elif movingUp and movingRight:
+					texture.rotation_degrees += (45 - texture.rotation_degrees) * animationSpeed
+				elif movingDown and movingLeft:
+					texture.rotation_degrees += (-135 - texture.rotation_degrees) * animationSpeed
+				elif movingDown and movingRight:
+					texture.rotation_degrees += (135 - texture.rotation_degrees) * animationSpeed
+				elif movingUp:
+					texture.rotation_degrees += (0 - texture.rotation_degrees) * animationSpeed
+				elif movingDown:
+					texture.rotation_degrees += (180 - texture.rotation_degrees) * animationSpeed
+				elif movingLeft:
+					texture.rotation_degrees += (-90 - texture.rotation_degrees) * animationSpeed
+				elif movingRight:
+					texture.rotation_degrees += (90 - texture.rotation_degrees) * animationSpeed
+				moveForward()
+			elif Input.is_action_pressed("attack"):
+				texture.rotation_degrees += (
+					rad_to_deg(get_local_mouse_position().angle_to_point(Vector2.ZERO))
+					- 90
+					- texture.rotation_degrees
+					) * animationSpeed;
+				attackChecked()
+			if Input.is_action_pressed("heal")and health<healthMax:
+				health+=healthMax*0.01
+				slag+=1
+			if Input.is_action_pressed("cool")and slag>0 and coolant>0:
+				slag-=1
+				coolant-=1
+				oil+=0.4
 		if slag>slagMax:
 			var diff=slag-slagMax
 			oil-=diff
@@ -152,6 +165,18 @@ func _process(_delta):
 			currentWeapon.add_child(cloned)
 		currentWeaponIndex+=1
 		lastWeaponLaunchTime=Time.get_ticks_msec()
+func setLevel(newLevel):
+	var healthRatio=health/healthMax
+	level=newLevel
+	healthMax=level*randi_range(15,25)+healthMaxSaved
+	health=healthRatio*healthMax
+	attackDamage=level*randf_range(0.01,0.03)+attackDamageSaved
+func upgradeLevel(step:int=1):
+	level+=step
+	var healthRatio=health/healthMax
+	healthMax+=step*randi_range(15,25)
+	health=healthRatio*healthMax
+	attackDamage+=step*randf_range(0.01,0.03)
 func readBullet(bullet:String):
 	return get_node("/root/world/projectiles/"+bullet) as bulletAI
 func moveForward():
@@ -205,14 +230,13 @@ func hit(damage:int,crit:bool,damageBoost:float,myDamageType:damageType.Enums):
 			healthBar.value=health
 			healthBar.max_value=healthMax
 		for i in range(len(drops)):
-			for j in range(init.shrimpRate(dropCounts[i]*0.01,-1)):
+			for j in range(randi_range(
+				dropMinCounts[i],
+				dropMaxCounts[i]
+			)):
 				var drop = drops[i].duplicate() as item
-				drop.canBeCollect=true
-				drop.itemId=drops[i].name
-				drop.global_position = global_position+Vector2(
-					randf_range(-dropRange,dropRange),
-					randf_range(-dropRange,dropRange)
-				)
+				drop.itemID=drops[i].name
+				drop.isSubstance=false
 				get_node("/root/world").call_deferred("add_child",drop)
 		queue_free()
 func PRESETAI_followPlayer():
