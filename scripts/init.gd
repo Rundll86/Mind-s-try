@@ -9,7 +9,8 @@ static var readWaves: Array[waveDefine] = [];
 static var isSelectingBuff: bool = false;
 static var enemyCount = 0;
 static var resetBuffCostSaved: int = 0;
-var bossBar: ProgressBar;
+static var playerEntity: entity;
+var bossBar: valuebar;
 var bossAvatar: TextureRect;
 var bossName: Label;
 var bossValue: Label;
@@ -30,17 +31,17 @@ func _ready():
 	$effects.hide()
 	for i in $buffs.get_children():
 		buff.collections.append(i)
-	waveTip = $camera/waveTip
+	waveTip = $"camera/ui-show/panels/bg/waveTip"
 	wave = initWave - 1
-	buffsShow = waveTip.get_node("panel/bar/buffs")
+	buffsShow = waveTip.get_node("bar/buffs")
 	buffCostCardExample = buffsShow.get_node("example/content/costs/example")
 	buffCostCardExample.get_parent().remove_child(buffCostCardExample)
 	buffCardExample = buffsShow.get_node("example")
 	buffCardExample.get_parent().remove_child(buffCardExample)
 	bossBar = $camera/bossHealth
-	bossAvatar = bossBar.get_node("avatar")
+	bossAvatar = bossBar.get_node("transformer/avatar")
 	bossName = bossAvatar.get_node("name")
-	bossValue = bossBar.get_node("value")
+	bossValue = bossBar.get_node("transformer/value")
 	weaponShow = $"camera/mamba-out/weapons"
 	var weaponExample: HBoxContainer = weaponShow.get_node("w0")
 	weaponExample.get_parent().remove_child(weaponExample)
@@ -54,47 +55,41 @@ func _ready():
 	for i in $waves.get_children():
 		readWaves.append(i)
 	staticFuncCaller = self
-	for i in $camera/ui/infos/inventory.get_children():
+	for i in $items.get_children():
 		inventory[i.name] = {
 			"count": 0,
-			"label": i.get_node("Label")
+			# "label": i.get_node("Label")
 		}
 	for i in range(len(initItems)):
 		inventory[initItems[i].name]["count"] += initItemCounts[i]
-	# $/root/world/player.setLevel(wave)
+	playerEntity = $/root/world/player
 func _process(_delta):
-	waveTip.get_node("panel/bar/tools/cost").text = str(resetBuffCostSaved)
+	waveTip.get_node("bar/tools/cost").text = str(resetBuffCostSaved)
 	if Input.is_action_just_pressed("nextweapon"):
 		userData.currentWeapon += 1
 		if userData.currentWeapon >= len(userData.weapons):
 			userData.currentWeapon = 0
+	if Input.is_action_just_pressed("overclock"):
+		playerEntity.overclock()
+	if Input.is_action_just_pressed("superclock"):
+		playerEntity.superclock()
 	if Input.is_action_just_pressed("pause"):
 		get_tree().paused = true
-	for i in inventory.values():
-		i["label"].text = str(i["count"])
-	enemyCount = 0
-	for i in get_children():
-		if i.name.begins_with("enemy_"):
-			enemyCount += 1
-	if enemyCount == 0 and not isSelectingBuff:
-		waveTip.get_node("panel/bar/title/title").text = "Wave " + str(wave + 1) + " Cleared!"
-		isSelectingBuff = true
-		resetBuffCostSaved = resetBuffCost
-		generateBuffCard()
-		waveTip.get_node("animator").play("show")
-		waveTip.get_node("panel/bar/buffs/animator").play("show")
-	for i in get_all_progress_bars(self):
-		var current = i.get_node_or_null("ignore_bgbar_myBgbar")
-		if not current:
-			var bar = $camera/ui/health/ignore_bgbar_myBgbar.duplicate()
-			bar.name = "ignore_bgbar_myBgbar"
-			i.add_child(bar)
-			print("added bar " + i.name)
+		panelDefine.checkTo("pause")
+	# for i in inventory.values():
+	# 	i["label"].text = str(i["count"])
+	if isPlayerAlive:
+		enemyCount = 0
+		for i in get_children():
+			if i.name.begins_with("enemy_"):
+				enemyCount += 1
+		if enemyCount == 0 and not isSelectingBuff:
+			panelDefine.checkTo("waveTip")
 	var currentBoss = findBoss()
 	bossBar.visible = currentBoss != null
 	if currentBoss:
-		bossBar.max_value = currentBoss.healthMax
-		bossBar.value = currentBoss.healthBar.value
+		bossBar.maxValue = currentBoss.healthMax
+		bossBar.currentValue = currentBoss.health
 		bossAvatar.texture = currentBoss.texture.texture
 		bossName.text = currentBoss.displayName
 		bossValue.text = str(int(currentBoss.health)) + "/" + str(int(currentBoss.healthMax))
@@ -105,7 +100,7 @@ static func generateBuffCard():
 	for i in buff.collections.slice(0, 3):
 		var entries = ""
 		if i.healthMax > 0:
-			entries += "装甲载荷+" + str(i.healthMax) + "\n"
+			entries += "生命上限+" + str(i.healthMax) + "点\n"
 		if i.attackSpeed > 0:
 			entries += "武器重载效率+" + str(i.attackSpeed) + "%\n"
 		if i.attackDamage > 0:
@@ -119,11 +114,11 @@ static func generateBuffCard():
 		if i.evasion > 0:
 			entries += "闪避率+" + str(i.evasion) + "%\n"
 		if i.coolant > 0:
-			entries += "冷却液上限+" + str(i.coolant) + "\n"
+			entries += "冷却液上限+" + str(i.coolant) + "FS\n"
 		if i.oil > 0:
-			entries += "芳油上限+" + str(i.oil) + "\n"
+			entries += "芳油上限+" + str(i.oil) + "FS\n"
 		if i.slag > 0:
-			entries += "矿渣上限+" + str(i.slag) + "\n"
+			entries += "矿渣上限+" + str(i.slag) + "FS\n"
 		var currentBuff = staticFuncCaller.buffCardExample.duplicate()
 		currentBuff.get_node("content/name").text = i.displayName
 		currentBuff.get_node("content/texture").texture = i.texture
@@ -145,7 +140,7 @@ static func generateUnit(target: String, pos: Vector2, boss: bool = false):
 	unit.enableAi = true
 	unit.isBoss = boss
 	unit.name = "enemy_" + target + str(randf_range(100, 999999) + randf_range(100, 999999)) + str(randf_range(10, 200))
-	unit.level = ceil(wave * randf_range(0.7, 1.3)) + randi_range(-1, 1) + (randi_range(35, 55) if boss else 0)
+	unit.level = ceil((wave * randf_range(0.7, 1.3) + randi_range(0, 1)) * (randf_range(2, 3.2) if boss else 1.0))
 	var healthBar = staticFuncCaller.get_node("units/healthBar").duplicate()
 	healthBar.name = "healthBar"
 	unit.add_child(healthBar)

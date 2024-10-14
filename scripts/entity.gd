@@ -8,25 +8,37 @@ var coolantMax:float=200;
 var coolant:float=0;
 var oilMax:float=100;
 var oil:float=0;
+var neoplasmMax:float=100;
+var neoplasm:float=0;
+var heatMax:float=100;
+var heat:float=0;
+var mrjMax:float=40;
+var mrj:float=0;#孢子菌泥，全拼MushRoomJam
 #元数据
 var texture: Sprite2D;
 var hitbox: CollisionShape2D;
 var animator:AnimationPlayer;
 var damageLabel:damageNode;
 var currentWeaponIndex=-1;
+var superclocking:bool=false;
 #数值显示条
-var healthBar:ProgressBar;
+var healthBar:valuebar;
 var levelLabel:Label;
-var slagBar:ProgressBar;
-var coolantBar:ProgressBar;
-var oilBar:ProgressBar;
+var slagBar:valuebar;
+var coolantBar:valuebar;
+var oilBar:valuebar;
+var neoplasmBar:valuebar;
+var heatBar:valuebar;
+var mrjBar:valuebar;
 #间隔计算
 var lastAttackTime = 0;
 var lastOilDamageTime=0;
 var lastWeaponLaunchTime=0;
+var lastoverclockTime=0;
+var lastsuperclockTime=0;
 #常量
 var playerEntity:entity;
-#已储存的数值基质
+#已储存的数值基值
 var healthMaxSaved:float=0;
 var attackDamageSaved:float=0;
 #---
@@ -61,6 +73,16 @@ var attackDamageSaved:float=0;
 @export var attackSpeed:float = 1;
 @export var attackDamage:float = 1;
 @export var moveSpeedBoost:float = 0;
+#关于普通超频
+@export var overclockPushForce:float=40000;
+@export var overclockNeedsHeat:float=25;
+@export var overclockNeedsMrj:float=10;
+#关于Q超频
+@export var superclockMovementSpeedBoost:float=0.75;
+@export var superclockAttackSpeedBoost:float=0.6;
+@export var superclockAttackDamageBoost:float=0.4;
+@export var superclockNeedsHeatPercent:float=1.0;
+@export var superclockNeedsMrjPercent:float=1.0;
 func _ready():
 	healthMaxSaved=healthMax
 	attackDamageSaved=attackDamage
@@ -78,33 +100,47 @@ func _ready():
 	health=healthMax
 	healthBar=get_node_or_null("healthBar")
 	if healthBar:
-		levelLabel=healthBar.get_node("level")
+		levelLabel=healthBar.get_node("transformer/level")
 	if playerControlled:
-		healthBar = get_node("/root/world/camera/ui/health")
-		slagBar = get_node("/root/world/camera/ui/slag")
-		coolantBar = get_node("/root/world/camera/ui/coolant")
-		oilBar = get_node("/root/world/camera/ui/oil")
+		healthBar = get_node("/root/world/camera/ui-show/board/healthMask/health")
+		slagBar = get_node("/root/world/camera/ui-show/board/slag")
+		coolantBar = get_node("/root/world/camera/ui-show/board/coolant")
+		oilBar = get_node("/root/world/camera/ui-show/board/oil")
+		neoplasmBar = get_node("/root/world/camera/ui-show/board/neoplasm")
+		heatBar = get_node("/root/world/camera/ui-show/board/damage/heatMask/heat")
+		mrjBar=get_node("/root/world/camera/ui-show/board/damage/mrjMask/mrj")
 		coolant=coolantMax
 		oil=oilMax
+		heat=heatMax
 	if enableAi:
 		hitbox.scale=Vector2(1,1)
 func _process(_delta):
 	hitbox.disabled = not enableAi
 	if healthBar:
-		healthBar.value+=(health-healthBar.value)*(init.animationSpeed[0])
-		healthBar.max_value=healthMax
+		healthBar.currentValue=health
+		healthBar.maxValue=healthMax
 		if levelLabel:levelLabel.text="Lv."+str(level)
-	health=min(health,healthMax)
+	health=max(min(health,healthMax),0)
 	if playerControlled:
-		slag=min(slag,slagMax)
-		coolant=min(coolant,coolantMax)
-		oil=min(oil,oilMax)
-		slagBar.value+=(slag-slagBar.value)*(init.animationSpeed[0])
-		slagBar.max_value=slagMax
-		coolantBar.value+=(coolant-coolantBar.value)*(init.animationSpeed[0])
-		coolantBar.max_value=coolantMax
-		oilBar.value+=(oil-oilBar.value)*(init.animationSpeed[0])
-		oilBar.max_value=oilMax
+		slag=max(min(slag,slagMax),0)
+		coolant=max(min(coolant,coolantMax),0)
+		oil=max(min(oil,oilMax),0)
+		neoplasm=max(min(neoplasm,neoplasmMax),0)
+		heat=max(min(heat,heatMax),0)
+		mrj=max(min(mrj,mrjMax),0)
+		slagBar.currentValue=slag
+		slagBar.maxValue=slagMax
+		coolantBar.currentValue=coolant
+		coolantBar.maxValue=coolantMax
+		oilBar.currentValue=oil
+		oilBar.maxValue=oilMax
+		neoplasmBar.currentValue=neoplasm
+		neoplasmBar.maxValue=neoplasmMax
+		heatBar.currentValue=heat
+		heatBar.maxValue=heatMax
+		mrjBar.currentValue=mrj
+		mrjBar.maxValue=mrjMax
+		heat+=slag/slagMax*0.01
 		if not init.isSelectingBuff:
 			var movingUp = Input.is_action_pressed("moveup")
 			var movingDown = Input.is_action_pressed("movedown")
@@ -130,12 +166,11 @@ func _process(_delta):
 					texture.rotation_degrees += (90 - texture.rotation_degrees) * animationSpeed
 				moveForward()
 			elif Input.is_action_pressed("attack"):
+				var target=rad_to_deg(get_local_mouse_position().angle_to_point(Vector2.ZERO))-90
 				texture.rotation_degrees += (
-					rad_to_deg(get_local_mouse_position().angle_to_point(Vector2.ZERO))
-					- 90
-					- texture.rotation_degrees
+					target- texture.rotation_degrees
 					) * animationSpeed;
-				attackChecked()
+				if abs(target- texture.rotation_degrees)<shootOffset*2:attackChecked()
 			if Input.is_action_pressed("heal")and health<healthMax:
 				health+=healthMax*0.01
 				slag+=1
@@ -151,13 +186,21 @@ func _process(_delta):
 			if Time.get_ticks_msec()-lastOilDamageTime>1000*diff:
 				hit(1,false,0,damageType.Enums.BIOEROSION)
 				lastOilDamageTime=Time.get_ticks_msec()
+		if superclocking:
+			heat-=0.03
+			mrj-=0.03
+			if heat<=0 or mrj<=0:
+				moveSpeedBoost-=superclockMovementSpeedBoost
+				attackSpeed-=superclockAttackSpeedBoost
+				attackDamage-=superclockAttackDamageBoost
+				superclocking=false
 	if enableAi&&init.isPlayerAlive:CustomAi()
-	if currentWeaponIndex>=0 and currentWeaponIndex<len(weapons) and Time.get_ticks_msec()-lastWeaponLaunchTime>weaponLaunchLimit/attackSpeed:
+	if currentWeaponIndex>=0 and currentWeaponIndex<len(weapons) and Time.get_ticks_msec()-lastWeaponLaunchTime>=weaponLaunchLimit/attackSpeed:
 		var currentWeapon=weapons[currentWeaponIndex]
 		launchBullet(
 			currentWeapon.bullet,
 			currentWeapon,
-			(slag/slagMax if currentWeapon.bullet.myDamageType==damageType.Enums.HIGH_T else 0.0)*(oil/oilMax)+attackDamage-1
+			damageBoostFactor()
 		)
 		currentWeapon.audioPlayer.play()
 		if currentWeapon.shootEffect:
@@ -168,9 +211,9 @@ func _process(_delta):
 func setLevel(newLevel):
 	var healthRatio=health/healthMax
 	level=newLevel
-	healthMax=level*randi_range(15,25)+healthMaxSaved
+	healthMax=level*0.8*healthMaxSaved+healthMaxSaved
 	health=healthRatio*healthMax
-	attackDamage=level*randf_range(0.01,0.03)+attackDamageSaved
+	attackDamage=level*randf_range(0.03,0.06)+attackDamageSaved
 func upgradeLevel(step:int=1):
 	level+=step
 	var healthRatio=health/healthMax
@@ -179,11 +222,11 @@ func upgradeLevel(step:int=1):
 	attackDamage+=step*randf_range(0.01,0.03)
 func readBullet(bullet:String):
 	return get_node("/root/world/projectiles/"+bullet) as bulletAI
-func moveForward():
+func moveForward(force=600.0):
 	apply_central_force(Vector2(
 		sin(texture.rotation),
 		-cos(texture.rotation)
-	) * moveSpeed * 600*(moveSpeedBoost+1))
+	) * moveSpeed * force*(moveSpeedBoost+1))
 func canAttack():
 	return (Time.get_ticks_msec()-lastAttackTime)>(attackLimit+len(weapons)*weaponLaunchLimit)/attackSpeed
 func launchBullet(bulletSubstance:bulletAI,spawner:Node2D,damageBooster:float=0):
@@ -195,6 +238,21 @@ func launchBullet(bulletSubstance:bulletAI,spawner:Node2D,damageBooster:float=0)
 	bullet.damageBooster=damageBooster
 	bullet.damageFromPlayer=damageFromPlayer
 	get_node("/root/world").add_child(bullet)
+func overclock():
+	print("overclock")
+	if heat>=overclockNeedsHeat and mrj>=overclockNeedsMrj:
+		print("success")
+		heat-=overclockNeedsHeat
+		mrj-=overclockNeedsMrj
+		moveForward(overclockPushForce)
+func superclock():
+	print("superclock")
+	if heat/heatMax>=superclockNeedsHeatPercent and mrj/mrjMax>=superclockNeedsMrjPercent:
+		print("success")
+		moveSpeedBoost+=superclockMovementSpeedBoost
+		attackSpeed+=superclockAttackSpeedBoost
+		attackDamage+=superclockAttackDamageBoost
+		superclocking=true
 func launchWeapon():
 	currentWeaponIndex=0
 func attackChecked():
@@ -205,11 +263,19 @@ func attack():
 	launchWeapon()
 func CustomAi():
 	pass
+func damageBoostFactor():
+	return (slag/slagMax*0.5*(oil/oilMax) if
+		weapons[currentWeaponIndex].bullet.myDamageType==damageType.Enums.HIGH_T else
+		0.0)+(attackDamage-1)
 func hit(damage:int,crit:bool,damageBoost:float,myDamageType:damageType.Enums):
 	if randf_range(0,1)<evasion:
 		return
 	animator.play("hit")
 	health -= damage
+	if myDamageType==damageType.Enums.BIOEROSION:
+		mrj+=damage
+	if myDamageType==damageType.Enums.HIGH_T:
+		heat+=damage
 	var currentDamageLabel=damageLabel.duplicate() as damageNode
 	currentDamageLabel.isSubstance=false
 	currentDamageLabel.global_position=global_position+Vector2(
@@ -224,11 +290,9 @@ func hit(damage:int,crit:bool,damageBoost:float,myDamageType:damageType.Enums):
 	get_node("/root/world").add_child(currentDamageLabel)
 	if health<=0:
 		if playerControlled:
-			($/root/world/camera/gameoverLay as ColorRect).show()
-			($/root/world/camera/gameoverLay/animator as AnimationPlayer).play("show")
+			panelDefine.checkTo("gameover")
 			init.isPlayerAlive=false
-			healthBar.value=health
-			healthBar.max_value=healthMax
+			healthBar.currentValue=0
 		for i in range(len(drops)):
 			for j in range(randi_range(
 				dropMinCounts[i],

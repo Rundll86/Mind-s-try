@@ -1,0 +1,616 @@
+[gd_scene load_steps=28 format=3 uid="uid://c3ffqr6j7phde"]
+
+[ext_resource type="PackedScene" uid="uid://drrf2btbv0wrd" path="res://scenes/valuebar.tscn" id="1_gkhuq"]
+[ext_resource type="Script" path="res://panels/waveTip.gd" id="1_o53dp"]
+[ext_resource type="Script" path="res://scripts/panelDefine.gd" id="1_wiabs"]
+[ext_resource type="Script" path="res://scripts/nextWave.gd" id="4_sawan"]
+[ext_resource type="Script" path="res://scripts/reset_buffs.gd" id="5_qtyk8"]
+[ext_resource type="Texture2D" uid="uid://dnq0rdqs2lrto" path="res://resources/items/copper.png" id="6_w3b3q"]
+[ext_resource type="Script" path="res://scripts/buffSelect.gd" id="7_11bad"]
+[ext_resource type="Script" path="res://scripts/buff.gd" id="8_vskcm"]
+[ext_resource type="Texture2D" uid="uid://dgpbu7j5428ro" path="res://resources/ui/overdrive_dome.png" id="9_l3hhh"]
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="9_ntdh6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qjk8u"]
+bg_color = Color(0, 0, 0, 0.501961)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xne5a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fved8"]
+content_margin_top = 20.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_66sgx"]
+content_margin_top = 50.0
+
+[sub_resource type="Animation" id="Animation_w1aso"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../blank:theme_override_styles/panel:content_margin_top")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(50, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.125, 0, 0.125, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_yy7ca"]
+resource_name = "hide"
+length = 0.25
+step = 0.05
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.125, 0, 0.125, 0, 0, -0.125, 0, 0.125, 0),
+"times": PackedFloat32Array(0, 0.25)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../blank:theme_override_styles/panel:content_margin_top")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-1, -0.125, 0, 0.125, 0, 50, -0.125, 0, 0.125, 0),
+"times": PackedFloat32Array(0, 0.25)
+}
+
+[sub_resource type="Animation" id="Animation_2fhkd"]
+resource_name = "show"
+length = 0.25
+step = 0.05
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../blank:theme_override_styles/panel:content_margin_top")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(50, -0.25, 0, 0.25, 0, -1, -0.125, 0, 0.125, 0),
+"times": PackedFloat32Array(0, 0.25)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.125, 0, 0.125, 0, 1, -0.125, 0, 0.125, 0),
+"times": PackedFloat32Array(0, 0.25)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ipudi"]
+_data = {
+"RESET": SubResource("Animation_w1aso"),
+"hide": SubResource("Animation_yy7ca"),
+"show": SubResource("Animation_2fhkd")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2elvq"]
+content_margin_left = 15.0
+content_margin_top = 10.0
+content_margin_right = 15.0
+bg_color = Color(0, 0, 0, 0.5)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_fdapp"]
+color = Color(1, 0.827451, 0.498039, 1)
+thickness = 3
+
+[sub_resource type="Animation" id="Animation_50o47"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate:a")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.2, 0, 0.2, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_wjiuq"]
+resource_name = "hide"
+length = 0.3
+step = 0.1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 2, -0.2, 0, 0.2, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 2, -0.2, 0, 0.2, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate:a")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.2, 0, 0.2, 0, 0, -0.2, 0, 0.2, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="Animation" id="Animation_rrtqa"]
+resource_name = "show"
+length = 0.3
+step = 0.1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(2, -0.25, 0, 0.25, 0, 1, -0.2, 0, 0.2, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(2, -0.25, 0, 0.25, 0, 1, -0.2, 0, 0.2, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate:a")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.2, 0, 0.2, 0, 1, -0.2, 0, 0.2, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jeg0h"]
+_data = {
+"RESET": SubResource("Animation_50o47"),
+"hide": SubResource("Animation_wjiuq"),
+"show": SubResource("Animation_rrtqa")
+}
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nblnm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6cjli"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6vg5g"]
+bg_color = Color(0, 0, 0, 0.5)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+corner_detail = 1
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[node name="root" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+metadata/_edit_lock_ = true
+metadata/_edit_horizontal_guides_ = [620.0, 654.0, 558.0, 586.0]
+
+[node name="panels" type="Node2D" parent="."]
+position = Vector2(640, 360)
+script = ExtResource("1_wiabs")
+
+[node name="bg" type="Panel" parent="panels"]
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qjk8u")
+metadata/_edit_lock_ = true
+
+[node name="waveTip" type="PanelContainer" parent="panels/bg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_xne5a")
+script = ExtResource("1_o53dp")
+
+[node name="bar" type="VBoxContainer" parent="panels/bg/waveTip"]
+layout_mode = 2
+theme_override_constants/separation = 15
+metadata/_edit_lock_ = true
+
+[node name="blankT" type="PanelContainer" parent="panels/bg/waveTip/bar"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_fved8")
+
+[node name="title" type="VBoxContainer" parent="panels/bg/waveTip/bar"]
+layout_mode = 2
+
+[node name="show" type="HBoxContainer" parent="panels/bg/waveTip/bar/title"]
+layout_mode = 2
+alignment = 1
+
+[node name="title-L" type="Label" parent="panels/bg/waveTip/bar/title/show"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "第"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="title-C" type="Label" parent="panels/bg/waveTip/bar/title/show"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "114514"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="title-R" type="Label" parent="panels/bg/waveTip/bar/title/show"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "波即将开始！"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="waveText" type="Label" parent="panels/bg/waveTip/bar/title"]
+layout_mode = 2
+text = "合成增益载荷..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="tools" type="HBoxContainer" parent="panels/bg/waveTip/bar"]
+layout_mode = 2
+alignment = 1
+
+[node name="nextWave" type="Button" parent="panels/bg/waveTip/bar/tools"]
+layout_mode = 2
+focus_mode = 0
+text = "开启下一波"
+script = ExtResource("4_sawan")
+
+[node name="resetBuffs" type="Button" parent="panels/bg/waveTip/bar/tools"]
+layout_mode = 2
+focus_mode = 0
+text = "重置增益列表"
+script = ExtResource("5_qtyk8")
+
+[node name="copper" type="TextureRect" parent="panels/bg/waveTip/bar/tools"]
+layout_mode = 2
+texture = ExtResource("6_w3b3q")
+expand_mode = 3
+stretch_mode = 3
+
+[node name="cost" type="Label" parent="panels/bg/waveTip/bar/tools"]
+layout_mode = 2
+text = "-1"
+
+[node name="blank" type="PanelContainer" parent="panels/bg/waveTip/bar"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_66sgx")
+
+[node name="buffs" type="HBoxContainer" parent="panels/bg/waveTip/bar"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="example" type="PanelContainer" parent="panels/bg/waveTip/bar/buffs"]
+layout_mode = 2
+
+[node name="content" type="VBoxContainer" parent="panels/bg/waveTip/bar/buffs/example"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="select" type="Button" parent="panels/bg/waveTip/bar/buffs/example/content"]
+layout_mode = 2
+text = "合成"
+script = ExtResource("7_11bad")
+
+[node name="attrs" type="Node" parent="panels/bg/waveTip/bar/buffs/example/content/select"]
+script = ExtResource("8_vskcm")
+
+[node name="name" type="Label" parent="panels/bg/waveTip/bar/buffs/example/content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Buff"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="texture" type="TextureRect" parent="panels/bg/waveTip/bar/buffs/example/content"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("9_l3hhh")
+expand_mode = 4
+
+[node name="entry" type="Label" parent="panels/bg/waveTip/bar/buffs/example/content"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 14
+text = "ENTRY+PERCENT%
+ENTRY+VALUE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="costs" type="GridContainer" parent="panels/bg/waveTip/bar/buffs/example/content"]
+layout_mode = 2
+columns = 2
+
+[node name="example" type="HBoxContainer" parent="panels/bg/waveTip/bar/buffs/example/content/costs"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="avatar" type="TextureRect" parent="panels/bg/waveTip/bar/buffs/example/content/costs/example"]
+layout_mode = 2
+texture = ExtResource("6_w3b3q")
+expand_mode = 2
+
+[node name="count" type="Label" parent="panels/bg/waveTip/bar/buffs/example/content/costs/example"]
+layout_mode = 2
+text = "50"
+
+[node name="animator" type="AnimationPlayer" parent="panels/bg/waveTip/bar/buffs"]
+libraries = {
+"": SubResource("AnimationLibrary_ipudi")
+}
+
+[node name="gameover" type="ColorRect" parent="panels/bg"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 0, 0.27451)
+script = ExtResource("1_wiabs")
+
+[node name="label" type="Label" parent="panels/bg/gameover"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+theme_override_font_sizes/font_size = 121
+text = "游戏结束"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="pause" type="PanelContainer" parent="panels/bg"]
+process_mode = 2
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_2elvq")
+script = ExtResource("1_wiabs")
+
+[node name="content" type="VBoxContainer" parent="panels/bg/pause"]
+layout_mode = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="title" type="Label" parent="panels/bg/pause/content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.827451, 0.498039, 1)
+theme_override_font_sizes/font_size = 18
+text = "已暂停"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="line" type="HSeparator" parent="panels/bg/pause/content"]
+layout_mode = 2
+theme_override_constants/separation = 1
+theme_override_styles/separator = SubResource("StyleBoxLine_fdapp")
+
+[node name="btns" type="VBoxContainer" parent="panels/bg/pause/content"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="continue" type="Button" parent="panels/bg/pause/content/btns"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "继续游戏"
+script = ExtResource("9_ntdh6")
+
+[node name="animator" type="AnimationPlayer" parent="panels"]
+process_mode = 3
+libraries = {
+"": SubResource("AnimationLibrary_jeg0h")
+}
+
+[node name="board" type="Panel" parent="."]
+layout_mode = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_nblnm")
+
+[node name="healthMask" type="Polygon2D" parent="board"]
+clip_children = 1
+position = Vector2(610, 620)
+scale = Vector2(1, 1.355)
+color = Color(1, 0, 0, 1)
+antialiased = true
+polygon = PackedVector2Array(30, 0, 60, 70, 0, 70)
+
+[node name="health" parent="board/healthMask" instance=ExtResource("1_gkhuq")]
+offset_left = 2.0
+offset_top = 81.0
+offset_right = 78.0
+offset_bottom = 140.0
+rotation = -1.95477
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6cjli")
+
+[node name="oil" parent="board" instance=ExtResource("1_gkhuq")]
+layout_mode = 0
+offset_left = 708.0
+offset_top = 717.0
+offset_right = 811.0
+offset_bottom = 727.0
+rotation = -1.97222
+colorFront = Color(0.545098, 0.678431, 0.309804, 1)
+
+[node name="slag" parent="board" instance=ExtResource("1_gkhuq")]
+layout_mode = 0
+offset_left = 692.0
+offset_top = 717.0
+offset_right = 795.0
+offset_bottom = 727.0
+rotation = -1.97222
+colorFront = Color(1, 0.501961, 0.258824, 1)
+
+[node name="coolant" parent="board" instance=ExtResource("1_gkhuq")]
+layout_mode = 0
+offset_left = 589.0
+offset_top = 717.0
+offset_right = 692.0
+offset_bottom = 727.0
+rotation = 1.97222
+scale = Vector2(-1, 1)
+colorFront = Color(0.52549, 0.803922, 0.917647, 1)
+
+[node name="neoplasm" parent="board" instance=ExtResource("1_gkhuq")]
+layout_mode = 0
+offset_left = 573.0
+offset_top = 717.0
+offset_right = 676.0
+offset_bottom = 727.0
+rotation = 1.97222
+scale = Vector2(-1, 1)
+colorFront = Color(0.556863, 0.0784314, 0.145098, 1)
+
+[node name="damage" type="PanelContainer" parent="board"]
+layout_mode = 0
+offset_left = 620.0
+offset_top = 566.0
+offset_right = 660.0
+offset_bottom = 606.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6vg5g")
+
+[node name="heatMask" type="Polygon2D" parent="board/damage"]
+clip_children = 1
+position = Vector2(25, -8)
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(0, 0, 10, 0, 38, 28.25, 10, 56.5, 0, 56.5, 28, 28.25)
+
+[node name="heat" parent="board/damage/heatMask" instance=ExtResource("1_gkhuq")]
+offset_left = 2.0
+offset_top = 81.0
+offset_right = 78.0
+offset_bottom = 140.0
+rotation = -1.95477
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6cjli")
+colorFront = Color(1, 0.726563, 0, 1)
+
+[node name="mrjMask" type="Polygon2D" parent="board/damage"]
+clip_children = 1
+position = Vector2(15, -8)
+rotation = 3.14159
+scale = Vector2(1, -1)
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(0, 0, 10, 0, 38, 28.25, 10, 56.5, 0, 56.5, 28, 28.25)
+
+[node name="mrj" parent="board/damage/mrjMask" instance=ExtResource("1_gkhuq")]
+offset_left = 2.0
+offset_top = 81.0
+offset_right = 78.0
+offset_bottom = 140.0
+rotation = -1.95477
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6cjli")
+colorFront = Color(0.454902, 0.341176, 0.807843, 1)
+
+[node name="cont" type="Control" parent="board/damage"]
+layout_mode = 2
+
+[node name="show" type="Label" parent="board/damage/cont"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.5
+offset_top = -8.5
+offset_right = 12.5
+offset_bottom = 8.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 10
+text = "0%"
+horizontal_alignment = 1
+vertical_alignment = 1

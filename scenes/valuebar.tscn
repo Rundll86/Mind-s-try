@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://drrf2btbv0wrd"]
+
+[ext_resource type="Script" path="res://scripts/valuebar.gd" id="1_c1plf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_whiiq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5lmuy"]
+bg_color = Color(0, 0, 0, 0.196078)
+skew = Vector2(0.4, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bxe2"]
+bg_color = Color(1, 0.454902, 0.439216, 1)
+skew = Vector2(0.4, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kqo6o"]
+bg_color = Color(0, 0, 0, 0.196078)
+skew = Vector2(0.4, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f4k2d"]
+bg_color = Color(1, 1, 1, 1)
+skew = Vector2(0.4, 0)
+
+[node name="valuebar" type="PanelContainer"]
+offset_right = 100.0
+offset_bottom = 10.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_whiiq")
+script = ExtResource("1_c1plf")
+animationSpeedFront = 0.4
+
+[node name="back" type="ProgressBar" parent="."]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_5lmuy")
+theme_override_styles/fill = SubResource("StyleBoxFlat_6bxe2")
+value = 100.0
+
+[node name="front" type="ProgressBar" parent="."]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_kqo6o")
+theme_override_styles/fill = SubResource("StyleBoxFlat_f4k2d")
+value = 100.0

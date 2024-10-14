@@ -18,5 +18,4 @@ func pressed():
                         randf_range(-i.spawnRandomPosition.y, i.spawnRandomPosition.y)
                     )
                 init.generateUnit(i.target.name, pos, i.spawnAsBoss)
-    init.isSelectingBuff = false
-    $/root/world/camera/waveTip/animator.play("hide")
+    panelDefine.closeCurrent()
