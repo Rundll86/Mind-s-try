@@ -95,8 +95,9 @@ func _ready():
 	lock_rotation = true
 	playerEntity = get_node("/root/world/player")
 	if useGodMode:
-		healthMax*=20
-		attackSpeed*=3
+		healthMax*=999
+		attackSpeed*=999
+		attackDamage*=999
 	health=healthMax
 	healthBar=get_node_or_null("healthBar")
 	if healthBar:
