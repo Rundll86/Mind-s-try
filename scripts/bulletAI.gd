@@ -29,7 +29,12 @@ func _ready():
 			if target:
 				myTracingTarget = target
 func _process(_delta):
-	if global_position.distance_to(startPosition) > lifeTime and enable:
+	# print(float(Time.get_ticks_msec()-startTime))
+	if enable and (
+		global_position.distance_to(startPosition)
+		if speed>0
+		else float(Time.get_ticks_msec()-startTime)
+		) >= lifeTime:
 		queue_free();
 	if not enable:
 		return
@@ -47,6 +52,7 @@ func _process(_delta):
 				global_rotation_degrees -= tracingSpeed
 			else:
 				global_rotation_degrees += tracingSpeed
+		tracingSpeed*=1.1
 	position += Vector2.from_angle(deg_to_rad(global_rotation_degrees - 90)) * speed * 10
 func hitCheck(body: entity):
 	if not enable or not body.enableAi:
@@ -57,7 +63,7 @@ func hitCheck(body: entity):
 	else:
 		if !damageFromPlayer:
 			return
-	var damageResult = damage * (1 + randf_range(-0.1, 0.1)) * (1 + damageBooster)
+	var damageResult = damage * (1 + randf_range(-0.3, 0.3)) * (1 + damageBooster)
 	var crit = false
 	if is_instance_valid(launcher):
 		crit = randf() < launcher.critRate;

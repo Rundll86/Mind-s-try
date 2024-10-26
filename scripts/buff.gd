@@ -14,4 +14,5 @@ class_name buff;
 @export var coolant: float = 0;
 @export var oil: float = 0;
 @export var slag: float = 0;
+@export var addWeapon: Weapon = null;
 static var collections: Array[buff] = [];

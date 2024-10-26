@@ -30,4 +30,6 @@ func pressed():
 	player.slag += myAttrs.slag
 	player.oilMax += myAttrs.oil
 	player.oil += myAttrs.oil
+	if myAttrs.addWeapon:
+		userData.addWeapon(myAttrs.addWeapon)
 	myCard.queue_free()

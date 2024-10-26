@@ -13,23 +13,23 @@ var backBar: ProgressBar;
 var frontStyleBox: StyleBoxFlat;
 var backStyleBox: StyleBoxFlat;
 func _ready():
-    frontBar = $front
-    backBar = $back
-    frontStyleBox = frontBar.get_theme_stylebox("fill").duplicate()
-    backStyleBox = backBar.get_theme_stylebox("fill").duplicate()
-    #样式
-    frontStyleBox.bg_color = colorFront
-    backStyleBox.bg_color = colorBack
-    frontStyleBox.skew.x = 0.4 if haveSkew else 0.0
-    backStyleBox.skew.x = 0.4 if haveSkew else 0.0
-    frontBar.add_theme_stylebox_override("fill", frontStyleBox)
-    backBar.add_theme_stylebox_override("fill", backStyleBox)
+	frontBar = $front
+	backBar = $back
+	frontStyleBox = frontBar.get_theme_stylebox("fill").duplicate()
+	backStyleBox = backBar.get_theme_stylebox("fill").duplicate()
+	#样式
+	frontStyleBox.bg_color = colorFront
+	backStyleBox.bg_color = colorBack
+	frontStyleBox.skew.x = 0.4 if haveSkew else 0.0
+	backStyleBox.skew.x = 0.4 if haveSkew else 0.0
+	frontBar.add_theme_stylebox_override("fill", frontStyleBox)
+	backBar.add_theme_stylebox_override("fill", backStyleBox)
 func _process(_delta):
-    #常量
-    frontBar.max_value = maxValue
-    frontBar.min_value = minValue
-    backBar.max_value = maxValue
-    backBar.min_value = minValue
-    #变量
-    frontBar.value += (currentValue - frontBar.value) * animationSpeedFront
-    backBar.value += (currentValue - backBar.value) * animationSpeedBack
+	#常量
+	frontBar.max_value = maxValue
+	frontBar.min_value = minValue
+	backBar.max_value = maxValue
+	backBar.min_value = minValue
+	#变量
+	frontBar.value += (currentValue - frontBar.value) * animationSpeedFront
+	backBar.value += (currentValue - backBar.value) * animationSpeedBack

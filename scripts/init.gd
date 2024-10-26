@@ -10,11 +10,14 @@ static var isSelectingBuff: bool = false;
 static var enemyCount = 0;
 static var resetBuffCostSaved: int = 0;
 static var playerEntity: entity;
+static var weaponExample: HBoxContainer;
+static var weaponShow;
+static var itemLabelExmaple: itemLabel;
+static var json = JSON.new();
 var bossBar: valuebar;
 var bossAvatar: TextureRect;
 var bossName: Label;
 var bossValue: Label;
-var weaponShow;
 var waveTip;
 var buffsShow;
 var buffCardExample;
@@ -23,7 +26,10 @@ var buffCostCardExample;
 @export var initItems: Array[item] = [];
 @export var initItemCounts: Array[int] = [];
 @export var resetBuffCost: int = 30;
+@export var loadSave:bool=true;
 func _ready():
+	if loadSave:save.loadData()
+	$"ui-layer".show()
 	resetBuffCostSaved = resetBuffCost
 	$projectiles.hide()
 	$units.hide()
@@ -31,44 +37,42 @@ func _ready():
 	$effects.hide()
 	for i in $buffs.get_children():
 		buff.collections.append(i)
-	waveTip = $"camera/ui-show/panels/bg/waveTip"
+	waveTip = $"ui-layer/ui-show/panels/bg/waveTip"
 	wave = initWave - 1
 	buffsShow = waveTip.get_node("bar/buffs")
 	buffCostCardExample = buffsShow.get_node("example/content/costs/example")
 	buffCostCardExample.get_parent().remove_child(buffCostCardExample)
 	buffCardExample = buffsShow.get_node("example")
 	buffCardExample.get_parent().remove_child(buffCardExample)
-	bossBar = $camera/bossHealth
+	bossBar = $"ui-layer/ui-show/board/bossHealth"
 	bossAvatar = bossBar.get_node("transformer/avatar")
 	bossName = bossAvatar.get_node("name")
 	bossValue = bossBar.get_node("transformer/value")
-	weaponShow = $"camera/mamba-out/weapons"
-	var weaponExample: HBoxContainer = weaponShow.get_node("w0")
+	weaponShow = $"ui-layer/ui-show/board/mamba-out/weapons"
+	weaponExample = weaponShow.get_node("w0")
 	weaponExample.get_parent().remove_child(weaponExample)
-	for i in userData.weapons:
-		var currentWeapon = weaponExample.duplicate()
-		currentWeapon.name = "w" + str(userData.weapons.find(i))
-		currentWeapon.get_node("block/num").text = str(userData.weapons.find(i) + 1)
-		currentWeapon.get_node("name").text = i.displayName
-		currentWeapon.get_node("texture").texture = i.icon
-		weaponShow.add_child(currentWeapon)
+	for i in range(len(userData.weapons)):
+		createWeaponLabel(i)
 	for i in $waves.get_children():
 		readWaves.append(i)
 	staticFuncCaller = self
+	itemLabelExmaple = $"ui-layer/ui-show/board/damage/cont/panels/items/container/example"
+	itemLabelExmaple.get_parent().remove_child(itemLabelExmaple)
 	for i in $items.get_children():
+		if i.name in ["coolant", "oil"]:
+			continue
+		var currentLabel = itemLabelExmaple.duplicate() as itemLabel
+		currentLabel.itemTexture = i.get_node("texture").texture
 		inventory[i.name] = {
 			"count": 0,
-			# "label": i.get_node("Label")
+			"label": currentLabel
 		}
+		$"ui-layer/ui-show/board/damage/cont/panels/items/container".add_child(currentLabel)
 	for i in range(len(initItems)):
 		inventory[initItems[i].name]["count"] += initItemCounts[i]
 	playerEntity = $/root/world/player
 func _process(_delta):
 	waveTip.get_node("bar/tools/cost").text = str(resetBuffCostSaved)
-	if Input.is_action_just_pressed("nextweapon"):
-		userData.currentWeapon += 1
-		if userData.currentWeapon >= len(userData.weapons):
-			userData.currentWeapon = 0
 	if Input.is_action_just_pressed("overclock"):
 		playerEntity.overclock()
 	if Input.is_action_just_pressed("superclock"):
@@ -76,8 +80,8 @@ func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
 		get_tree().paused = true
 		panelDefine.checkTo("pause")
-	# for i in inventory.values():
-	# 	i["label"].text = str(i["count"])
+	for i in inventory.values():
+		i["label"].count = str(i["count"])
 	if isPlayerAlive:
 		enemyCount = 0
 		for i in get_children():
@@ -119,6 +123,8 @@ static func generateBuffCard():
 			entries += "芳油上限+" + str(i.oil) + "FS\n"
 		if i.slag > 0:
 			entries += "矿渣上限+" + str(i.slag) + "FS\n"
+		if i.addWeapon:
+			entries += "获得武器：" + i.addWeapon.displayName + "\n"
 		var currentBuff = staticFuncCaller.buffCardExample.duplicate()
 		currentBuff.get_node("content/name").text = i.displayName
 		currentBuff.get_node("content/texture").texture = i.texture
@@ -169,3 +175,10 @@ static func findBoss():
 		if i.isBoss:
 			return i
 	return null
+static func createWeaponLabel(i: int):
+	var currentWeapon = weaponExample.duplicate()
+	currentWeapon.name = "w" + str(i)
+	currentWeapon.get_node("block/num").text = str(i + 1)
+	currentWeapon.get_node("name").text = userData.weapons[i].displayName
+	currentWeapon.get_node("texture").texture = userData.weapons[i].icon
+	weaponShow.add_child(currentWeapon)

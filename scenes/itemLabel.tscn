@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgceorqllt1ov"]
+
+[ext_resource type="Script" path="res://scripts/item_label.gd" id="1_bh3qi"]
+[ext_resource type="Texture2D" uid="uid://2o6o4hmg4c1l" path="res://resources/ui/copper.png" id="1_nij8c"]
+
+[node name="root" type="HBoxContainer"]
+script = ExtResource("1_bh3qi")
+
+[node name="avatar" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_nij8c")
+expand_mode = 2
+stretch_mode = 6
+
+[node name="count" type="Label" parent="."]
+layout_mode = 2
+text = "0"
