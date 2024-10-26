@@ -105,13 +105,13 @@ func _ready():
 	if healthBar:
 		levelLabel=healthBar.get_node("transformer/level")
 	if playerControlled:
-		healthBar = get_node("/root/world/ui-layer/ui-show/board/healthMask/health")
-		slagBar = get_node("/root/world/ui-layer/ui-show/board/slag")
-		coolantBar = get_node("/root/world/ui-layer/ui-show/board/coolant")
-		oilBar = get_node("/root/world/ui-layer/ui-show/board/oil")
-		neoplasmBar = get_node("/root/world/ui-layer/ui-show/board/neoplasm")
-		heatBar = get_node("/root/world/ui-layer/ui-show/board/damage/heatMask/heat")
-		mrjBar=get_node("/root/world/ui-layer/ui-show/board/damage/mrjMask/mrj")
+		healthBar = get_node("/root/world/ui-layer/ui-show/board/infos/healthMask/health")
+		slagBar = get_node("/root/world/ui-layer/ui-show/board/infos/slag")
+		coolantBar = get_node("/root/world/ui-layer/ui-show/board/infos/coolant")
+		oilBar = get_node("/root/world/ui-layer/ui-show/board/infos/oil")
+		neoplasmBar = get_node("/root/world/ui-layer/ui-show/board/infos/neoplasm")
+		heatBar = get_node("/root/world/ui-layer/ui-show/board/infos/damage/heatMask/heat")
+		mrjBar=get_node("/root/world/ui-layer/ui-show/board/infos/damage/mrjMask/mrj")
 		coolant=coolantMax
 		oil=oilMax
 		heat=heatMax
@@ -213,7 +213,10 @@ func _process(_delta):
 			currentWeapon,
 			damageBoostFactor()
 		)
-		if currentWeapon.audioPlayer and sustIndex==0:currentWeapon.audioPlayer.play()
+		if currentWeapon.audioPlayer and sustIndex==0:
+			currentWeapon.audioPlayer.pitch_scale=attackSpeed
+			currentWeapon.audioPlayer.stream.set("loop", currentWeapon.loopSound)
+			currentWeapon.audioPlayer.play()
 		if currentWeapon.shootEffect and sustIndex==0:
 			var cloned=currentWeapon.shootEffect.duplicate() as effectAuto
 			cloned.bullet=bullet
@@ -229,6 +232,7 @@ func _process(_delta):
 				currentWeaponIndex+=1
 				if playerControlled:userData.next()
 				lastSustWeaponEffect.forceToEnd()
+				currentWeapon.audioPlayer.stream.set("loop", false)
 		else:
 			currentWeaponIndex+=1
 			if playerControlled:userData.next()
@@ -236,17 +240,27 @@ func _process(_delta):
 func setLevel(newLevel):
 	var healthRatio=health/healthMax
 	level=newLevel
-	healthMax=level*healthMaxSaved+healthMaxSaved
+	healthMax=level*0.5*healthMaxSaved+healthMaxSaved
 	health=healthRatio*healthMax
-	attackDamage=level*0.03+attackDamageSaved
-func upgradeLevel(step:int=1):
-	level+=step
-	var healthRatio=health/healthMax
-	healthMax+=step*healthMaxSaved
-	health=healthRatio*healthMax
-	attackDamage+=step*0.03
+	attackDamage=level*0.05+attackDamageSaved
 func readBullet(bullet:String):
 	return get_node("/root/world/projectiles/"+bullet) as bulletAI
+func weaponsConsume():
+	var result=0
+	for i in weapons:
+		result+=i.thisWeaponConsume(attackLimit,attackSpeed)
+	result/=1000.0
+	return float(result)
+func weaponsDamage():
+	var result=0
+	var willCritDamage;
+	for i in weapons:
+		result+=i.thisWeaponDamage(damageBoostFactor()+1)
+	willCritDamage=result*critRate
+	result-=willCritDamage
+	willCritDamage*=critDamageBoost+1
+	result+=willCritDamage
+	return float(result)
 func moveForward(force=600.0):
 	apply_central_force(Vector2(
 		sin(texture.rotation),
@@ -295,17 +309,19 @@ func CustomAi():
 	pass
 func damageBoostFactor():
 	return (slag/slagMax*0.5*(oil/oilMax) if
-		weapons[currentWeaponIndex].bullet.myDamageType==damageType.Enums.HIGH_T else
+		weapons[currentWeaponIndex-(0 if currentWeaponIndex<len(weapons) else 1)].bullet.myDamageType==damageType.Enums.HIGH_T else
 		0.0)+(attackDamage-1)
 func hit(damage:int,crit:bool,damageBoost:float,myDamageType:damageType.Enums):
 	if randf_range(0,1)<evasion:
 		return
+	if not playerControlled:
+		damageNode.dps+=damage
 	animator.play("hit")
 	health -= damage
 	if myDamageType==damageType.Enums.BIOEROSION:
 		mrj+=damage
 	if myDamageType==damageType.Enums.HIGH_T:
-		heat+=damage
+		heat+=damage*0.1
 	var currentDamageLabel=damageLabel.duplicate() as damageNode
 	currentDamageLabel.isSubstance=false
 	currentDamageLabel.global_position=global_position+Vector2(

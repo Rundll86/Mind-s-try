@@ -14,6 +14,7 @@ static var weaponExample: HBoxContainer;
 static var weaponShow;
 static var itemLabelExmaple: itemLabel;
 static var json = JSON.new();
+static var entriesContainer: VBoxContainer;
 var bossBar: valuebar;
 var bossAvatar: TextureRect;
 var bossName: Label;
@@ -26,9 +27,9 @@ var buffCostCardExample;
 @export var initItems: Array[item] = [];
 @export var initItemCounts: Array[int] = [];
 @export var resetBuffCost: int = 30;
-@export var loadSave:bool=true;
+@export var loadSave: bool = true;
 func _ready():
-	if loadSave:save.loadData()
+	if loadSave: save.loadData()
 	$"ui-layer".show()
 	resetBuffCostSaved = resetBuffCost
 	$projectiles.hide()
@@ -51,12 +52,13 @@ func _ready():
 	weaponShow = $"ui-layer/ui-show/board/mamba-out/weapons"
 	weaponExample = weaponShow.get_node("w0")
 	weaponExample.get_parent().remove_child(weaponExample)
+	entriesContainer = $"ui-layer/ui-show/board/infos/damage/cont/panels/entries/container"
 	for i in range(len(userData.weapons)):
 		createWeaponLabel(i)
 	for i in $waves.get_children():
 		readWaves.append(i)
 	staticFuncCaller = self
-	itemLabelExmaple = $"ui-layer/ui-show/board/damage/cont/panels/items/container/example"
+	itemLabelExmaple = $"ui-layer/ui-show/board/infos/damage/cont/panels/items/container/example"
 	itemLabelExmaple.get_parent().remove_child(itemLabelExmaple)
 	for i in $items.get_children():
 		if i.name in ["coolant", "oil"]:
@@ -67,7 +69,7 @@ func _ready():
 			"count": 0,
 			"label": currentLabel
 		}
-		$"ui-layer/ui-show/board/damage/cont/panels/items/container".add_child(currentLabel)
+		$"ui-layer/ui-show/board/infos/damage/cont/panels/items/container".add_child(currentLabel)
 	for i in range(len(initItems)):
 		inventory[initItems[i].name]["count"] += initItemCounts[i]
 	playerEntity = $/root/world/player
@@ -83,6 +85,14 @@ func _process(_delta):
 	for i in inventory.values():
 		i["label"].count = str(i["count"])
 	if isPlayerAlive:
+		entriesContainer.get_node("healthMax").entryValue = playerEntity.healthMax
+		entriesContainer.get_node("shootOffset").entryValue = playerEntity.shootOffset
+		entriesContainer.get_node("critRate").entryValue = playerEntity.critRate
+		entriesContainer.get_node("critDamage").entryValue = playerEntity.critDamageBoost
+		entriesContainer.get_node("evasion").entryValue = playerEntity.evasion
+		entriesContainer.get_node("attackSpeed").entryValue = playerEntity.attackSpeed
+		entriesContainer.get_node("attackDamage").entryValue = playerEntity.attackDamage
+		entriesContainer.get_node("movementSpeed").entryValue = playerEntity.moveSpeedBoost
 		enemyCount = 0
 		for i in get_children():
 			if i.name.begins_with("enemy_"):

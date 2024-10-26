@@ -14,6 +14,8 @@ var damageBooster: float;
 @export var tracingTime: float = 0;
 @export var tracingSpeed: float = 1;
 @export var myDamageType: damageType.Enums = damageType.Enums.COLLITE;
+@export var repluseAngle: float = 0;
+@export var replusePower: float = 0;
 func _ready():
 	startPosition = position;
 	startTime = Time.get_ticks_msec()
@@ -32,8 +34,8 @@ func _process(_delta):
 	# print(float(Time.get_ticks_msec()-startTime))
 	if enable and (
 		global_position.distance_to(startPosition)
-		if speed>0
-		else float(Time.get_ticks_msec()-startTime)
+		if speed > 0
+		else float(Time.get_ticks_msec() - startTime)
 		) >= lifeTime:
 		queue_free();
 	if not enable:
@@ -52,7 +54,7 @@ func _process(_delta):
 				global_rotation_degrees -= tracingSpeed
 			else:
 				global_rotation_degrees += tracingSpeed
-		tracingSpeed*=1.1
+		tracingSpeed *= 1.1
 	position += Vector2.from_angle(deg_to_rad(global_rotation_degrees - 90)) * speed * 10
 func hitCheck(body: entity):
 	if not enable or not body.enableAi:
@@ -70,6 +72,9 @@ func hitCheck(body: entity):
 		if crit:
 			damageResult *= 1 + launcher.critDamageBoost
 	body.hit(damageResult, crit, damageBooster, myDamageType)
+	body.texture.rotation_degrees += repluseAngle
+	body.moveForward(-replusePower)
+	body.texture.rotation_degrees -= repluseAngle
 	if randf() < penetrate:
 		return
 	queue_free()

@@ -33,9 +33,9 @@ func drawLaser(length: float, color: Color, width: float, invertColor: bool = fa
 		draw_circle(Vector2.ZERO, width * (1.0 if invertColor else 0.5), color)
 		draw_circle(Vector2.UP * length, width * (1.0 if invertColor else 0.5), color)
 	var _white = func():
-		draw_line(Vector2.ZERO, Vector2.UP * length, Color(1, 1, 1), width * (1 if invertColor else 2), true)
-		draw_circle(Vector2.ZERO, width * (0.5 if invertColor else 1.0), Color(1, 1, 1))
-		draw_circle(Vector2.UP * length, width * (0.5 if invertColor else 1.0), Color(1, 1, 1))
+		draw_line(Vector2.ZERO, Vector2.UP * length, Color(1, 1, 1, color.a), width * (1 if invertColor else 2), true)
+		draw_circle(Vector2.ZERO, width * (0.5 if invertColor else 1.0), Color(1, 1, 1, color.a))
+		draw_circle(Vector2.UP * length, width * (0.5 if invertColor else 1.0), Color(1, 1, 1, color.a))
 	if invertColor:
 		_color.call()
 		_white.call()

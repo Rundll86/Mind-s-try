@@ -1,11 +1,9 @@
-extends CanvasItem
+extends Control
 class_name panelDefine
-
 func onOpen():
 	pass
 func onClose():
 	pass
-
 func _ready():
 	panelRoot = $"/root/world/ui-layer/ui-show/panels"
 	panelBackground = panelRoot.get_node("bg")
@@ -26,13 +24,11 @@ func onAnimationFinished(anim_name):
 			currentPanel = willCheckTo
 			currentPanel.show()
 			panelRootAnimator.play("show")
-
-static var panelRoot: Node2D;
+static var panelRoot: Control;
 static var panelBackground: Panel;
 static var panelRootAnimator: AnimationPlayer;
 static var currentPanel: panelDefine;
 static var willCheckTo: panelDefine;
-
 static func findPanel(panel) -> panelDefine:
 	return panelBackground.get_node_or_null(panel) as panelDefine
 static func checkTo(panel):

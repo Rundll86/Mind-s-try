@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsty65tmcmmjw"]
+
+[ext_resource type="Script" path="res://scripts/entry_box.gd" id="1_3wqfj"]
+
+[node name="entryBox" type="HBoxContainer"]
+theme_override_constants/separation = 15
+alignment = 1
+script = ExtResource("1_3wqfj")
+
+[node name="name" type="Label" parent="."]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "生命值上限"
+
+[node name="value" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 0
+
+[node name="text" type="Label" parent="value"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 13
+text = "%float%"
+
+[node name="unit" type="Label" parent="value"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13

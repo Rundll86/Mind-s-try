@@ -32,4 +32,5 @@ func pressed():
 	player.oil += myAttrs.oil
 	if myAttrs.addWeapon:
 		userData.addWeapon(myAttrs.addWeapon)
+		player.currentWeaponIndex += 1
 	myCard.queue_free()

@@ -49,7 +49,7 @@
 [ext_resource type="Script" path="res://scripts/effectAuto.gd" id="35_loevs"]
 [ext_resource type="Texture2D" uid="uid://b2ekkteufkksd" path="res://resources/ui/boost.png" id="36_j0qbd"]
 [ext_resource type="Material" uid="uid://kenykku7ajam" path="res://effects/blank_particle.tres" id="42_53mc8"]
-[ext_resource type="Script" path="res://effects/parallax.gd" id="43_2xbh3"]
+[ext_resource type="Script" path="res://effects/colorLaser.gd" id="43_2xbh3"]
 [ext_resource type="AudioStream" uid="uid://ck6o3nx2fttgq" path="res://resources/sounds/spark.ogg" id="45_dn8r1"]
 [ext_resource type="Texture2D" uid="uid://o01pdy1b02rv" path="res://resources/weapon-icons/meltdown.png" id="51_ebf4q"]
 [ext_resource type="AudioStream" uid="uid://bvwvh0kapbx33" path="res://resources/sounds/laserbig.ogg" id="52_pclci"]
@@ -200,7 +200,7 @@ packet_data = Array[Array]([[PackedByteArray("AXZvcmJpcwAAAAACgLsAAAAAAAAAcQIAAA
 granule_positions = PackedInt64Array(0, 0, 10176, 16840)
 sampling_rate = 48000.0
 
-[sub_resource type="AudioStreamOggVorbis" id="AudioStreamOggVorbis_kmouw"]
+[sub_resource type="AudioStreamOggVorbis" id="AudioStreamOggVorbis_hxst0"]
 packet_sequence = SubResource("OggPacketSequence_1d0bs")
 loop = true
 
@@ -300,7 +300,7 @@ process_mode = 1
 process_priority = -1
 texture_filter = 2
 script = ExtResource("1_luxnj")
-initWave = 13
+initWave = 8
 initItems = [NodePath("items/copper"), NodePath("items/silicon"), NodePath("items/graphite"), NodePath("items/wolfram"), NodePath("items/steel"), NodePath("items/alloy")]
 initItemCounts = Array[int]([40, 40, 40, 40, 40, 40])
 loadSave = false
@@ -309,7 +309,7 @@ metadata/_edit_vertical_guides_ = [-379.0, -617.0, -564.0, -511.0, 0.0, 4.0, 32.
 
 [node name="userData" type="Node" parent="." node_paths=PackedStringArray("startWeapons")]
 script = ExtResource("3_fu3qe")
-startWeapons = [NodePath("../player/texture/centerW/meltdown")]
+startWeapons = [NodePath("../player/texture/centerW/meltdown"), NodePath("../player/texture/centerW/arc"), NodePath("../player/texture/centerW/scorch")]
 
 [node name="damageType" type="Node" parent="."]
 script = ExtResource("3_jqkn2")
@@ -476,6 +476,15 @@ costItems = [NodePath("../../items/silicon"), NodePath("../../items/graphite"), 
 costCounts = Array[int]([15, 30, 30])
 addWeapon = NodePath("../../player/texture/centerW/parallax")
 
+[node name="meltdown" type="Node" parent="buffs" node_paths=PackedStringArray("costItems", "addWeapon")]
+script = ExtResource("4_n3crq")
+displayName = "熔毁"
+texture = ExtResource("51_ebf4q")
+healthMax = 0.0
+costItems = [NodePath("../../items/silicon"), NodePath("../../items/graphite"), NodePath("../../items/wolfram"), NodePath("../../items/copper")]
+costCounts = Array[int]([15, 30, 7, 60])
+addWeapon = NodePath("../../player/texture/centerW/meltdown")
+
 [node name="projectiles" type="Node2D" parent="."]
 process_mode = 4
 position = Vector2(-198, -137)
@@ -589,7 +598,8 @@ speed = 0.0
 lifeTime = 400
 damage = 7
 penetrate = 1.0
-myDamageType = 1
+myDamageType = 4
+replusePower = 100000.0
 
 [node name="hitbox" type="CollisionShape2D" parent="projectiles/parallax"]
 position = Vector2(0, -250)
@@ -930,12 +940,18 @@ onWorld = true
 [node name="parallax" type="GPUParticles2D" parent="effects"]
 process_material = ExtResource("42_53mc8")
 script = ExtResource("43_2xbh3")
+length = 700.0
 color = Color(0.210938, 0.704102, 1, 1)
+toWidth = 10
+alpha = 0.25
 
 [node name="meltdown" type="GPUParticles2D" parent="effects"]
 process_material = ExtResource("42_53mc8")
 script = ExtResource("43_2xbh3")
+length = 350.0
 color = Color(1, 0.585938, 0, 1)
+toWidth = 25
+alpha = 0.5
 
 [node name="map" type="Sprite2D" parent="."]
 process_mode = 4
@@ -955,8 +971,8 @@ script = ExtResource("1_iydk2")
 enableAi = true
 playerControlled = true
 damageFromPlayer = true
-healthMax = 150.0
-shootOffset = 5.0
+healthMax = 200.0
+level = 0
 
 [node name="texture" type="Sprite2D" parent="player"]
 texture = ExtResource("2_8pxho")
@@ -1025,9 +1041,10 @@ displayName = "差扰"
 icon = ExtResource("18_bf3dg")
 sustTimes = 5
 shootingLimit = 300.0
+loopSound = true
 
 [node name="asp" type="AudioStreamPlayer2D" parent="player/texture/centerW/parallax"]
-stream = SubResource("AudioStreamOggVorbis_kmouw")
+stream = SubResource("AudioStreamOggVorbis_hxst0")
 
 [node name="meltdown" type="Node2D" parent="player/texture/centerW" node_paths=PackedStringArray("bullet", "shootEffect")]
 position = Vector2(0, -10)
