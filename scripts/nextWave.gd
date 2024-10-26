@@ -10,7 +10,7 @@ func pressed():
 			init.wave >= i.fromWave and
 			(i.toWave < 1 or init.wave <= i.toWave) and
 			i.visible and
-			(init.wave-i.fromWave)%i.perWaves==0
+			(init.wave - i.fromWave)%i.perWaves == 0
 		):
 			var count = init.shrimpRate(i.rateBoost, i.maxCount)
 			if i.spawnAsBoss:
@@ -24,4 +24,10 @@ func pressed():
 					)
 				init.generateUnit(i.target.name, pos, i.spawnAsBoss)
 	panelDefine.closeCurrent()
+	if init.wave == 1:
+		panelDefine.checkTo("tip-0")
+	elif init.wave == 2:
+		panelDefine.checkTo("tip-1")
+	elif init.wave == 3:
+		panelDefine.checkTo("tip-2")
 	save.saveData()

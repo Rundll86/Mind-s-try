@@ -21,7 +21,6 @@
 [ext_resource type="Script" path="res://scripts/buff.gd" id="8_vskcm"]
 [ext_resource type="Texture2D" uid="uid://dgpbu7j5428ro" path="res://resources/ui/overdrive_dome.png" id="9_l3hhh"]
 [ext_resource type="Script" path="res://scripts/pause_menu.gd" id="9_ntdh6"]
-[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="22_sqk6e"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nblnm"]
 
@@ -320,6 +319,9 @@ bg_color = Color(0, 0, 0, 0.5)
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_fdapp"]
 color = Color(1, 0.827451, 0.498039, 1)
 thickness = 3
+
+[sub_resource type="LabelSettings" id="LabelSettings_q62wt"]
+font_size = 30
 
 [sub_resource type="Animation" id="Animation_50o47"]
 length = 0.001
@@ -809,7 +811,6 @@ text = "100/100"
 vertical_alignment = 1
 
 [node name="panels" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -837,6 +838,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_qjk8u")
 metadata/_edit_lock_ = true
 
 [node name="waveTip" type="PanelContainer" parent="panels/bg"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -991,6 +993,7 @@ libraries = {
 }
 
 [node name="gameover" type="ColorRect" parent="panels/bg"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1014,6 +1017,7 @@ vertical_alignment = 1
 
 [node name="pause" type="PanelContainer" parent="panels/bg"]
 process_mode = 2
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1051,6 +1055,65 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "继续游戏"
 script = ExtResource("9_ntdh6")
+
+[node name="tip-0" type="CenterContainer" parent="panels/bg"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wiabs")
+
+[node name="label" type="Label" parent="panels/bg/tip-0"]
+layout_mode = 2
+text = "无需多言：使用WSAD移动，点击任意位置射击"
+label_settings = SubResource("LabelSettings_q62wt")
+
+[node name="tip-1" type="BoxContainer" parent="panels/bg"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wiabs")
+
+[node name="label" type="RichTextLabel" parent="panels/bg/tip-1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]承受敌方子弹将会损失[color=FF6666]生命值[/color]
+按住E持续回复
+适可而止...[/center]"
+fit_content = true
+
+[node name="tip-2" type="BoxContainer" parent="panels/bg"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+vertical = true
+script = ExtResource("1_wiabs")
+
+[node name="label" type="RichTextLabel" parent="panels/bg/tip-2"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]回复[color=FF6666]生命值[/color]需要生成[color=orange]矿渣[/color]
+过多的[color=orange]矿渣[/color]将会将[color=8bad4f]芳油[/color]转换为[color=8e1425]瘤液[/color]
+按住R消耗[color=86cdea]冷却液[/color]清除[color=orange]矿渣[/color][/center]"
+fit_content = true
+scroll_active = false
 
 [node name="animator" type="AnimationPlayer" parent="panels"]
 process_mode = 3

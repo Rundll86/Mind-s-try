@@ -300,7 +300,6 @@ process_mode = 1
 process_priority = -1
 texture_filter = 2
 script = ExtResource("1_luxnj")
-initWave = 8
 initItems = [NodePath("items/copper"), NodePath("items/silicon"), NodePath("items/graphite"), NodePath("items/wolfram"), NodePath("items/steel"), NodePath("items/alloy")]
 initItemCounts = Array[int]([40, 40, 40, 40, 40, 40])
 loadSave = false
@@ -309,7 +308,7 @@ metadata/_edit_vertical_guides_ = [-379.0, -617.0, -564.0, -511.0, 0.0, 4.0, 32.
 
 [node name="userData" type="Node" parent="." node_paths=PackedStringArray("startWeapons")]
 script = ExtResource("3_fu3qe")
-startWeapons = [NodePath("../player/texture/centerW/meltdown"), NodePath("../player/texture/centerW/arc"), NodePath("../player/texture/centerW/scorch")]
+startWeapons = [NodePath("../player/texture/leftW"), NodePath("../player/texture/rightW")]
 
 [node name="damageType" type="Node" parent="."]
 script = ExtResource("3_jqkn2")
@@ -971,6 +970,7 @@ script = ExtResource("1_iydk2")
 enableAi = true
 playerControlled = true
 damageFromPlayer = true
+attackLimit = 500.0
 healthMax = 200.0
 level = 0
 

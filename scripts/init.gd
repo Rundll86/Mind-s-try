@@ -92,7 +92,7 @@ func _process(_delta):
 		entriesContainer.get_node("evasion").entryValue = playerEntity.evasion
 		entriesContainer.get_node("attackSpeed").entryValue = playerEntity.attackSpeed
 		entriesContainer.get_node("attackDamage").entryValue = playerEntity.attackDamage
-		entriesContainer.get_node("movementSpeed").entryValue = playerEntity.moveSpeedBoost
+		entriesContainer.get_node("movementSpeed").entryValue = playerEntity.moveSpeedBoost + 1
 		enemyCount = 0
 		for i in get_children():
 			if i.name.begins_with("enemy_"):

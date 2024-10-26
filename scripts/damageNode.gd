@@ -11,5 +11,6 @@ func _ready():
     animator.animation_finished.connect((func(_nothing): queue_free()))
 func _process(_delta):
     if Time.get_ticks_msec() - lastClearDPSTime > 1000:
+        dpsCurrent.targetDps = dps
         dps = 0
         lastClearDPSTime = Time.get_ticks_msec()
