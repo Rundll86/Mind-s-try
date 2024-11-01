@@ -7,3 +7,4 @@ func _ready():
 func clicked():
 	panelState = !panelState
 	panelAnimator.play("show" if panelState else "hide")
+	panelDefine.checkTipOpenedAndClose(4)

@@ -75,10 +75,6 @@ func _ready():
 	playerEntity = $/root/world/player
 func _process(_delta):
 	waveTip.get_node("bar/tools/cost").text = str(resetBuffCostSaved)
-	if Input.is_action_just_pressed("overclock"):
-		playerEntity.overclock()
-	if Input.is_action_just_pressed("superclock"):
-		playerEntity.superclock()
 	if Input.is_action_just_pressed("pause"):
 		get_tree().paused = true
 		panelDefine.checkTo("pause")
@@ -156,7 +152,7 @@ static func generateUnit(target: String, pos: Vector2, boss: bool = false):
 	unit.enableAi = true
 	unit.isBoss = boss
 	unit.name = "enemy_" + target + str(randf_range(100, 999999) + randf_range(100, 999999)) + str(randf_range(10, 200))
-	unit.level = ceil((wave * randf_range(0.7, 1.3) + randi_range(0, 1)) * (randf_range(2, 3.2) if boss else 1.0))
+	unit.level = ceil((wave * randf_range(0.7, 1.3) + randi_range(0, 1)) * (4.0 if boss else 1.0))
 	var healthBar = staticFuncCaller.get_node("units/healthBar").duplicate()
 	healthBar.name = "healthBar"
 	unit.add_child(healthBar)

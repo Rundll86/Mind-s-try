@@ -47,3 +47,10 @@ static func closeCurrent():
 	willCheckTo = null
 	currentPanel.onClose()
 	panelRootAnimator.play("hide")
+static func checkToTip(index):
+	if index not in userData.showedTip:
+		checkTo("tip-" + str(index))
+		userData.showedTip.append(index)
+static func checkTipOpenedAndClose(index):
+	if currentPanel and currentPanel.name == "tip-" + str(index):
+		closeCurrent()

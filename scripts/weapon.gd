@@ -8,6 +8,7 @@ var audioPlayer: AudioStreamPlayer2D;
 @export var sustTimes: int = 0;
 @export var shootingLimit: float = 0;
 @export var loopSound: bool = false;
+@export var audioAcceleration:bool=false;
 func _ready():
 	audioPlayer = get_node_or_null("asp")
 	if audioPlayer and sustTimes > 0:

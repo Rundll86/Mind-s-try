@@ -16,6 +16,7 @@ var damageBooster: float;
 @export var myDamageType: damageType.Enums = damageType.Enums.COLLITE;
 @export var repluseAngle: float = 0;
 @export var replusePower: float = 0;
+@export var selfRotateSpeed:float=0;
 func _ready():
 	startPosition = position;
 	startTime = Time.get_ticks_msec()
@@ -41,6 +42,7 @@ func _process(_delta):
 	if not enable:
 		return
 	if canTrace() and is_instance_valid(myTracingTarget):
+		tracingSpeed *= 1.05
 		var targetRotation = rad_to_deg(myTracingTarget.global_position.angle_to_point(global_position))
 		var rotationDiff = global_rotation_degrees - targetRotation
 		if rotationDiff > 180:
@@ -54,7 +56,7 @@ func _process(_delta):
 				global_rotation_degrees -= tracingSpeed
 			else:
 				global_rotation_degrees += tracingSpeed
-		tracingSpeed *= 1.1
+	global_rotation_degrees+=selfRotateSpeed
 	position += Vector2.from_angle(deg_to_rad(global_rotation_degrees - 90)) * speed * 10
 func hitCheck(body: entity):
 	if not enable or not body.enableAi:

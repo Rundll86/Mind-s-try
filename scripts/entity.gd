@@ -22,6 +22,7 @@ var damageLabel:damageNode;
 var currentWeaponIndex=-1;
 var superclocking:bool=false;
 var lastSustWeaponEffect:effectAuto;
+var haveBuffCount:int=0;
 #数值显示条
 var healthBar:valuebar;
 var levelLabel:Label;
@@ -151,6 +152,7 @@ func _process(_delta):
 			var movingRight = Input.is_action_pressed("moveright")
 			var moved = Input.is_action_pressed("moving")
 			if moved:
+				panelDefine.checkTipOpenedAndClose(0)
 				if movingUp and movingLeft:
 					texture.rotation_degrees += (-45 - texture.rotation_degrees) * animationSpeed
 				elif movingUp and movingRight:
@@ -169,18 +171,28 @@ func _process(_delta):
 					texture.rotation_degrees += (90 - texture.rotation_degrees) * animationSpeed
 				moveForward()
 			elif Input.is_action_pressed("attack"):
+				panelDefine.checkTipOpenedAndClose(0)
 				var target=rad_to_deg(get_local_mouse_position().angle_to_point(Vector2.ZERO))-90
 				texture.rotation_degrees += (
 					target- texture.rotation_degrees
 					) * animationSpeed;
 				if abs(target- texture.rotation_degrees)<shootOffset*2:attackChecked()
 			if Input.is_action_pressed("heal")and health<healthMax:
+				panelDefine.checkTipOpenedAndClose(1)
 				health+=healthMax*0.01
 				slag+=1
 			if Input.is_action_pressed("cool")and slag>0 and coolant>0:
+				panelDefine.checkTipOpenedAndClose(2)
+				panelDefine.checkTipOpenedAndClose(3)
 				slag-=1
 				coolant-=1
 				oil+=0.4
+			if Input.is_action_just_pressed("overclock"):
+				panelDefine.checkTipOpenedAndClose(5)
+				overclock()
+			if Input.is_action_just_pressed("superclock"):
+				panelDefine.checkTipOpenedAndClose(6)
+				superclock()
 		if slag>slagMax:
 			var diff=slag-slagMax
 			oil-=diff
@@ -214,12 +226,14 @@ func _process(_delta):
 			damageBoostFactor()
 		)
 		if currentWeapon.audioPlayer and sustIndex==0:
-			currentWeapon.audioPlayer.pitch_scale=attackSpeed
+			if currentWeapon.audioAcceleration:
+				currentWeapon.audioPlayer.pitch_scale=attackSpeed
 			currentWeapon.audioPlayer.stream.set("loop", currentWeapon.loopSound)
 			currentWeapon.audioPlayer.play()
 		if currentWeapon.shootEffect and sustIndex==0:
 			var cloned=currentWeapon.shootEffect.duplicate() as effectAuto
 			cloned.bullet=bullet
+			cloned.position=Vector2(0,0)
 			lastSustWeaponEffect=cloned
 			if cloned.onWorld:
 				cloned.global_position=global_position

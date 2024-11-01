@@ -33,4 +33,5 @@ func pressed():
 	if myAttrs.addWeapon:
 		userData.addWeapon(myAttrs.addWeapon)
 		player.currentWeaponIndex += 1
+	player.haveBuffCount += 1
 	myCard.queue_free()

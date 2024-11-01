@@ -25,9 +25,17 @@ func pressed():
 				init.generateUnit(i.target.name, pos, i.spawnAsBoss)
 	panelDefine.closeCurrent()
 	if init.wave == 1:
-		panelDefine.checkTo("tip-0")
-	elif init.wave == 2:
-		panelDefine.checkTo("tip-1")
+		panelDefine.checkToTip(0)
 	elif init.wave == 3:
-		panelDefine.checkTo("tip-2")
+		panelDefine.checkToTip(1)
+	elif init.wave == 4:
+		panelDefine.checkToTip(2)
+	elif init.wave == 8:
+		panelDefine.checkToTip(3)
+	elif player.haveBuffCount > 3:
+		panelDefine.checkToTip(4)
+	elif player.heat >= player.overclockNeedsHeat and player.mrj >= player.overclockNeedsMrj:
+		panelDefine.checkToTip(5)
+	elif player.heat >= player.superclockNeedsHeatPercent * player.heatMax and player.mrj >= player.superclockNeedsMrjPercent * player.mrjMax:
+		panelDefine.checkToTip(6)
 	save.saveData()

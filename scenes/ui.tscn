@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://c3ffqr6j7phde"]
+[gd_scene load_steps=53 format=3 uid="uid://c3ffqr6j7phde"]
 
 [ext_resource type="PackedScene" uid="uid://drrf2btbv0wrd" path="res://scenes/valuebar.tscn" id="1_gkhuq"]
 [ext_resource type="Script" path="res://panels/waveTip.gd" id="1_o53dp"]
@@ -319,9 +319,6 @@ bg_color = Color(0, 0, 0, 0.5)
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_fdapp"]
 color = Color(1, 0.827451, 0.498039, 1)
 thickness = 3
-
-[sub_resource type="LabelSettings" id="LabelSettings_q62wt"]
-font_size = 30
 
 [sub_resource type="Animation" id="Animation_50o47"]
 length = 0.001
@@ -1056,7 +1053,7 @@ size_flags_horizontal = 4
 text = "继续游戏"
 script = ExtResource("9_ntdh6")
 
-[node name="tip-0" type="CenterContainer" parent="panels/bg"]
+[node name="tip-0" type="BoxContainer" parent="panels/bg"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -1066,10 +1063,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wiabs")
 
-[node name="label" type="Label" parent="panels/bg/tip-0"]
+[node name="label" type="RichTextLabel" parent="panels/bg/tip-0"]
 layout_mode = 2
-text = "无需多言：使用WSAD移动，点击任意位置射击"
-label_settings = SubResource("LabelSettings_q62wt")
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]无需多言：使用[color=wheat]WSAD[/color]移动，点击[color=wheat]任意位置[/color]射击[/center]"
+fit_content = true
 
 [node name="tip-1" type="BoxContainer" parent="panels/bg"]
 visible = false
@@ -1085,11 +1086,13 @@ script = ExtResource("1_wiabs")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+theme_override_font_sizes/bold_italics_font_size = 1
 theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 25
 bbcode_enabled = true
 text = "[center]承受敌方子弹将会损失[color=FF6666]生命值[/color]
-按住E持续回复
-适可而止...[/center]"
+按住[color=wheat]E[/color]持续回复
+[b]适可而止...[/b][/center]"
 fit_content = true
 
 [node name="tip-2" type="BoxContainer" parent="panels/bg"]
@@ -1110,8 +1113,99 @@ size_flags_vertical = 6
 theme_override_font_sizes/normal_font_size = 30
 bbcode_enabled = true
 text = "[center]回复[color=FF6666]生命值[/color]需要生成[color=orange]矿渣[/color]
-过多的[color=orange]矿渣[/color]将会将[color=8bad4f]芳油[/color]转换为[color=8e1425]瘤液[/color]
-按住R消耗[color=86cdea]冷却液[/color]清除[color=orange]矿渣[/color][/center]"
+按住[color=wheat]R[/color]消耗[color=86cdea]冷却液[/color]清除[color=orange]矿渣[/color][/center]"
+fit_content = true
+scroll_active = false
+
+[node name="tip-3" type="BoxContainer" parent="panels/bg"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+vertical = true
+script = ExtResource("1_wiabs")
+
+[node name="label" type="RichTextLabel" parent="panels/bg/tip-3"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]过多的[color=orange]矿渣[/color]将会将[color=8bad4f]芳油[/color]转换为[color=8e1425]瘤液[/color]
+时刻小心[color=8e1425]瘤液[/color]造成的大量持续伤害！
+（消耗[color=86cdea]冷却液[/color]可以非常缓慢的合成[color=8bad4f]芳油[/color]）[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="tip-4" type="BoxContainer" parent="panels/bg"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+vertical = true
+script = ExtResource("1_wiabs")
+
+[node name="label" type="RichTextLabel" parent="panels/bg/tip-4"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]增益载荷将会增强你的属性词条
+武器载荷将会提供强大的武器加入攻击序列
+按下[color=wheat]C[/color]或点击[color=wheat][State]按钮[/color]查看属性面板[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="tip-5" type="BoxContainer" parent="panels/bg"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+vertical = true
+script = ExtResource("1_wiabs")
+
+[node name="label" type="RichTextLabel" parent="panels/bg/tip-5"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]消耗少量[color=7457ce]孢子菌泥[/color]与少量[color=ffb900]热量[/color]
+按下[color=wheat]鼠标右键[/color]释放基础超频，向前突进
+[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="tip-6" type="BoxContainer" parent="panels/bg"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+vertical = true
+script = ExtResource("1_wiabs")
+
+[node name="label" type="RichTextLabel" parent="panels/bg/tip-6"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]储存[color=7457ce]孢子菌泥[/color]与[color=ffb900]热量[/color]到达极限后
+按下[color=wheat]Q[/color]燃烧所有能量，释放极限超频，大幅增加各项属性词条
+[/center]"
 fit_content = true
 scroll_active = false
 

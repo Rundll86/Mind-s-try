@@ -8,6 +8,7 @@ static var currentWeapon = 0;
 static var lastWeaponIndex = -1;
 static var player: entity;
 static var subtanceSelf: Node;
+static var showedTip: Array[int] = [];
 func _ready():
 	subtanceSelf = self
 	weapons = startWeapons
