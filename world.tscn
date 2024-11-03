@@ -1,4 +1,4 @@
-[gd_scene load_steps=94 format=4 uid="uid://5ih0ql0ybs0i"]
+[gd_scene load_steps=97 format=4 uid="uid://5ih0ql0ybs0i"]
 
 [ext_resource type="Script" path="res://scripts/entity.gd" id="1_iydk2"]
 [ext_resource type="Script" path="res://scripts/init.gd" id="1_luxnj"]
@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://bva2ii6nunnyv" path="res://resources/ui/alloy.png" id="16_7jkwn"]
 [ext_resource type="Texture2D" uid="uid://c58x4yxsioflr" path="res://resources/weapon-icons/parallax.png" id="18_bf3dg"]
 [ext_resource type="Script" path="res://units/dagger.gd" id="20_h1nwg"]
+[ext_resource type="Texture2D" uid="uid://byoxw18e52053" path="res://resources/ui/bengbeng.png" id="20_svt1l"]
 [ext_resource type="Texture2D" uid="uid://b0gm5lsfpoeba" path="res://resources/entities/dagger.png" id="21_dbapv"]
 [ext_resource type="AudioStream" uid="uid://eish8to7v1hg" path="res://resources/sounds/flame.ogg" id="21_fft66"]
 [ext_resource type="Script" path="res://units/mace.gd" id="23_4s4uw"]
@@ -47,7 +48,9 @@
 [ext_resource type="Texture2D" uid="uid://juku3prxtywy" path="res://resources/weapon-icons/arc.png" id="31_d38fh"]
 [ext_resource type="Script" path="res://scripts/damageNode.gd" id="34_gam8l"]
 [ext_resource type="Script" path="res://scripts/effectAuto.gd" id="35_loevs"]
+[ext_resource type="Script" path="res://units/pangxie.gd" id="36_g5mu3"]
 [ext_resource type="Texture2D" uid="uid://b2ekkteufkksd" path="res://resources/ui/boost.png" id="36_j0qbd"]
+[ext_resource type="Texture2D" uid="uid://pabydqanrjfk" path="res://resources/entities/pangxie.png" id="36_jdek1"]
 [ext_resource type="Material" uid="uid://kenykku7ajam" path="res://effects/blank_particle.tres" id="42_53mc8"]
 [ext_resource type="Script" path="res://effects/colorLaser.gd" id="43_2xbh3"]
 [ext_resource type="AudioStream" uid="uid://ck6o3nx2fttgq" path="res://resources/sounds/spark.ogg" id="45_dn8r1"]
@@ -75,9 +78,6 @@ height = 500.0
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_b56g3"]
 b = Vector2(0, 80)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_jtth6"]
-radius = 40.0
 
 [sub_resource type="Animation" id="Animation_a37q6"]
 length = 0.001
@@ -160,6 +160,9 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_umibw"]
+radius = 20.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x4t4l"]
 radius = 20.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ttkq2"]
@@ -307,6 +310,20 @@ _data = {
 "rotate": SubResource("Animation_wkmtn")
 }
 
+[sub_resource type="Animation" id="Animation_r32hl"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(6.28319, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
 [sub_resource type="Animation" id="Animation_wlikf"]
 resource_name = "rotate"
 length = 3.0
@@ -320,20 +337,6 @@ tracks/0/keys = {
 "handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(6.28319, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 3)
-}
-
-[sub_resource type="Animation" id="Animation_r32hl"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(6.28319, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ll8mw"]
@@ -447,6 +450,7 @@ process_mode = 1
 process_priority = -1
 texture_filter = 2
 script = ExtResource("1_luxnj")
+initWave = 8
 initItems = [NodePath("items/copper"), NodePath("items/silicon"), NodePath("items/graphite"), NodePath("items/wolfram"), NodePath("items/steel"), NodePath("items/alloy")]
 initItemCounts = Array[int]([40, 40, 40, 40, 40, 40])
 loadSave = false
@@ -470,13 +474,11 @@ rateBoost = 0.3
 fromWave = 2
 
 [node name="2" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
-visible = false
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/dagger")
 rateBoost = 0.3
 
 [node name="3" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
-visible = false
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/mace")
 rateBoost = 0.25
@@ -490,11 +492,18 @@ fromWave = 8
 perWaves = 5
 
 [node name="5" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
-visible = false
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/crawler")
 rateBoost = 0.25
 fromWave = 5
+
+[node name="6" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
+script = ExtResource("2_pf3la")
+target = NodePath("../../units/pangxie")
+spawnAsBoss = true
+fromWave = 8
+toWave = 45
+perWaves = 5
 
 [node name="buffs" type="Node" parent="."]
 process_mode = 4
@@ -634,6 +643,15 @@ costItems = [NodePath("../../items/silicon"), NodePath("../../items/graphite"), 
 costCounts = Array[int]([15, 30, 7, 60])
 addWeapon = NodePath("../../player/texture/centerW/meltdown")
 
+[node name="squirrel" type="Node" parent="buffs" node_paths=PackedStringArray("costItems", "addWeapon")]
+script = ExtResource("4_n3crq")
+displayName = "“武松”"
+texture = ExtResource("52_pmby1")
+healthMax = 0.0
+costItems = [NodePath("../../items/squirrel")]
+costCounts = Array[int]([5])
+addWeapon = NodePath("../../player/texture/centerW/squirrel")
+
 [node name="projectiles" type="Node2D" parent="."]
 process_mode = 4
 
@@ -730,7 +748,6 @@ collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 0.0
 lifeTime = 500
-damage = 20
 penetrate = 1.0
 myDamageType = 6
 
@@ -803,9 +820,6 @@ shape = SubResource("SegmentShape2D_b56g3")
 position = Vector2(-95, -30)
 rotation = 5.02655
 shape = SubResource("SegmentShape2D_b56g3")
-
-[node name="hitboxC" type="CollisionShape2D" parent="projectiles/squirrel"]
-shape = SubResource("CircleShape2D_jtth6")
 
 [node name="units" type="Node2D" parent="."]
 process_mode = 4
@@ -970,9 +984,9 @@ gravity_scale = 0.0
 linear_damp = 1.2
 script = ExtResource("28_qwxqq")
 attackLimit = 800.0
-drops = [NodePath("../../items/copper"), NodePath("../../items/silicon"), NodePath("../../items/graphite"), NodePath("../../items/wolfram"), NodePath("../../items/steel"), NodePath("../../items/alloy"), NodePath("../../items/oil"), NodePath("../../items/coolant")]
-dropMinCounts = Array[int]([15, 8, 2, 0, 1, 1, 2, 3])
-dropMaxCounts = Array[int]([50, 25, 7, 3, 5, 15, 7, 6])
+drops = [NodePath("../../items/copper"), NodePath("../../items/silicon"), NodePath("../../items/graphite"), NodePath("../../items/wolfram"), NodePath("../../items/steel"), NodePath("../../items/alloy"), NodePath("../../items/oil"), NodePath("../../items/coolant"), NodePath("../../items/squirrel")]
+dropMinCounts = Array[int]([15, 8, 2, 0, 1, 1, 2, 3, 5])
+dropMaxCounts = Array[int]([50, 25, 7, 3, 5, 15, 7, 6, 10])
 weapons = [NodePath("texture/bulletSpawner")]
 displayName = "挣脱"
 healthMax = 50.0
@@ -1003,6 +1017,43 @@ color = Color(0.952941, 0.34902, 0.34902, 1)
 [node name="hitbox" type="CollisionShape2D" parent="units/elude"]
 scale = Vector2(1e-05, 1e-05)
 shape = SubResource("CircleShape2D_umibw")
+
+[node name="pangxie" type="RigidBody2D" parent="units" node_paths=PackedStringArray("drops", "weapons")]
+collision_layer = 2
+collision_mask = 2
+gravity_scale = 0.0
+linear_damp = 1.2
+script = ExtResource("36_g5mu3")
+attackLimit = 3000.0
+drops = [NodePath("../../items/copper"), NodePath("../../items/silicon"), NodePath("../../items/graphite"), NodePath("../../items/wolfram"), NodePath("../../items/steel"), NodePath("../../items/alloy"), NodePath("../../items/oil"), NodePath("../../items/coolant"), NodePath("../../items/pangxie")]
+dropMinCounts = Array[int]([15, 8, 2, 0, 1, 1, 2, 3, 5])
+dropMaxCounts = Array[int]([50, 25, 7, 3, 5, 15, 7, 6, 10])
+weapons = [NodePath("texture/bulletSpawner"), NodePath("texture/bulletSpawner")]
+displayName = "谢宇轩"
+healthMax = 40.0
+moveSpeed = 0.25
+attackDamage = 0.5
+
+[node name="texture" type="Sprite2D" parent="units/pangxie"]
+texture = ExtResource("36_jdek1")
+
+[node name="bulletSpawner" type="Node2D" parent="units/pangxie/texture" node_paths=PackedStringArray("bullet", "shootEffect")]
+position = Vector2(0, -23)
+script = ExtResource("6_l6cvj")
+bullet = NodePath("../../../../projectiles/thunder")
+shootEffect = NodePath("../../../../effects/thunder")
+
+[node name="asp" type="AudioStreamPlayer2D" parent="units/pangxie/texture/bulletSpawner"]
+stream = ExtResource("45_dn8r1")
+
+[node name="animator" type="AnimationPlayer" parent="units/pangxie/texture"]
+libraries = {
+"": SubResource("AnimationLibrary_dpl8o")
+}
+
+[node name="hitbox" type="CollisionShape2D" parent="units/pangxie"]
+scale = Vector2(1e-05, 1e-05)
+shape = SubResource("CircleShape2D_x4t4l")
 
 [node name="healthBar" parent="units" instance=ExtResource("55_ag6au")]
 offset_left = -35.0
@@ -1103,6 +1154,26 @@ texture = ExtResource("16_7jkwn")
 [node name="hitbox" type="CollisionShape2D" parent="items/alloy"]
 shape = SubResource("CircleShape2D_d4fdl")
 
+[node name="squirrel" type="Area2D" parent="items"]
+position = Vector2(110, 37)
+script = ExtResource("11_tf7be")
+
+[node name="texture" type="Sprite2D" parent="items/squirrel"]
+texture = ExtResource("20_svt1l")
+
+[node name="hitbox" type="CollisionShape2D" parent="items/squirrel"]
+shape = SubResource("CircleShape2D_d4fdl")
+
+[node name="pangxie" type="Area2D" parent="items"]
+position = Vector2(110, 37)
+script = ExtResource("11_tf7be")
+
+[node name="texture" type="Sprite2D" parent="items/pangxie"]
+texture = ExtResource("36_jdek1")
+
+[node name="hitbox" type="CollisionShape2D" parent="items/pangxie"]
+shape = SubResource("CircleShape2D_d4fdl")
+
 [node name="effects" type="Node2D" parent="."]
 process_mode = 4
 metadata/_edit_lock_ = true
@@ -1191,6 +1262,7 @@ libraries = {
 }
 
 [node name="bengbeng" type="Sprite2D" parent="effects/squirrel"]
+z_index = 2
 rotation = 6.28319
 texture = ExtResource("52_pmby1")
 
@@ -1219,7 +1291,7 @@ enableAi = true
 playerControlled = true
 damageFromPlayer = true
 attackLimit = 500.0
-healthMax = 200.0
+healthMax = 500.0
 level = 0
 
 [node name="texture" type="Sprite2D" parent="player"]
@@ -1340,6 +1412,7 @@ shape = SubResource("CircleShape2D_umibw")
 
 [node name="camera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
 z_index = 10
+process_callback = 0
 position_smoothing_enabled = true
 script = ExtResource("5_i3cw1")
 target = NodePath("../player")

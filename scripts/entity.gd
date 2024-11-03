@@ -26,6 +26,7 @@ var haveBuffCount:int=0;
 #数值显示条
 var healthBar:valuebar;
 var levelLabel:Label;
+var healthLabel:Label;
 var slagBar:valuebar;
 var coolantBar:valuebar;
 var oilBar:valuebar;
@@ -102,9 +103,8 @@ func _ready():
 		attackSpeed*=1
 		attackDamage*=999
 	health=healthMax
-	healthBar=get_node_or_null("healthBar")
-	if healthBar:
-		levelLabel=healthBar.get_node("transformer/level")
+	if healthBar and not levelLabel:
+		levelLabel=healthBar.get_node_or_null("transformer/level")
 	if playerControlled:
 		healthBar = get_node("/root/world/ui-layer/ui-show/board/infos/healthMask/health")
 		slagBar = get_node("/root/world/ui-layer/ui-show/board/infos/slag")
@@ -124,6 +124,8 @@ func _process(_delta):
 		healthBar.currentValue=health
 		healthBar.maxValue=healthMax
 		if levelLabel:levelLabel.text="Lv."+str(level)
+	if healthLabel:
+		healthLabel.text=str(health)+"/"+str(healthMax)
 	health=max(min(health,healthMax),0)
 	if playerControlled:
 		slag=max(min(slag,slagMax),0)
@@ -265,6 +267,8 @@ func weaponsConsume():
 		result+=i.thisWeaponConsume(attackLimit,attackSpeed)
 	result/=1000.0
 	return float(result)
+func getTexture()->Texture2D:
+	return $texture.texture
 func weaponsDamage():
 	var result=0
 	var willCritDamage;
