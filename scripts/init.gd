@@ -3,7 +3,7 @@ class_name init;
 static var isPlayerAlive: bool = true;
 static var inventory = {};
 static var animationSpeed = [0.7, 0.01];
-static var wave = 0;
+static var wave:int = 0;
 static var staticFuncCaller;
 static var readWaves: Array[waveDefine] = [];
 static var isSelectingBuff: bool = false;
@@ -29,7 +29,6 @@ var buffCostCardExample;
 @export var resetBuffCost: int = 30;
 @export var loadSave: bool = true;
 func _ready():
-	if loadSave: save.loadData()
 	$"ui-layer".show()
 	resetBuffCostSaved = resetBuffCost
 	$projectiles.hide()
@@ -73,6 +72,7 @@ func _ready():
 	for i in range(len(initItems)):
 		inventory[initItems[i].name]["count"] += initItemCounts[i]
 	playerEntity = $/root/world/player
+	if loadSave: save.loadData()
 func _process(_delta):
 	waveTip.get_node("bar/tools/cost").text = str(resetBuffCostSaved)
 	if Input.is_action_just_pressed("pause"):

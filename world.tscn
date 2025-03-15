@@ -307,6 +307,20 @@ _data = {
 "rotate": SubResource("Animation_wkmtn")
 }
 
+[sub_resource type="Animation" id="Animation_r32hl"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(6.28319, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
 [sub_resource type="Animation" id="Animation_wlikf"]
 resource_name = "rotate"
 length = 3.0
@@ -320,20 +334,6 @@ tracks/0/keys = {
 "handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(6.28319, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 3)
-}
-
-[sub_resource type="Animation" id="Animation_r32hl"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(6.28319, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ll8mw"]
@@ -455,7 +455,7 @@ metadata/_edit_vertical_guides_ = [-379.0, -617.0, -564.0, -511.0, 0.0, 4.0, 32.
 
 [node name="userData" type="Node" parent="." node_paths=PackedStringArray("startWeapons")]
 script = ExtResource("3_fu3qe")
-startWeapons = [NodePath("../player/texture/centerW/squirrel")]
+startWeapons = [NodePath("../player/texture/leftW"), NodePath("../player/texture/rightW")]
 
 [node name="damageType" type="Node" parent="."]
 script = ExtResource("3_jqkn2")
@@ -470,13 +470,11 @@ rateBoost = 0.3
 fromWave = 2
 
 [node name="2" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
-visible = false
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/dagger")
 rateBoost = 0.3
 
 [node name="3" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
-visible = false
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/mace")
 rateBoost = 0.25
@@ -490,7 +488,6 @@ fromWave = 8
 perWaves = 5
 
 [node name="5" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
-visible = false
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/crawler")
 rateBoost = 0.25
@@ -504,6 +501,7 @@ script = ExtResource("4_n3crq")
 displayName = "小型铜墙"
 texture = ExtResource("24_56s8g")
 healthMax = 30.0
+movementSpeed = -3.0
 costItems = [NodePath("../../items/copper"), NodePath("../../items/graphite")]
 costCounts = Array[int]([30, 5])
 
@@ -512,6 +510,7 @@ script = ExtResource("4_n3crq")
 displayName = "大型铜墙"
 texture = ExtResource("6_dem2e")
 healthMax = 75.0
+movementSpeed = -8.0
 evasion = 0.8
 costItems = [NodePath("../../items/copper"), NodePath("../../items/graphite")]
 costCounts = Array[int]([60, 20])
@@ -521,8 +520,8 @@ script = ExtResource("4_n3crq")
 displayName = "超速穹顶"
 texture = ExtResource("23_f85n3")
 healthMax = 0.0
-attackSpeed = 7.0
-movementSpeed = 4.0
+attackSpeed = 12.0
+movementSpeed = 4.8
 costItems = [NodePath("../../items/copper"), NodePath("../../items/silicon")]
 costCounts = Array[int]([30, 10])
 
@@ -552,6 +551,7 @@ script = ExtResource("4_n3crq")
 displayName = "超级处理器"
 texture = ExtResource("27_yd85k")
 healthMax = 0.0
+attackDamage = 15.0
 critRate = 7.0
 critDamage = 6.0
 evasion = 4.0
@@ -747,7 +747,6 @@ lifeTime = 400
 damage = 7
 penetrate = 1.0
 myDamageType = 1
-replusePower = 100000.0
 
 [node name="hitbox" type="CollisionShape2D" parent="projectiles/parallax"]
 position = Vector2(0, -250)
@@ -815,7 +814,7 @@ metadata/_edit_lock_ = true
 gravity_scale = 0.0
 linear_damp = 1.2
 script = ExtResource("10_aym84")
-attackLimit = 500.0
+attackLimit = 700.0
 drops = [NodePath("../../items/copper"), NodePath("../../items/oil")]
 dropMinCounts = Array[int]([5, 0])
 dropMaxCounts = Array[int]([20, 3])
@@ -848,7 +847,7 @@ shape = SubResource("CircleShape2D_umibw")
 gravity_scale = 0.0
 linear_damp = 1.2
 script = ExtResource("20_h1nwg")
-attackLimit = 500.0
+attackLimit = 650.0
 drops = [NodePath("../../items/copper"), NodePath("../../items/coolant")]
 dropMinCounts = Array[int]([3, 2])
 dropMaxCounts = Array[int]([15, 4])
@@ -1218,7 +1217,6 @@ script = ExtResource("1_iydk2")
 enableAi = true
 playerControlled = true
 damageFromPlayer = true
-attackLimit = 500.0
 healthMax = 200.0
 level = 0
 
@@ -1366,7 +1364,6 @@ vertical_alignment = 1
 metadata/_edit_lock_ = true
 
 [node name="arrow" type="Node2D" parent="damage/label"]
-visible = false
 position = Vector2(640, 180)
 metadata/_edit_lock_ = true
 
@@ -1387,7 +1384,6 @@ texture = ExtResource("36_j0qbd")
 expand_mode = 1
 
 [node name="boost" type="Label" parent="damage/label"]
-visible = false
 layout_mode = 0
 offset_left = 658.0
 offset_right = 1298.0
