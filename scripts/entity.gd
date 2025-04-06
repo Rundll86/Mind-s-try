@@ -287,7 +287,7 @@ func moveForward(force=600.0):
 func canAttack():
 	return (
 		(currentWeaponIndex==len(weapons) or currentWeaponIndex==-1) and
-		(Time.get_ticks_msec()-lastAttackTime>attackLimit/attackSpeed)
+		(Time.get_ticks_msec()-lastAttackTime>attackLimit*len(weapons)/attackSpeed)
 		)
 func launchBullet(bulletSubstance:bulletAI,spawner:Node2D,damageBooster:float=0):
 	# print("launchBullet",bulletSubstance.name)
@@ -366,6 +366,10 @@ func hit(damage:int,crit:bool,damageBoost:float,myDamageType:damageType.Enums):
 				drop.itemID=drops[i].name
 				drop.isSubstance=false
 				get_node("/root/world").call_deferred("add_child",drop)
+		var removeTarget:Control=healthBar;
+		if isBoss:
+			removeTarget=removeTarget.get_parent()
+		removeTarget.queue_free()
 		queue_free()
 func PRESETAI_followPlayer():
 	if init.isPlayerAlive:

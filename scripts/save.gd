@@ -1,3 +1,4 @@
+@tool
 extends Node;
 class_name save;
 static var savePath = "user://file0.save";
@@ -29,13 +30,32 @@ static func loadData():
 		init.playerEntity.heat = data.player.heat
 		init.playerEntity.mrjMax = data.player.mrjMax
 		init.playerEntity.mrj = data.player.mrj
+		init.playerEntity.haveBuffCount = data.player.haveBuffCount
 		init.wave = data.wave
+		var playerWeapons = init.playerEntity.texture.get_node("centerW").get_children()
+		for i in data.weapons:
+			for j in playerWeapons:
+				if j.name == i:
+					userData.weapons.append(j)
+					break
+		for i in data.items:
+			init.inventory[i]["count"] = data.items[i]
+		init.resetBuffCostSaved = data.resetBuffCost
+		for i in data.showedTips:
+			userData.weapons.append(i)
 		file.close()
+		init.saveLoaded = true
 	else:
 		print("No save file found")
 static func saveData():
 	FileAccess.open(savePath, FileAccess.WRITE).store_string(calcSavedData())
 static func calcSavedData():
+	var weapons = []
+	for i in userData.weapons:
+		weapons.append(i.name)
+	var inventory = {}
+	for i in init.inventory:
+		inventory[i] = init.inventory[i].count
 	return JSON.stringify({
 		"player": {
 			"health": init.playerEntity.health,
@@ -60,7 +80,12 @@ static func calcSavedData():
 			"heatMax": init.playerEntity.heatMax,
 			"heat": init.playerEntity.heat,
 			"mrjMax": init.playerEntity.mrjMax,
-			"mrj": init.playerEntity.mrj
+			"mrj": init.playerEntity.mrj,
+			"haveBuffCount": init.playerEntity.haveBuffCount
 		},
-		"wave": init.wave
-	})
+		"wave": init.wave,
+		"weapons": weapons,
+		"items": inventory,
+		"resetBuffCost": init.resetBuffCostSaved,
+		"showedTips": userData.showedTip
+	}, "    ")

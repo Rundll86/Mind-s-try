@@ -13,7 +13,7 @@ config_version=5
 config/name="Mind's try"
 run/main_scene="res://world.tscn"
 config/features=PackedStringArray("4.3")
-run/max_fps=120
+run/max_fps=60
 config/icon="res://icon.svg"
 
 [display]
