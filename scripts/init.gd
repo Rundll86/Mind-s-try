@@ -48,8 +48,8 @@ func _ready():
 	weaponShow = $"ui-layer/ui-show/board/mamba-out/weapons"
 	weaponExample = weaponShow.get_node("w0")
 	weaponExample.get_parent().remove_child(weaponExample)
-	entriesContainer = $"ui-layer/ui-show/board/infos/damage/cont/panels/entries/container"
-	itemLabelExmaple = $"ui-layer/ui-show/board/infos/damage/cont/panels/items/container/example"
+	entriesContainer = $"ui-layer/ui-show/board/infos/damage/cont/panels/datas/entries/container"
+	itemLabelExmaple = $"ui-layer/ui-show/board/infos/damage/cont/panels/datas/items/container/example"
 	itemLabelExmaple.get_parent().remove_child(itemLabelExmaple)
 	for i in $items.get_children():
 		if i.name in ["coolant", "oil"]:
@@ -60,7 +60,7 @@ func _ready():
 			"count": 0,
 			"label": currentLabel
 		}
-		$"ui-layer/ui-show/board/infos/damage/cont/panels/items/container".add_child(currentLabel)
+		$"ui-layer/ui-show/board/infos/damage/cont/panels/datas/items/container".add_child(currentLabel)
 	for i in $buffs.get_children():
 		buff.collections.append(i)
 	for i in $waves.get_children():
@@ -90,6 +90,7 @@ func _process(_delta):
 		entriesContainer.get_node("attackSpeed").entryValue = playerEntity.attackSpeed
 		entriesContainer.get_node("attackDamage").entryValue = playerEntity.attackDamage
 		entriesContainer.get_node("movementSpeed").entryValue = playerEntity.moveSpeedBoost + 1
+		entriesContainer.get_node("bulletBoost").entryValue = playerEntity.bulletBoost
 		enemyCount = 0
 		for i in get_children():
 			if i.name.begins_with("enemy_"):
@@ -195,6 +196,22 @@ static func generateBuffCard():
 					"获得武器",
 					entryBox.EntryUnit.TEXT,
 					i.addWeapon.displayName
+				)
+			)
+		if i.bulletBoost != 0:
+			entryBoxes.append(
+				createEntryBoxWith(
+					"子弹提升",
+					entryBox.EntryUnit.NONE,
+					i.bulletBoost
+				)
+			)
+		if i.shootOffset != 0:
+			entryBoxes.append(
+				createEntryBoxWith(
+					"射击偏差",
+					entryBox.EntryUnit.DEGRESS,
+					i.shootOffset
 				)
 			)
 		var currentBuff = staticFuncCaller.buffCardExample.duplicate()

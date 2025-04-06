@@ -24,15 +24,15 @@ var superclocking: bool = false;
 var lastSustWeaponEffect: effectAuto;
 var haveBuffCount: int = 0;
 #数值显示条
-var healthBar:valuebar;
-var levelLabel:Label;
-var healthLabel:Label;
-var slagBar:valuebar;
-var coolantBar:valuebar;
-var oilBar:valuebar;
-var neoplasmBar:valuebar;
-var heatBar:valuebar;
-var mrjBar:valuebar;
+var healthBar: valuebar;
+var levelLabel: Label;
+var healthLabel: Label;
+var slagBar: valuebar;
+var coolantBar: valuebar;
+var oilBar: valuebar;
+var neoplasmBar: valuebar;
+var heatBar: valuebar;
+var mrjBar: valuebar;
 #间隔计算
 var lastAttackTime = 0;
 var lastOilDamageTime = 0;
@@ -77,14 +77,15 @@ var attackDamageSaved: float = 0;
 @export var attackSpeed: float = 1;
 @export var attackDamage: float = 1;
 @export var moveSpeedBoost: float = 0;
+@export var bulletBoost: int = 0; # 子弹数量提升
 #关于普通超频
 @export var overclockPushForce: float = 40000;
 @export var overclockNeedsHeat: float = 25;
 @export var overclockNeedsMrj: float = 10;
 #关于极限超频
-@export var superclockMovementSpeedBoost: float = 0.5; # 移速提升50%
-@export var superclockAttackSpeedBoost: float = 0.4; # 攻速提升40%
-@export var superclockAttackDamageBoost: float = 0.2; # 伤害提升20%
+@export var superclockMovementSpeedBoost: float = 0.35; # 移速提升35%
+@export var superclockAttackSpeedBoost: float = 0.6; # 攻速提升60%
+@export var superclockAttackDamageBoost: float = -0.075; # 伤害降低7.5%
 @export var superclockNeedsHeatPercent: float = 1.0;
 @export var superclockNeedsMrjPercent: float = 1.0;
 func _ready():
@@ -99,12 +100,12 @@ func _ready():
 	lock_rotation = true
 	playerEntity = get_node("/root/world/player")
 	if useGodMode:
-		healthMax*=999
-		attackSpeed*=1
-		attackDamage*=999
-	health=healthMax
+		healthMax *= 999
+		attackSpeed *= 1
+		attackDamage *= 999
+	health = healthMax
 	if healthBar and not levelLabel:
-		levelLabel=healthBar.get_node_or_null("transformer/level")
+		levelLabel = healthBar.get_node_or_null("transformer/level")
 	if playerControlled:
 		healthBar = get_node("/root/world/ui-layer/ui-show/board/infos/healthMask/health")
 		slagBar = get_node("/root/world/ui-layer/ui-show/board/infos/slag")
@@ -121,12 +122,12 @@ func _ready():
 func _process(_delta):
 	hitbox.disabled = not enableAi
 	if healthBar:
-		healthBar.currentValue=health
-		healthBar.maxValue=healthMax
-		if levelLabel:levelLabel.text="Lv."+str(level)
+		healthBar.currentValue = health
+		healthBar.maxValue = healthMax
+		if levelLabel: levelLabel.text = "Lv." + str(level)
 	if healthLabel:
-		healthLabel.text=str(health)+"/"+str(healthMax)
-	health=max(min(health,healthMax),0)
+		healthLabel.text = str(health) + "/" + str(healthMax)
+	health = max(min(health, healthMax), 0)
 	if playerControlled:
 		slag = max(min(slag, slagMax), 0)
 		coolant = max(min(coolant, coolantMax), 0)
@@ -201,7 +202,7 @@ func _process(_delta):
 		if oil < oilMax:
 			var diff = oil / oilMax
 			if Time.get_ticks_msec() - lastOilDamageTime > 1000 * diff:
-				hit(1, false, 0, damageType.Enums.BIOEROSION)
+				hit(health * 0.02, false, 0, damageType.Enums.BIOEROSION)
 				lastOilDamageTime = Time.get_ticks_msec()
 		if superclocking:
 			heat -= 0.03
@@ -227,6 +228,12 @@ func _process(_delta):
 			currentWeapon,
 			damageBoostFactor()
 		)
+		for i in range(bulletBoost):
+			launchBullet(
+				currentWeapon.bullet,
+				currentWeapon,
+				damageBoostFactor()
+			)
 		if currentWeapon.audioPlayer and sustIndex == 0:
 			if currentWeapon.audioAcceleration:
 				currentWeapon.audioPlayer.pitch_scale = attackSpeed
@@ -256,9 +263,9 @@ func _process(_delta):
 func setLevel(newLevel):
 	var healthRatio = health / healthMax
 	level = newLevel
-	healthMax = level * 0.5 * healthMaxSaved + healthMaxSaved
+	healthMax = level * 1.0 * healthMaxSaved + healthMaxSaved
 	health = healthRatio * healthMax
-	attackDamage = level * 0.05 + attackDamageSaved
+	attackDamage = level * 0.1 + attackDamageSaved
 func readBullet(bullet: String):
 	return get_node("/root/world/projectiles/" + bullet) as bulletAI
 func weaponsConsume():
@@ -267,7 +274,7 @@ func weaponsConsume():
 		result += i.thisWeaponConsume(attackLimit, attackSpeed)
 	result /= 1000.0
 	return float(result)
-func getTexture()->Texture2D:
+func getTexture() -> Texture2D:
 	return $texture.texture
 func weaponsDamage():
 	var result = 0
@@ -286,8 +293,8 @@ func moveForward(force = 600.0):
 	) * moveSpeed * force * (moveSpeedBoost + 1))
 func canAttack():
 	return (
-		(currentWeaponIndex==len(weapons) or currentWeaponIndex==-1) and
-		(Time.get_ticks_msec()-lastAttackTime>attackLimit*len(weapons)/attackSpeed)
+		(currentWeaponIndex == len(weapons) or currentWeaponIndex == -1) and
+		(Time.get_ticks_msec() - lastAttackTime > attackLimit * len(weapons) / attackSpeed)
 		)
 func launchBullet(bulletSubstance: bulletAI, spawner: Node2D, damageBooster: float = 0):
 	# print("launchBullet",bulletSubstance.name)
@@ -329,7 +336,7 @@ func damageBoostFactor():
 	return (slag / slagMax * 0.5 * (oil / oilMax) if
 		weapons[currentWeaponIndex - (0 if currentWeaponIndex < len(weapons) else 1)].bullet.myDamageType == damageType.Enums.HIGH_T else
 		0.0) + (attackDamage - 1)
-func hit(damage: int, crit: bool, damageBoost: float, myDamageType: damageType.Enums):
+func hit(damage: float, crit: bool, damageBoost: float, myDamageType: damageType.Enums):
 	if randf_range(0, 1) < evasion:
 		return
 	if not playerControlled:
@@ -363,12 +370,12 @@ func hit(damage: int, crit: bool, damageBoost: float, myDamageType: damageType.E
 				dropMaxCounts[i]
 			)):
 				var drop = drops[i].duplicate() as item
-				drop.itemID=drops[i].name
-				drop.isSubstance=false
-				get_node("/root/world").call_deferred("add_child",drop)
-		var removeTarget:Control=healthBar;
+				drop.itemID = drops[i].name
+				drop.isSubstance = false
+				get_node("/root/world").call_deferred("add_child", drop)
+		var removeTarget: Control = healthBar;
 		if isBoss:
-			removeTarget=removeTarget.get_parent()
+			removeTarget = removeTarget.get_parent()
 		removeTarget.queue_free()
 		queue_free()
 func PRESETAI_followPlayer():

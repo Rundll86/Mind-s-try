@@ -589,92 +589,90 @@ offset_right = 40.0
 offset_bottom = -6.0
 scale = Vector2(1, 1e-05)
 
-[node name="items" type="PanelContainer" parent="board/infos/damage/cont/panels"]
+[node name="datas" type="VBoxContainer" parent="board/infos/damage/cont/panels"]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -51.0
-offset_top = -312.0
-offset_right = 51.0
-offset_bottom = -209.0
+offset_left = -78.0
+offset_top = -255.0
+offset_right = 78.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 0
+
+[node name="items" type="PanelContainer" parent="board/infos/damage/cont/panels/datas"]
+layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_tj7b1")
 
-[node name="container" type="GridContainer" parent="board/infos/damage/cont/panels/items"]
+[node name="container" type="GridContainer" parent="board/infos/damage/cont/panels/datas/items"]
 layout_mode = 2
 theme_override_constants/h_separation = 20
 theme_override_constants/v_separation = 5
 columns = 2
 
-[node name="example" parent="board/infos/damage/cont/panels/items/container" instance=ExtResource("5_n7ahg")]
+[node name="example" parent="board/infos/damage/cont/panels/datas/items/container" instance=ExtResource("5_n7ahg")]
 layout_mode = 2
 
-[node name="entries" type="PanelContainer" parent="board/infos/damage/cont/panels"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -61.0
-offset_top = -200.0
-offset_right = 61.0
-offset_bottom = -15.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="entries" type="PanelContainer" parent="board/infos/damage/cont/panels/datas"]
+layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_tj7b1")
 
-[node name="container" type="VBoxContainer" parent="board/infos/damage/cont/panels/entries"]
+[node name="container" type="VBoxContainer" parent="board/infos/damage/cont/panels/datas/entries"]
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="healthMax" parent="board/infos/damage/cont/panels/entries/container" instance=ExtResource("4_xba47")]
+[node name="healthMax" parent="board/infos/damage/cont/panels/datas/entries/container" instance=ExtResource("4_xba47")]
 layout_mode = 2
 
-[node name="movementSpeed" parent="board/infos/damage/cont/panels/entries/container" instance=ExtResource("4_xba47")]
+[node name="movementSpeed" parent="board/infos/damage/cont/panels/datas/entries/container" instance=ExtResource("4_xba47")]
 layout_mode = 2
 entryName = "引擎功率"
 entryUnit = 2
 
-[node name="shootOffset" parent="board/infos/damage/cont/panels/entries/container" instance=ExtResource("4_xba47")]
+[node name="shootOffset" parent="board/infos/damage/cont/panels/datas/entries/container" instance=ExtResource("4_xba47")]
 layout_mode = 2
 entryName = "射击偏差"
 entryUnit = 1
 
-[node name="sep1" type="HSeparator" parent="board/infos/damage/cont/panels/entries/container"]
+[node name="sep1" type="HSeparator" parent="board/infos/damage/cont/panels/datas/entries/container"]
 layout_mode = 2
 theme = ExtResource("4_yuu7q")
 
-[node name="attackDamage" parent="board/infos/damage/cont/panels/entries/container" instance=ExtResource("4_xba47")]
+[node name="attackDamage" parent="board/infos/damage/cont/panels/datas/entries/container" instance=ExtResource("4_xba47")]
 layout_mode = 2
 entryName = "伤害倍率"
 entryUnit = 2
 
-[node name="critRate" parent="board/infos/damage/cont/panels/entries/container" instance=ExtResource("4_xba47")]
+[node name="critRate" parent="board/infos/damage/cont/panels/datas/entries/container" instance=ExtResource("4_xba47")]
 layout_mode = 2
 entryName = "暴击率"
 entryUnit = 2
 
-[node name="critDamage" parent="board/infos/damage/cont/panels/entries/container" instance=ExtResource("4_xba47")]
+[node name="critDamage" parent="board/infos/damage/cont/panels/datas/entries/container" instance=ExtResource("4_xba47")]
 layout_mode = 2
 entryName = "暴击伤害"
 entryUnit = 2
 
-[node name="sep2" type="HSeparator" parent="board/infos/damage/cont/panels/entries/container"]
+[node name="sep2" type="HSeparator" parent="board/infos/damage/cont/panels/datas/entries/container"]
 layout_mode = 2
 theme = ExtResource("4_yuu7q")
 
-[node name="attackSpeed" parent="board/infos/damage/cont/panels/entries/container" instance=ExtResource("4_xba47")]
+[node name="attackSpeed" parent="board/infos/damage/cont/panels/datas/entries/container" instance=ExtResource("4_xba47")]
 layout_mode = 2
 entryName = "攻击速度"
 entryUnit = 2
 
-[node name="evasion" parent="board/infos/damage/cont/panels/entries/container" instance=ExtResource("4_xba47")]
+[node name="evasion" parent="board/infos/damage/cont/panels/datas/entries/container" instance=ExtResource("4_xba47")]
 layout_mode = 2
 entryName = "闪避率"
 entryUnit = 2
+
+[node name="bulletBoost" parent="board/infos/damage/cont/panels/datas/entries/container" instance=ExtResource("4_xba47")]
+layout_mode = 2
+entryName = "子弹提升"
 
 [node name="animator" type="AnimationPlayer" parent="board/infos/damage/cont/panels"]
 libraries = {
