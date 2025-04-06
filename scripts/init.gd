@@ -28,6 +28,7 @@ var buffCardEntryBoxExample: Node;
 @export var resetBuffCost: int = 30;
 @export var loadSave: bool = true;
 func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	$projectiles.hide()
 	$units.hide()
 	$items.hide()

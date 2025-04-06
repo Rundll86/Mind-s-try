@@ -31,6 +31,7 @@ static func loadData():
 		init.playerEntity.mrjMax = data.player.mrjMax
 		init.playerEntity.mrj = data.player.mrj
 		init.playerEntity.haveBuffCount = data.player.haveBuffCount
+		init.playerEntity.bulletBoost = data.player.bulletBoost
 		init.wave = data.wave
 		var playerWeapons = init.playerEntity.texture.get_node("centerW").get_children()
 		for i in data.weapons:
@@ -42,7 +43,7 @@ static func loadData():
 			init.inventory[i]["count"] = data.items[i]
 		init.resetBuffCostSaved = data.resetBuffCost
 		for i in data.showedTips:
-			userData.weapons.append(i)
+			userData.showedTip.append(i as int)
 		file.close()
 		init.saveLoaded = true
 	else:
@@ -81,7 +82,8 @@ static func calcSavedData():
 			"heat": init.playerEntity.heat,
 			"mrjMax": init.playerEntity.mrjMax,
 			"mrj": init.playerEntity.mrj,
-			"haveBuffCount": init.playerEntity.haveBuffCount
+			"haveBuffCount": init.playerEntity.haveBuffCount,
+			"bulletBoost": init.playerEntity.bulletBoost
 		},
 		"wave": init.wave,
 		"weapons": weapons,

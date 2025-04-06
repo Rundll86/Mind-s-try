@@ -85,7 +85,7 @@ var attackDamageSaved: float = 0;
 #关于极限超频
 @export var superclockMovementSpeedBoost: float = 0.35; # 移速提升35%
 @export var superclockAttackSpeedBoost: float = 0.6; # 攻速提升60%
-@export var superclockAttackDamageBoost: float = -0.075; # 伤害降低7.5%
+@export var superclockAttackDamageBoost: float = -0.05; # 伤害降低5%
 @export var superclockNeedsHeatPercent: float = 1.0;
 @export var superclockNeedsMrjPercent: float = 1.0;
 func _ready():
@@ -126,7 +126,7 @@ func _process(_delta):
 		healthBar.maxValue = healthMax
 		if levelLabel: levelLabel.text = "Lv." + str(level)
 	if healthLabel:
-		healthLabel.text = str(health) + "/" + str(healthMax)
+		healthLabel.text = str(ceil(health)) + "/" + str(ceil(healthMax))
 	health = max(min(health, healthMax), 0)
 	if playerControlled:
 		slag = max(min(slag, slagMax), 0)
@@ -263,7 +263,7 @@ func _process(_delta):
 func setLevel(newLevel):
 	var healthRatio = health / healthMax
 	level = newLevel
-	healthMax = level * 1.0 * healthMaxSaved + healthMaxSaved
+	healthMax = level * 0.75 * healthMaxSaved + healthMaxSaved
 	health = healthRatio * healthMax
 	attackDamage = level * 0.1 + attackDamageSaved
 func readBullet(bullet: String):
@@ -277,7 +277,7 @@ func weaponsConsume():
 func getTexture() -> Texture2D:
 	return $texture.texture
 func weaponsDamage():
-	var result = 0
+	var result = 0.0
 	var willCritDamage;
 	for i in weapons:
 		result += i.thisWeaponDamage(damageBoostFactor() + 1)
@@ -285,7 +285,9 @@ func weaponsDamage():
 	result -= willCritDamage
 	willCritDamage *= critDamageBoost + 1
 	result += willCritDamage
-	return float(result)
+	result *= 1 + bulletBoost
+	result /= shootOffset ** (1 / 5.0)
+	return result
 func moveForward(force = 600.0):
 	apply_central_force(Vector2(
 		sin(texture.rotation),

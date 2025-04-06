@@ -2,67 +2,67 @@
 
 [ext_resource type="Script" path="res://scripts/entity.gd" id="1_iydk2"]
 [ext_resource type="Script" path="res://scripts/init.gd" id="1_luxnj"]
-[ext_resource type="Texture2D" uid="uid://cwcnr7yp8suc8" path="res://resources/maps/outputs/mao.png" id="1_oe6ch"]
-[ext_resource type="Texture2D" uid="uid://c15cjw3eld7pe" path="res://resources/entities/player.png" id="2_8pxho"]
+[ext_resource type="Texture2D" uid="uid://cispuyug12u18" path="res://resources/maps/outputs/mao.png" id="1_oe6ch"]
+[ext_resource type="Texture2D" uid="uid://h18f7c614s23" path="res://resources/entities/player.png" id="2_8pxho"]
 [ext_resource type="Script" path="res://scripts/waveDefine.gd" id="2_pf3la"]
 [ext_resource type="Script" path="res://scripts/userData.gd" id="3_fu3qe"]
 [ext_resource type="Script" path="res://scripts/damageType.gd" id="3_jqkn2"]
 [ext_resource type="Script" path="res://scripts/buff.gd" id="4_n3crq"]
 [ext_resource type="Script" path="res://scripts/position_lock.gd" id="5_i3cw1"]
 [ext_resource type="Script" path="res://scripts/entity_engine.gd" id="5_xuxgv"]
-[ext_resource type="Texture2D" uid="uid://dvi4bgnad2s1b" path="res://resources/ui/copper-wall-large.png" id="6_dem2e"]
-[ext_resource type="AudioStream" uid="uid://drbjija4r10xv" path="res://resources/sounds/pew.ogg" id="6_gxym7"]
+[ext_resource type="Texture2D" uid="uid://bmwuokt71hgcj" path="res://resources/ui/copper-wall-large.png" id="6_dem2e"]
+[ext_resource type="AudioStream" uid="uid://cmuc4gqmsgaqh" path="res://resources/sounds/pew.ogg" id="6_gxym7"]
 [ext_resource type="Script" path="res://scripts/weapon.gd" id="6_l6cvj"]
 [ext_resource type="Script" path="res://scripts/bulletAI.gd" id="7_5ybsd"]
-[ext_resource type="Texture2D" uid="uid://bxm1mhyg2byjn" path="res://resources/entities/stell.png" id="10_24r3v"]
+[ext_resource type="Texture2D" uid="uid://m0krjidie653" path="res://resources/entities/stell.png" id="10_24r3v"]
 [ext_resource type="Script" path="res://units/stell.gd" id="10_aym84"]
-[ext_resource type="Texture2D" uid="uid://b3tclkr3wnqel" path="res://resources/ui/liquid-container-merged.png" id="11_cmhkf"]
-[ext_resource type="Texture2D" uid="uid://dnq0rdqs2lrto" path="res://resources/items/copper.png" id="11_fh18r"]
+[ext_resource type="Texture2D" uid="uid://ck28nn5xkmnn3" path="res://resources/ui/liquid-container-merged.png" id="11_cmhkf"]
+[ext_resource type="Texture2D" uid="uid://b6v2swvekmei2" path="res://resources/items/copper.png" id="11_fh18r"]
 [ext_resource type="Script" path="res://scripts/item.gd" id="11_tf7be"]
-[ext_resource type="Texture2D" uid="uid://dcm3pxcuxhxwu" path="res://resources/ui/silicon.png" id="12_8ftri"]
-[ext_resource type="Texture2D" uid="uid://cva0a4keelbh" path="res://resources/ui/liquid-tank-merged.png" id="12_j4gxp"]
-[ext_resource type="Texture2D" uid="uid://on23ffsdhjyb" path="res://resources/ui/graphite.png" id="13_rx1pe"]
-[ext_resource type="Texture2D" uid="uid://87dusu46ulvm" path="res://resources/ui/wolfram.png" id="14_a13hj"]
-[ext_resource type="Texture2D" uid="uid://d4l4s85psg2go" path="res://resources/ui/steel.png" id="15_nxvoo"]
-[ext_resource type="Texture2D" uid="uid://bva2ii6nunnyv" path="res://resources/ui/alloy.png" id="16_7jkwn"]
-[ext_resource type="Texture2D" uid="uid://c58x4yxsioflr" path="res://resources/weapon-icons/parallax.png" id="18_bf3dg"]
+[ext_resource type="Texture2D" uid="uid://ccfuafegb0t5r" path="res://resources/ui/silicon.png" id="12_8ftri"]
+[ext_resource type="Texture2D" uid="uid://bivdbx808fial" path="res://resources/ui/liquid-tank-merged.png" id="12_j4gxp"]
+[ext_resource type="Texture2D" uid="uid://bc3nvyyy0qo0u" path="res://resources/ui/graphite.png" id="13_rx1pe"]
+[ext_resource type="Texture2D" uid="uid://btuqtmepognvp" path="res://resources/ui/wolfram.png" id="14_a13hj"]
+[ext_resource type="Texture2D" uid="uid://bfiogfn8uaod0" path="res://resources/ui/steel.png" id="15_nxvoo"]
+[ext_resource type="Texture2D" uid="uid://fdcfelxra3vm" path="res://resources/ui/alloy.png" id="16_7jkwn"]
+[ext_resource type="Texture2D" uid="uid://bnpre5bi3evtk" path="res://resources/weapon-icons/parallax.png" id="18_bf3dg"]
 [ext_resource type="Script" path="res://units/dagger.gd" id="20_h1nwg"]
-[ext_resource type="Texture2D" uid="uid://byoxw18e52053" path="res://resources/ui/bengbeng.png" id="20_svt1l"]
-[ext_resource type="Texture2D" uid="uid://b0gm5lsfpoeba" path="res://resources/entities/dagger.png" id="21_dbapv"]
-[ext_resource type="AudioStream" uid="uid://eish8to7v1hg" path="res://resources/sounds/flame.ogg" id="21_fft66"]
+[ext_resource type="Texture2D" uid="uid://dpwjv2jyqhfqh" path="res://resources/ui/bengbeng.png" id="20_svt1l"]
+[ext_resource type="Texture2D" uid="uid://cxlwcfrf8h6u7" path="res://resources/entities/dagger.png" id="21_dbapv"]
+[ext_resource type="AudioStream" uid="uid://dbomh5v1shkvi" path="res://resources/sounds/flame.ogg" id="21_fft66"]
 [ext_resource type="Script" path="res://units/mace.gd" id="23_4s4uw"]
-[ext_resource type="Texture2D" uid="uid://dgpbu7j5428ro" path="res://resources/ui/overdrive_dome.png" id="23_f85n3"]
-[ext_resource type="Texture2D" uid="uid://c3g2f66xatfj8" path="res://resources/entities/mace.png" id="23_opgie"]
-[ext_resource type="Texture2D" uid="uid://bjfu3norvwimu" path="res://resources/ui/copper_wall.png" id="24_56s8g"]
-[ext_resource type="Texture2D" uid="uid://db65twm3fun0v" path="res://resources/ui/micro-processor.png" id="25_cbmmq"]
-[ext_resource type="Texture2D" uid="uid://ci0bcioojckr6" path="res://resources/entities/crawler.png" id="25_w6eu4"]
+[ext_resource type="Texture2D" uid="uid://dg5esjs58lvgy" path="res://resources/ui/overdrive_dome.png" id="23_f85n3"]
+[ext_resource type="Texture2D" uid="uid://tbnp4putwik4" path="res://resources/entities/mace.png" id="23_opgie"]
+[ext_resource type="Texture2D" uid="uid://c4vo1mtajlol2" path="res://resources/ui/copper_wall.png" id="24_56s8g"]
+[ext_resource type="Texture2D" uid="uid://bn1437rf2ri6x" path="res://resources/ui/micro-processor.png" id="25_cbmmq"]
+[ext_resource type="Texture2D" uid="uid://3hk8n1yrv2y2" path="res://resources/entities/crawler.png" id="25_w6eu4"]
 [ext_resource type="Script" path="res://units/crawler.gd" id="26_rcrdu"]
-[ext_resource type="Texture2D" uid="uid://tk71uft6u71g" path="res://resources/ui/logic-processor.png" id="26_uve1e"]
-[ext_resource type="Texture2D" uid="uid://4uoio7vwepp1" path="res://resources/ui/hyper-processor.png" id="27_yd85k"]
-[ext_resource type="Texture2D" uid="uid://c6xcagwmthrf4" path="res://resources/entities/elude.png" id="28_in1ka"]
+[ext_resource type="Texture2D" uid="uid://gdusqis087dr" path="res://resources/ui/logic-processor.png" id="26_uve1e"]
+[ext_resource type="Texture2D" uid="uid://c2coa6mduia70" path="res://resources/ui/hyper-processor.png" id="27_yd85k"]
+[ext_resource type="Texture2D" uid="uid://cf7x21v8nlp7o" path="res://resources/entities/elude.png" id="28_in1ka"]
 [ext_resource type="Script" path="res://units/elude.gd" id="28_qwxqq"]
-[ext_resource type="Texture2D" uid="uid://fgnnbaewxui6" path="res://resources/weapon-icons/duo-preview.png" id="28_s7ifl"]
-[ext_resource type="Texture2D" uid="uid://b5iml48qa1lrh" path="res://resources/weapon-icons/hail.png" id="29_d7t5f"]
+[ext_resource type="Texture2D" uid="uid://d18sydw87d56s" path="res://resources/weapon-icons/duo-preview.png" id="28_s7ifl"]
+[ext_resource type="Texture2D" uid="uid://do8x118ryanaj" path="res://resources/weapon-icons/hail.png" id="29_d7t5f"]
 [ext_resource type="Script" path="res://effects/thunder.gd" id="30_rhbpo"]
-[ext_resource type="Texture2D" uid="uid://c643y24itetr3" path="res://resources/weapon-icons/scorch.png" id="30_rljy7"]
-[ext_resource type="Texture2D" uid="uid://juku3prxtywy" path="res://resources/weapon-icons/arc.png" id="31_d38fh"]
+[ext_resource type="Texture2D" uid="uid://3vnd3cwucren" path="res://resources/weapon-icons/scorch.png" id="30_rljy7"]
+[ext_resource type="Texture2D" uid="uid://bflqnlim87sfd" path="res://resources/weapon-icons/arc.png" id="31_d38fh"]
 [ext_resource type="Script" path="res://scripts/damageNode.gd" id="34_gam8l"]
 [ext_resource type="Script" path="res://scripts/effectAuto.gd" id="35_loevs"]
 [ext_resource type="Script" path="res://units/pangxie.gd" id="36_g5mu3"]
-[ext_resource type="Texture2D" uid="uid://b2ekkteufkksd" path="res://resources/ui/boost.png" id="36_j0qbd"]
-[ext_resource type="Texture2D" uid="uid://pabydqanrjfk" path="res://resources/entities/pangxie.png" id="36_jdek1"]
+[ext_resource type="Texture2D" uid="uid://hfkhvithef6r" path="res://resources/ui/boost.png" id="36_j0qbd"]
+[ext_resource type="Texture2D" uid="uid://d65pg1g3em51" path="res://resources/entities/pangxie.png" id="36_jdek1"]
 [ext_resource type="Material" uid="uid://kenykku7ajam" path="res://effects/blank_particle.tres" id="42_53mc8"]
 [ext_resource type="Script" path="res://effects/colorLaser.gd" id="43_2xbh3"]
-[ext_resource type="AudioStream" uid="uid://ck6o3nx2fttgq" path="res://resources/sounds/spark.ogg" id="45_dn8r1"]
+[ext_resource type="AudioStream" uid="uid://ibu4s0qw21o3" path="res://resources/sounds/spark.ogg" id="45_dn8r1"]
 [ext_resource type="Script" path="res://effects/animatable.gd" id="47_ckxyg"]
-[ext_resource type="Texture2D" uid="uid://o01pdy1b02rv" path="res://resources/weapon-icons/meltdown.png" id="51_ebf4q"]
-[ext_resource type="AudioStream" uid="uid://bvwvh0kapbx33" path="res://resources/sounds/laserbig.ogg" id="52_pclci"]
-[ext_resource type="Texture2D" uid="uid://chdrinbh840y3" path="res://resources/weapon-icons/bengbeng.png" id="52_pmby1"]
-[ext_resource type="Texture2D" uid="uid://b6fbekkrontgr" path="res://resources/weapon-icons/wusong.png" id="53_ty7pb"]
+[ext_resource type="Texture2D" uid="uid://s8e8h6khfl36" path="res://resources/weapon-icons/meltdown.png" id="51_ebf4q"]
+[ext_resource type="AudioStream" uid="uid://dfy2sbdat1gq1" path="res://resources/sounds/laserbig.ogg" id="52_pclci"]
+[ext_resource type="Texture2D" uid="uid://bfjyf3krg8eny" path="res://resources/weapon-icons/bengbeng.png" id="52_pmby1"]
+[ext_resource type="Texture2D" uid="uid://bddmgb43j783h" path="res://resources/weapon-icons/wusong.png" id="53_ty7pb"]
 [ext_resource type="PackedScene" uid="uid://drrf2btbv0wrd" path="res://scenes/valuebar.tscn" id="55_ag6au"]
-[ext_resource type="AudioStream" uid="uid://dyu8j6rhvn4" path="res://resources/sounds/hxsp.ogg" id="55_eua4s"]
+[ext_resource type="AudioStream" uid="uid://c0k5uctqquotg" path="res://resources/sounds/hxsp.ogg" id="55_eua4s"]
 [ext_resource type="PackedScene" uid="uid://c3ffqr6j7phde" path="res://scenes/ui.tscn" id="55_vivcu"]
-[ext_resource type="Texture2D" uid="uid://brn8ssp7peeue" path="res://resources/ui/target.png" id="63_n5hh8"]
+[ext_resource type="Texture2D" uid="uid://76anquim01u4" path="res://resources/ui/target.png" id="63_n5hh8"]
 [ext_resource type="Script" path="res://scripts/followCursor.gd" id="64_wqey6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mon7o"]
@@ -455,7 +455,6 @@ texture_filter = 2
 script = ExtResource("1_luxnj")
 initItems = [NodePath("items/copper"), NodePath("items/silicon"), NodePath("items/graphite"), NodePath("items/wolfram"), NodePath("items/steel"), NodePath("items/alloy")]
 initItemCounts = Array[int]([40, 40, 40, 40, 40, 40])
-loadSave = false
 metadata/_edit_horizontal_guides_ = [351.0, 356.0, 253.0, 258.0, 317.0, 293.0, -80.0, 20.0, -288.0, -263.0]
 metadata/_edit_vertical_guides_ = [-379.0, -617.0, -564.0, -511.0, 0.0, 4.0, 32.0, 36.0, -344.0]
 
@@ -525,7 +524,7 @@ displayName = "大型铜墙"
 texture = ExtResource("6_dem2e")
 healthMax = 75.0
 movementSpeed = -7.0
-evasion = 0.8
+evasion = -0.8
 costItems = [NodePath("../../items/copper"), NodePath("../../items/graphite")]
 costCounts = Array[int]([60, 20])
 
@@ -545,7 +544,7 @@ displayName = "微核处理器"
 texture = ExtResource("25_cbmmq")
 healthMax = 0.0
 critRate = 3.0
-evasion = 1.2
+evasion = 0.9
 costItems = [NodePath("../../items/copper"), NodePath("../../items/silicon")]
 costCounts = Array[int]([10, 20])
 
@@ -556,7 +555,7 @@ texture = ExtResource("26_uve1e")
 healthMax = 0.0
 critRate = 4.5
 critDamage = 5.0
-evasion = 2.0
+evasion = 1.1
 costItems = [NodePath("../../items/copper"), NodePath("../../items/silicon")]
 costCounts = Array[int]([15, 30])
 
@@ -568,7 +567,7 @@ healthMax = 0.0
 attackDamage = 10.0
 critRate = 7.0
 critDamage = 6.0
-evasion = 4.0
+evasion = 2.0
 costItems = [NodePath("../../items/copper"), NodePath("../../items/silicon"), NodePath("../../items/wolfram")]
 costCounts = Array[int]([20, 40, 5])
 
@@ -583,7 +582,7 @@ coolant = 15.0
 oil = 10.0
 slag = 7.0
 bulletBoost = 1
-shootOffset = 5.0
+shootOffset = 15.0
 
 [node name="tank" type="Node" parent="buffs" node_paths=PackedStringArray("costItems")]
 script = ExtResource("4_n3crq")
@@ -596,7 +595,7 @@ coolant = 65.0
 oil = 43.0
 slag = 21.0
 bulletBoost = 2
-shootOffset = 10.0
+shootOffset = 12.5
 
 [node name="duo" type="Node" parent="buffs" node_paths=PackedStringArray("costItems", "addWeapon")]
 script = ExtResource("4_n3crq")
@@ -836,9 +835,9 @@ gravity_scale = 0.0
 linear_damp = 1.2
 script = ExtResource("10_aym84")
 attackLimit = 700.0
-drops = [NodePath("../../items/copper"), NodePath("../../items/oil")]
-dropMinCounts = Array[int]([5, 0])
-dropMaxCounts = Array[int]([20, 3])
+drops = [NodePath("../../items/copper"), NodePath("../../items/oil"), NodePath("../../items/silicon")]
+dropMinCounts = Array[int]([5, 0, 0])
+dropMaxCounts = Array[int]([20, 3, 3])
 weapons = [NodePath("texture/bulletSpawner")]
 displayName = "围护"
 healthMax = 30.0
@@ -869,9 +868,9 @@ gravity_scale = 0.0
 linear_damp = 1.2
 script = ExtResource("20_h1nwg")
 attackLimit = 650.0
-drops = [NodePath("../../items/copper"), NodePath("../../items/coolant")]
-dropMinCounts = Array[int]([3, 2])
-dropMaxCounts = Array[int]([15, 4])
+drops = [NodePath("../../items/copper"), NodePath("../../items/coolant"), NodePath("../../items/silicon")]
+dropMinCounts = Array[int]([3, 2, 0])
+dropMaxCounts = Array[int]([15, 4, 1])
 weapons = [NodePath("texture/leftW"), NodePath("texture/rightW")]
 displayName = "尖刀"
 healthMax = 19.0
@@ -913,7 +912,7 @@ attackLimit = 600.0
 weaponLaunchLimit = 200.0
 drops = [NodePath("../../items/copper"), NodePath("../../items/graphite"), NodePath("../../items/silicon")]
 dropMinCounts = Array[int]([10, 5, 1])
-dropMaxCounts = Array[int]([30, 10, 3])
+dropMaxCounts = Array[int]([30, 10, 5])
 weapons = [NodePath("texture/leftW"), NodePath("texture/rightW")]
 displayName = "战锤"
 healthMax = 40.0
@@ -957,7 +956,7 @@ script = ExtResource("26_rcrdu")
 attackLimit = 0.0
 drops = [NodePath("../../items/copper"), NodePath("../../items/graphite"), NodePath("../../items/silicon"), NodePath("../../items/wolfram")]
 dropMinCounts = Array[int]([0, 0, 4, 1])
-dropMaxCounts = Array[int]([15, 5, 8, 3])
+dropMaxCounts = Array[int]([15, 5, 12, 3])
 weapons = [NodePath("texture/bulletSpawner")]
 displayName = "爬虫"
 healthMax = 28.0
