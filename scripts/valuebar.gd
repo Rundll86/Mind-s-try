@@ -33,3 +33,5 @@ func _process(_delta):
 	#变量
 	frontBar.value += (currentValue - frontBar.value) * animationSpeedFront
 	backBar.value += (currentValue - backBar.value) * animationSpeedBack
+func reach():
+	backBar.value = currentValue

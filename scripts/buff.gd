@@ -15,6 +15,6 @@ class_name buff;
 @export var oil: float = 0;
 @export var slag: float = 0;
 @export var addWeapon: Weapon = null;
-@export var bulletBoost: int = 0;
+@export var bulletBoost: float = 0;
 @export var shootOffset: float = 0;
 static var collections: Array[buff] = [];

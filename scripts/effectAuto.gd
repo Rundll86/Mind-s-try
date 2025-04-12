@@ -1,12 +1,16 @@
 extends GPUParticles2D;
 class_name effectAuto;
 @export var onWorld: bool = false;
+@export var speed: float = 0;
+@export var forwardInit: bool = false;
 var startTime = 0;
 var bullet: bulletAI;
+@onready var initRotation: float = rotation_degrees;
 func _ready():
 	startTime = Time.get_ticks_msec()
 	emitter()
 func _process(_delta):
+	position += Vector2.from_angle(deg_to_rad((initRotation if forwardInit else rotation_degrees) - 90)) * speed * 10
 	queue_redraw()
 	if isEnd():
 		queue_free()

@@ -77,7 +77,7 @@ var attackDamageSaved: float = 0;
 @export var attackSpeed: float = 1;
 @export var attackDamage: float = 1;
 @export var moveSpeedBoost: float = 0;
-@export var bulletBoost: int = 0; # 子弹数量提升
+@export var bulletBoost: float = 0; # 子弹数量提升
 #关于普通超频
 @export var overclockPushForce: float = 40000;
 @export var overclockNeedsHeat: float = 25;
@@ -106,6 +106,7 @@ func _ready():
 	health = healthMax
 	if healthBar and not levelLabel:
 		levelLabel = healthBar.get_node_or_null("transformer/level")
+		healthBar.currentValue = health
 	if playerControlled:
 		healthBar = get_node("/root/world/ui-layer/ui-show/board/infos/healthMask/health")
 		slagBar = get_node("/root/world/ui-layer/ui-show/board/infos/slag")
@@ -147,7 +148,7 @@ func _process(_delta):
 		heatBar.maxValue = heatMax
 		mrjBar.currentValue = mrj
 		mrjBar.maxValue = mrjMax
-		heat += slag / slagMax * 0.01
+		heat += slag * 0.01
 		if not init.isSelectingBuff:
 			var movingUp = Input.is_action_pressed("moveup")
 			var movingDown = Input.is_action_pressed("movedown")
@@ -228,7 +229,7 @@ func _process(_delta):
 			currentWeapon,
 			damageBoostFactor()
 		)
-		for i in range(bulletBoost):
+		for i in range(init.garlicRate(bulletBoost)):
 			launchBullet(
 				currentWeapon.bullet,
 				currentWeapon,
@@ -263,9 +264,9 @@ func _process(_delta):
 func setLevel(newLevel):
 	var healthRatio = health / healthMax
 	level = newLevel
-	healthMax = level * 0.75 * healthMaxSaved + healthMaxSaved
+	healthMax = level * 0.5 * healthMaxSaved + healthMaxSaved
 	health = healthRatio * healthMax
-	attackDamage = level * 0.1 + attackDamageSaved
+	attackDamage = level * 0.05 + attackDamageSaved
 func readBullet(bullet: String):
 	return get_node("/root/world/projectiles/" + bullet) as bulletAI
 func weaponsConsume():
@@ -382,6 +383,7 @@ func hit(damage: float, crit: bool, damageBoost: float, myDamageType: damageType
 		queue_free()
 func PRESETAI_followPlayer():
 	if init.isPlayerAlive:
-		var target = rad_to_deg(playerEntity.position.angle_to_point(position)) - 90
-		texture.rotation_degrees += (target - texture.rotation_degrees) * animationSpeed * 0.15
+		var target_angle = rad_to_deg(playerEntity.global_position.angle_to_point(global_position)) - 90
+		var angle_diff = fmod(target_angle - texture.rotation_degrees + 180, 360) - 180
+		texture.rotation_degrees += angle_diff * animationSpeed * 0.15
 		moveForward()

@@ -15,7 +15,7 @@ def root(page):
 
 @app.route("/index.html")
 def index():
-    return flask.send_file("../build/web/Mind's try.html")
+    return flask.send_file("../build/web/web.html")
 
 
 app.run(host="0.0.0.0", port=8080)

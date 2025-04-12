@@ -6,8 +6,9 @@ var launcher: entity;
 var myTracingTarget: entity;
 var damageBooster: float;
 @export var speed: float = 1.0;
-@export var enable = false;
-@export var lifeTime = 700;
+@export var enable: bool = false;
+@export var lifeTime: float = 700;
+@export var maxTime: float = -1;
 @export var damage = 10;
 @export var damageFromPlayer = false;
 @export var penetrate: float = 0;
@@ -16,7 +17,9 @@ var damageBooster: float;
 @export var myDamageType: damageType.Enums = damageType.Enums.COLLITE;
 @export var repluseAngle: float = 0;
 @export var replusePower: float = 0;
-@export var selfRotateSpeed:float=0;
+@export var selfRotateSpeed: float = 0;
+@export var forwardInit: bool = false;
+@onready var initRotation: float = rotation_degrees;
 func _ready():
 	startPosition = position;
 	startTime = Time.get_ticks_msec()
@@ -33,12 +36,14 @@ func _ready():
 				myTracingTarget = target
 func _process(_delta):
 	# print(float(Time.get_ticks_msec()-startTime))
-	if enable and (
-		global_position.distance_to(startPosition)
-		if speed > 0
-		else float(Time.get_ticks_msec() - startTime)
-		) >= lifeTime:
-		queue_free();
+	if enable:
+		if maxTime > 0 and Time.get_ticks_msec() - startTime >= maxTime:
+			queue_free()
+		if speed > 0:
+			if global_position.distance_to(startPosition) >= lifeTime:
+				queue_free()
+		elif lifeTime > 0 and Time.get_ticks_msec() - startTime >= lifeTime:
+				queue_free()
 	if not enable:
 		return
 	if canTrace() and is_instance_valid(myTracingTarget):
@@ -56,8 +61,8 @@ func _process(_delta):
 				global_rotation_degrees -= tracingSpeed
 			else:
 				global_rotation_degrees += tracingSpeed
-	global_rotation_degrees+=selfRotateSpeed
-	position += Vector2.from_angle(deg_to_rad(global_rotation_degrees - 90)) * speed * 10
+	global_rotation_degrees += selfRotateSpeed
+	position += Vector2.from_angle(deg_to_rad((initRotation if forwardInit else global_rotation_degrees) - 90)) * speed * 10
 func hitCheck(body: entity):
 	if not enable or not body.enableAi:
 		return

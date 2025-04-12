@@ -1,4 +1,4 @@
-[gd_scene load_steps=99 format=4 uid="uid://5ih0ql0ybs0i"]
+[gd_scene load_steps=95 format=4 uid="uid://5ih0ql0ybs0i"]
 
 [ext_resource type="Script" path="res://scripts/entity.gd" id="1_iydk2"]
 [ext_resource type="Script" path="res://scripts/init.gd" id="1_luxnj"]
@@ -58,7 +58,6 @@
 [ext_resource type="Texture2D" uid="uid://s8e8h6khfl36" path="res://resources/weapon-icons/meltdown.png" id="51_ebf4q"]
 [ext_resource type="AudioStream" uid="uid://dfy2sbdat1gq1" path="res://resources/sounds/laserbig.ogg" id="52_pclci"]
 [ext_resource type="Texture2D" uid="uid://bfjyf3krg8eny" path="res://resources/weapon-icons/bengbeng.png" id="52_pmby1"]
-[ext_resource type="Texture2D" uid="uid://bddmgb43j783h" path="res://resources/weapon-icons/wusong.png" id="53_ty7pb"]
 [ext_resource type="PackedScene" uid="uid://drrf2btbv0wrd" path="res://scenes/valuebar.tscn" id="55_ag6au"]
 [ext_resource type="AudioStream" uid="uid://c0k5uctqquotg" path="res://resources/sounds/hxsp.ogg" id="55_eua4s"]
 [ext_resource type="PackedScene" uid="uid://c3ffqr6j7phde" path="res://scenes/ui.tscn" id="55_vivcu"]
@@ -215,7 +214,7 @@ length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
+tracks/0/path = NodePath("center:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -226,7 +225,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:modulate:a")
+tracks/1/path = NodePath("center:modulate:a")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -237,7 +236,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".:scale:x")
+tracks/2/path = NodePath("center:scale:x")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -248,7 +247,7 @@ tracks/2/keys = {
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath(".:scale:y")
+tracks/3/path = NodePath("center:scale:y")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -264,7 +263,7 @@ step = 0.05
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
+tracks/0/path = NodePath("center:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -275,7 +274,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:modulate:a")
+tracks/1/path = NodePath("center:modulate:a")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -286,7 +285,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".:scale:x")
+tracks/2/path = NodePath("center:scale:x")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -297,7 +296,7 @@ tracks/2/keys = {
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath(".:scale:y")
+tracks/3/path = NodePath("center:scale:y")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -306,46 +305,10 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.3, 6.7, 7)
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_hsp3y"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hckcw"]
 _data = {
 "RESET": SubResource("Animation_12nwq"),
 "rotate": SubResource("Animation_wkmtn")
-}
-
-[sub_resource type="Animation" id="Animation_r32hl"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(6.28319, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_wlikf"]
-resource_name = "rotate"
-length = 7.0
-step = 0.05
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(6.28319, -0.25, 0, 0.25, 0, -18.8496, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 7)
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ll8mw"]
-_data = {
-"RESET": SubResource("Animation_r32hl"),
-"rotate": SubResource("Animation_wlikf")
 }
 
 [sub_resource type="OggPacketSequence" id="OggPacketSequence_1d0bs"]
@@ -449,18 +412,17 @@ _data = {
 }
 
 [node name="world" type="Node2D" node_paths=PackedStringArray("initItems")]
-process_mode = 1
-process_priority = -1
 texture_filter = 2
 script = ExtResource("1_luxnj")
 initItems = [NodePath("items/copper"), NodePath("items/silicon"), NodePath("items/graphite"), NodePath("items/wolfram"), NodePath("items/steel"), NodePath("items/alloy")]
 initItemCounts = Array[int]([40, 40, 40, 40, 40, 40])
+loadSave = false
 metadata/_edit_horizontal_guides_ = [351.0, 356.0, 253.0, 258.0, 317.0, 293.0, -80.0, 20.0, -288.0, -263.0]
 metadata/_edit_vertical_guides_ = [-379.0, -617.0, -564.0, -511.0, 0.0, 4.0, 32.0, 36.0, -344.0]
 
 [node name="userData" type="Node" parent="." node_paths=PackedStringArray("startWeapons")]
 script = ExtResource("3_fu3qe")
-startWeapons = [NodePath("../player/texture/leftW"), NodePath("../player/texture/rightW")]
+startWeapons = [NodePath("../player/texture/centerW/squirrel")]
 
 [node name="damageType" type="Node" parent="."]
 script = ExtResource("3_jqkn2")
@@ -502,7 +464,7 @@ fromWave = 5
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/pangxie")
 spawnAsBoss = true
-fromWave = 8
+fromWave = 10
 toWave = 45
 perWaves = 5
 
@@ -581,8 +543,8 @@ costCounts = Array[int]([40, 20, 15])
 coolant = 15.0
 oil = 10.0
 slag = 7.0
-bulletBoost = 1
-shootOffset = 15.0
+bulletBoost = 0.25
+shootOffset = 7.2
 
 [node name="tank" type="Node" parent="buffs" node_paths=PackedStringArray("costItems")]
 script = ExtResource("4_n3crq")
@@ -594,8 +556,8 @@ costCounts = Array[int]([60, 30, 45])
 coolant = 65.0
 oil = 43.0
 slag = 21.0
-bulletBoost = 2
-shootOffset = 12.5
+bulletBoost = 0.4
+shootOffset = 5.0
 
 [node name="duo" type="Node" parent="buffs" node_paths=PackedStringArray("costItems", "addWeapon")]
 script = ExtResource("4_n3crq")
@@ -683,8 +645,7 @@ polygon = PackedVector2Array(0, 0, 5, 5, 5, 20, 0, 25, -5, 20, -5, 5)
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
-lifeTime = 1000
-damage = 12
+damage = 7
 myDamageType = 7
 
 [node name="texture" type="Polygon2D" parent="projectiles/tracingBullet"]
@@ -703,8 +664,8 @@ collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 2.0
-lifeTime = 1200
-damage = 33
+lifeTime = 1200.0
+damage = 12
 
 [node name="texture" type="Polygon2D" parent="projectiles/hailBullet"]
 scale = Vector2(0.8, 0.8)
@@ -723,7 +684,7 @@ collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 2.0
-lifeTime = 300
+lifeTime = 100.0
 damage = 17
 penetrate = 1.0
 myDamageType = 0
@@ -740,7 +701,7 @@ collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 0.0
-lifeTime = 50
+lifeTime = 100.0
 damage = 90
 myDamageType = 0
 
@@ -753,7 +714,7 @@ collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 0.0
-lifeTime = 500
+lifeTime = 10.0
 penetrate = 1.0
 myDamageType = 6
 
@@ -766,7 +727,7 @@ collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 0.0
-lifeTime = 400
+lifeTime = 300.0
 damage = 7
 penetrate = 1.0
 myDamageType = 1
@@ -781,8 +742,6 @@ collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 0.0
-lifeTime = 400
-damage = 7
 penetrate = 1.0
 myDamageType = 0
 
@@ -795,12 +754,13 @@ position = Vector2(432, 216)
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
-speed = 0.0
-lifeTime = 7000
+speed = 0.2
+maxTime = 7000.0
 damage = 5
 penetrate = 1.0
 myDamageType = 5
-selfRotateSpeed = 3.5
+selfRotateSpeed = 5.0
+forwardInit = true
 
 [node name="hitbox1" type="CollisionShape2D" parent="projectiles/squirrel"]
 position = Vector2(0, -100)
@@ -818,12 +778,12 @@ shape = SubResource("SegmentShape2D_b56g3")
 
 [node name="hitbox4" type="CollisionShape2D" parent="projectiles/squirrel"]
 position = Vector2(-58, 80)
-rotation = 3.76991
+rotation = -2.51328
 shape = SubResource("SegmentShape2D_b56g3")
 
 [node name="hitbox5" type="CollisionShape2D" parent="projectiles/squirrel"]
 position = Vector2(-95, -30)
-rotation = 5.02655
+rotation = -1.25664
 shape = SubResource("SegmentShape2D_b56g3")
 
 [node name="units" type="Node2D" parent="."]
@@ -1217,65 +1177,64 @@ toWidth = 25
 alpha = 0.5
 
 [node name="squirrel" type="GPUParticles2D" parent="effects" node_paths=PackedStringArray("animators")]
-modulate = Color(1, 1, 1, 0)
-position = Vector2(432, 216)
+position = Vector2(271, 210)
 scale = Vector2(1e-05, 1e-05)
 process_material = ExtResource("42_53mc8")
 script = ExtResource("47_ckxyg")
-animators = [NodePath("animator"), NodePath("bengbeng/animator")]
-animationNames = Array[String](["rotate", "rotate"])
+animators = [NodePath("animator")]
+animationNames = Array[String](["rotate"])
 onWorld = true
-
-[node name="squirrel1" type="Node2D" parent="effects/squirrel"]
-
-[node name="texture" type="Sprite2D" parent="effects/squirrel/squirrel1"]
-position = Vector2(0, -100)
-texture = ExtResource("52_pmby1")
-
-[node name="squirrel2" type="Node2D" parent="effects/squirrel"]
-rotation = 1.25664
-
-[node name="texture" type="Sprite2D" parent="effects/squirrel/squirrel2"]
-position = Vector2(0, -100)
-texture = ExtResource("52_pmby1")
-
-[node name="squirrel3" type="Node2D" parent="effects/squirrel"]
-rotation = 2.51327
-
-[node name="texture" type="Sprite2D" parent="effects/squirrel/squirrel3"]
-position = Vector2(0, -100)
-texture = ExtResource("52_pmby1")
-
-[node name="squirrel4" type="Node2D" parent="effects/squirrel"]
-rotation = 3.76991
-
-[node name="texture" type="Sprite2D" parent="effects/squirrel/squirrel4"]
-position = Vector2(0, -100)
-texture = ExtResource("52_pmby1")
-
-[node name="squirrel5" type="Node2D" parent="effects/squirrel"]
-rotation = 5.02655
-
-[node name="texture" type="Sprite2D" parent="effects/squirrel/squirrel5"]
-position = Vector2(0, -100)
-texture = ExtResource("52_pmby1")
+speed = 0.2
+forwardInit = true
 
 [node name="animator" type="AnimationPlayer" parent="effects/squirrel"]
 process_mode = 3
 libraries = {
-"": SubResource("AnimationLibrary_hsp3y")
+"": SubResource("AnimationLibrary_hckcw")
 }
 
-[node name="bengbeng" type="Sprite2D" parent="effects/squirrel"]
-z_index = 2
-rotation = 6.28319
-texture = ExtResource("53_ty7pb")
+[node name="center" type="Node2D" parent="effects/squirrel"]
+modulate = Color(1, 1, 1, 0)
+scale = Vector2(1e-05, 1e-05)
 
-[node name="animator" type="AnimationPlayer" parent="effects/squirrel/bengbeng"]
-process_mode = 3
-libraries = {
-"": SubResource("AnimationLibrary_ll8mw")
-}
+[node name="squirrel1" type="Node2D" parent="effects/squirrel/center"]
+scale = Vector2(100000, 100000)
+
+[node name="texture" type="Sprite2D" parent="effects/squirrel/center/squirrel1"]
+position = Vector2(0, -100)
+texture = ExtResource("52_pmby1")
+
+[node name="squirrel2" type="Node2D" parent="effects/squirrel/center"]
+rotation = 1.25664
+scale = Vector2(100000, 100000)
+
+[node name="texture" type="Sprite2D" parent="effects/squirrel/center/squirrel2"]
+position = Vector2(0, -100)
+texture = ExtResource("52_pmby1")
+
+[node name="squirrel3" type="Node2D" parent="effects/squirrel/center"]
+rotation = 2.51327
+scale = Vector2(100000, 100000)
+
+[node name="texture" type="Sprite2D" parent="effects/squirrel/center/squirrel3"]
+position = Vector2(0, -100)
+texture = ExtResource("52_pmby1")
+
+[node name="squirrel4" type="Node2D" parent="effects/squirrel/center"]
+rotation = -2.51328
+scale = Vector2(100000, 100000)
+
+[node name="texture" type="Sprite2D" parent="effects/squirrel/center/squirrel4"]
+position = Vector2(0, -100)
+texture = ExtResource("52_pmby1")
+
+[node name="squirrel5" type="Node2D" parent="effects/squirrel/center"]
+rotation = -1.25664
+scale = Vector2(100000, 100000)
+
+[node name="texture" type="Sprite2D" parent="effects/squirrel/center/squirrel5"]
+position = Vector2(0, -100)
+texture = ExtResource("52_pmby1")
 
 [node name="map" type="Sprite2D" parent="."]
 process_mode = 4
@@ -1296,7 +1255,7 @@ enableAi = true
 playerControlled = true
 damageFromPlayer = true
 attackLimit = 250.0
-healthMax = 500.0
+healthMax = 150.0
 shootOffset = 3.0
 level = 0
 

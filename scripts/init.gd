@@ -203,7 +203,7 @@ static func generateBuffCard():
 			entryBoxes.append(
 				createEntryBoxWith(
 					"子弹提升",
-					entryBox.EntryUnit.NONE,
+					entryBox.EntryUnit.PERCENT,
 					i.bulletBoost
 				)
 			)
@@ -257,6 +257,12 @@ static func shrimpRate(rate: float, maxCount: int):
 	while randf() < rate and (result < maxCount or maxCount <= 0):
 		result += 1
 	return result
+static func garlicRate(rate: float):
+	var result = 0
+	while randf() < rate:
+		result += 1
+		rate -= 1
+	return result
 static func getAllEnemies():
 	var result = []
 	for i in staticFuncCaller.get_children():
@@ -277,3 +283,15 @@ static func createWeaponLabel(i: int):
 	currentWeapon.get_node("name").text = userData.weapons[i].displayName
 	currentWeapon.get_node("texture").texture = userData.weapons[i].icon
 	weaponShow.add_child(currentWeapon)
+static func frame(count: int = 1):
+	if count <= 0: return
+	else:
+		await staticFuncCaller.get_tree().process_frame
+		await frame(count - 1)
+static func normalize_angle(angle: int):
+	var normalized_angle = angle % 360
+	if normalized_angle < 0:
+		normalized_angle += 360
+	if normalized_angle > 180:
+		normalized_angle -= 360
+	return normalized_angle
