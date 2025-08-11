@@ -1,67 +1,67 @@
 [gd_scene load_steps=95 format=4 uid="uid://5ih0ql0ybs0i"]
 
-[ext_resource type="Script" path="res://scripts/entity.gd" id="1_iydk2"]
 [ext_resource type="Script" path="res://scripts/init.gd" id="1_luxnj"]
-[ext_resource type="Texture2D" uid="uid://cispuyug12u18" path="res://resources/maps/outputs/mao.png" id="1_oe6ch"]
-[ext_resource type="Texture2D" uid="uid://h18f7c614s23" path="res://resources/entities/player.png" id="2_8pxho"]
+[ext_resource type="Texture2D" uid="uid://djhfolsmykquq" path="res://resources/maps/outputs/mao.png" id="1_oe6ch"]
+[ext_resource type="Texture2D" uid="uid://b4emlyfohjcun" path="res://resources/entities/player.png" id="2_8pxho"]
 [ext_resource type="Script" path="res://scripts/waveDefine.gd" id="2_pf3la"]
 [ext_resource type="Script" path="res://scripts/userData.gd" id="3_fu3qe"]
 [ext_resource type="Script" path="res://scripts/damageType.gd" id="3_jqkn2"]
 [ext_resource type="Script" path="res://scripts/buff.gd" id="4_n3crq"]
 [ext_resource type="Script" path="res://scripts/position_lock.gd" id="5_i3cw1"]
 [ext_resource type="Script" path="res://scripts/entity_engine.gd" id="5_xuxgv"]
-[ext_resource type="Texture2D" uid="uid://bmwuokt71hgcj" path="res://resources/ui/copper-wall-large.png" id="6_dem2e"]
-[ext_resource type="AudioStream" uid="uid://cmuc4gqmsgaqh" path="res://resources/sounds/pew.ogg" id="6_gxym7"]
+[ext_resource type="Texture2D" uid="uid://ylh6xp1k3rlx" path="res://resources/ui/copper-wall-large.png" id="6_dem2e"]
+[ext_resource type="AudioStream" uid="uid://d2puti80mo1r1" path="res://resources/sounds/pew.ogg" id="6_gxym7"]
 [ext_resource type="Script" path="res://scripts/weapon.gd" id="6_l6cvj"]
 [ext_resource type="Script" path="res://scripts/bulletAI.gd" id="7_5ybsd"]
-[ext_resource type="Texture2D" uid="uid://m0krjidie653" path="res://resources/entities/stell.png" id="10_24r3v"]
+[ext_resource type="Texture2D" uid="uid://dugtqugriqhiy" path="res://resources/entities/stell.png" id="10_24r3v"]
 [ext_resource type="Script" path="res://units/stell.gd" id="10_aym84"]
-[ext_resource type="Texture2D" uid="uid://ck28nn5xkmnn3" path="res://resources/ui/liquid-container-merged.png" id="11_cmhkf"]
-[ext_resource type="Texture2D" uid="uid://b6v2swvekmei2" path="res://resources/items/copper.png" id="11_fh18r"]
+[ext_resource type="Texture2D" uid="uid://dfw27mp48yapb" path="res://resources/ui/liquid-container-merged.png" id="11_cmhkf"]
+[ext_resource type="Texture2D" uid="uid://dtluh3h8t3g38" path="res://resources/items/copper.png" id="11_fh18r"]
 [ext_resource type="Script" path="res://scripts/item.gd" id="11_tf7be"]
-[ext_resource type="Texture2D" uid="uid://ccfuafegb0t5r" path="res://resources/ui/silicon.png" id="12_8ftri"]
-[ext_resource type="Texture2D" uid="uid://bivdbx808fial" path="res://resources/ui/liquid-tank-merged.png" id="12_j4gxp"]
-[ext_resource type="Texture2D" uid="uid://bc3nvyyy0qo0u" path="res://resources/ui/graphite.png" id="13_rx1pe"]
-[ext_resource type="Texture2D" uid="uid://btuqtmepognvp" path="res://resources/ui/wolfram.png" id="14_a13hj"]
-[ext_resource type="Texture2D" uid="uid://bfiogfn8uaod0" path="res://resources/ui/steel.png" id="15_nxvoo"]
-[ext_resource type="Texture2D" uid="uid://fdcfelxra3vm" path="res://resources/ui/alloy.png" id="16_7jkwn"]
-[ext_resource type="Texture2D" uid="uid://bnpre5bi3evtk" path="res://resources/weapon-icons/parallax.png" id="18_bf3dg"]
+[ext_resource type="Texture2D" uid="uid://cb7ln7ihiycv5" path="res://resources/ui/silicon.png" id="12_8ftri"]
+[ext_resource type="Texture2D" uid="uid://ds7mi4gyi8puq" path="res://resources/ui/liquid-tank-merged.png" id="12_j4gxp"]
+[ext_resource type="Texture2D" uid="uid://dxj0hnwrd1hoe" path="res://resources/ui/graphite.png" id="13_rx1pe"]
+[ext_resource type="Texture2D" uid="uid://cyaqlbvj2fw6x" path="res://resources/ui/wolfram.png" id="14_a13hj"]
+[ext_resource type="Texture2D" uid="uid://dcllgxxwv4wwn" path="res://resources/ui/steel.png" id="15_nxvoo"]
+[ext_resource type="Texture2D" uid="uid://cx8oexgk3ac85" path="res://resources/ui/alloy.png" id="16_7jkwn"]
+[ext_resource type="Texture2D" uid="uid://bi6752cc11p40" path="res://resources/weapon-icons/parallax.png" id="18_bf3dg"]
 [ext_resource type="Script" path="res://units/dagger.gd" id="20_h1nwg"]
-[ext_resource type="Texture2D" uid="uid://dpwjv2jyqhfqh" path="res://resources/ui/bengbeng.png" id="20_svt1l"]
-[ext_resource type="Texture2D" uid="uid://cxlwcfrf8h6u7" path="res://resources/entities/dagger.png" id="21_dbapv"]
-[ext_resource type="AudioStream" uid="uid://dbomh5v1shkvi" path="res://resources/sounds/flame.ogg" id="21_fft66"]
+[ext_resource type="Texture2D" uid="uid://b5174q07jy0wm" path="res://resources/ui/bengbeng.png" id="20_svt1l"]
+[ext_resource type="Texture2D" uid="uid://1lcsss4ourm3" path="res://resources/entities/dagger.png" id="21_dbapv"]
+[ext_resource type="AudioStream" uid="uid://03xexghyyyqc" path="res://resources/sounds/flame.ogg" id="21_fft66"]
 [ext_resource type="Script" path="res://units/mace.gd" id="23_4s4uw"]
-[ext_resource type="Texture2D" uid="uid://dg5esjs58lvgy" path="res://resources/ui/overdrive_dome.png" id="23_f85n3"]
-[ext_resource type="Texture2D" uid="uid://tbnp4putwik4" path="res://resources/entities/mace.png" id="23_opgie"]
-[ext_resource type="Texture2D" uid="uid://c4vo1mtajlol2" path="res://resources/ui/copper_wall.png" id="24_56s8g"]
-[ext_resource type="Texture2D" uid="uid://bn1437rf2ri6x" path="res://resources/ui/micro-processor.png" id="25_cbmmq"]
-[ext_resource type="Texture2D" uid="uid://3hk8n1yrv2y2" path="res://resources/entities/crawler.png" id="25_w6eu4"]
+[ext_resource type="Texture2D" uid="uid://c0m2vvncl1fl3" path="res://resources/ui/overdrive_dome.png" id="23_f85n3"]
+[ext_resource type="Texture2D" uid="uid://bpkt3n4ybrwgw" path="res://resources/entities/mace.png" id="23_opgie"]
+[ext_resource type="Texture2D" uid="uid://ygxer1b5rtmg" path="res://resources/ui/copper_wall.png" id="24_56s8g"]
+[ext_resource type="Texture2D" uid="uid://bu10fboy32rb4" path="res://resources/ui/micro-processor.png" id="25_cbmmq"]
+[ext_resource type="Texture2D" uid="uid://ci5h1gsy7dl6f" path="res://resources/entities/crawler.png" id="25_w6eu4"]
 [ext_resource type="Script" path="res://units/crawler.gd" id="26_rcrdu"]
-[ext_resource type="Texture2D" uid="uid://gdusqis087dr" path="res://resources/ui/logic-processor.png" id="26_uve1e"]
-[ext_resource type="Texture2D" uid="uid://c2coa6mduia70" path="res://resources/ui/hyper-processor.png" id="27_yd85k"]
-[ext_resource type="Texture2D" uid="uid://cf7x21v8nlp7o" path="res://resources/entities/elude.png" id="28_in1ka"]
+[ext_resource type="Texture2D" uid="uid://d2ajxcows6553" path="res://resources/ui/logic-processor.png" id="26_uve1e"]
+[ext_resource type="Texture2D" uid="uid://iuhy1k1qarp5" path="res://resources/ui/hyper-processor.png" id="27_yd85k"]
+[ext_resource type="Texture2D" uid="uid://dp2umjrp6afdj" path="res://resources/entities/elude.png" id="28_in1ka"]
 [ext_resource type="Script" path="res://units/elude.gd" id="28_qwxqq"]
-[ext_resource type="Texture2D" uid="uid://d18sydw87d56s" path="res://resources/weapon-icons/duo-preview.png" id="28_s7ifl"]
-[ext_resource type="Texture2D" uid="uid://do8x118ryanaj" path="res://resources/weapon-icons/hail.png" id="29_d7t5f"]
+[ext_resource type="Texture2D" uid="uid://ru0wyinn38sc" path="res://resources/weapon-icons/duo-preview.png" id="28_s7ifl"]
+[ext_resource type="Texture2D" uid="uid://dv87hngijusqs" path="res://resources/weapon-icons/hail.png" id="29_d7t5f"]
 [ext_resource type="Script" path="res://effects/thunder.gd" id="30_rhbpo"]
-[ext_resource type="Texture2D" uid="uid://3vnd3cwucren" path="res://resources/weapon-icons/scorch.png" id="30_rljy7"]
-[ext_resource type="Texture2D" uid="uid://bflqnlim87sfd" path="res://resources/weapon-icons/arc.png" id="31_d38fh"]
+[ext_resource type="Texture2D" uid="uid://b7bol7cfwerqu" path="res://resources/weapon-icons/scorch.png" id="30_rljy7"]
+[ext_resource type="Texture2D" uid="uid://ddp7ikpjimbj6" path="res://resources/weapon-icons/arc.png" id="31_d38fh"]
 [ext_resource type="Script" path="res://scripts/damageNode.gd" id="34_gam8l"]
 [ext_resource type="Script" path="res://scripts/effectAuto.gd" id="35_loevs"]
 [ext_resource type="Script" path="res://units/pangxie.gd" id="36_g5mu3"]
-[ext_resource type="Texture2D" uid="uid://hfkhvithef6r" path="res://resources/ui/boost.png" id="36_j0qbd"]
-[ext_resource type="Texture2D" uid="uid://d65pg1g3em51" path="res://resources/entities/pangxie.png" id="36_jdek1"]
+[ext_resource type="Texture2D" uid="uid://mmaoivkd8p5x" path="res://resources/ui/boost.png" id="36_j0qbd"]
+[ext_resource type="Texture2D" uid="uid://ciyv206ew8cxs" path="res://resources/entities/pangxie.png" id="36_jdek1"]
 [ext_resource type="Material" uid="uid://kenykku7ajam" path="res://effects/blank_particle.tres" id="42_53mc8"]
 [ext_resource type="Script" path="res://effects/colorLaser.gd" id="43_2xbh3"]
-[ext_resource type="AudioStream" uid="uid://ibu4s0qw21o3" path="res://resources/sounds/spark.ogg" id="45_dn8r1"]
+[ext_resource type="AudioStream" uid="uid://dmev0ywn0di43" path="res://resources/sounds/spark.ogg" id="45_dn8r1"]
 [ext_resource type="Script" path="res://effects/animatable.gd" id="47_ckxyg"]
-[ext_resource type="Texture2D" uid="uid://s8e8h6khfl36" path="res://resources/weapon-icons/meltdown.png" id="51_ebf4q"]
-[ext_resource type="AudioStream" uid="uid://dfy2sbdat1gq1" path="res://resources/sounds/laserbig.ogg" id="52_pclci"]
-[ext_resource type="Texture2D" uid="uid://bfjyf3krg8eny" path="res://resources/weapon-icons/bengbeng.png" id="52_pmby1"]
+[ext_resource type="Texture2D" uid="uid://crl5ftclv43fm" path="res://resources/weapon-icons/meltdown.png" id="51_ebf4q"]
+[ext_resource type="AudioStream" uid="uid://ckadd6jndcfrt" path="res://resources/sounds/laserbig.ogg" id="52_pclci"]
+[ext_resource type="Texture2D" uid="uid://cpspfmftlal82" path="res://resources/weapon-icons/bengbeng.png" id="52_pmby1"]
+[ext_resource type="Script" path="res://units/player.gd" id="54_ep18l"]
 [ext_resource type="PackedScene" uid="uid://drrf2btbv0wrd" path="res://scenes/valuebar.tscn" id="55_ag6au"]
-[ext_resource type="AudioStream" uid="uid://c0k5uctqquotg" path="res://resources/sounds/hxsp.ogg" id="55_eua4s"]
+[ext_resource type="AudioStream" uid="uid://dsf37cj7yyo2b" path="res://resources/sounds/hxsp.ogg" id="55_eua4s"]
 [ext_resource type="PackedScene" uid="uid://c3ffqr6j7phde" path="res://scenes/ui.tscn" id="55_vivcu"]
-[ext_resource type="Texture2D" uid="uid://76anquim01u4" path="res://resources/ui/target.png" id="63_n5hh8"]
+[ext_resource type="Texture2D" uid="uid://coubcf115dbg7" path="res://resources/ui/target.png" id="63_n5hh8"]
 [ext_resource type="Script" path="res://scripts/followCursor.gd" id="64_wqey6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mon7o"]
@@ -422,7 +422,7 @@ metadata/_edit_vertical_guides_ = [-379.0, -617.0, -564.0, -511.0, 0.0, 4.0, 32.
 
 [node name="userData" type="Node" parent="." node_paths=PackedStringArray("startWeapons")]
 script = ExtResource("3_fu3qe")
-startWeapons = [NodePath("../player/texture/centerW/squirrel")]
+startWeapons = [NodePath("../player/texture/leftW"), NodePath("../player/texture/rightW")]
 
 [node name="damageType" type="Node" parent="."]
 script = ExtResource("3_jqkn2")
@@ -646,6 +646,7 @@ collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
 damage = 7
+tracingTime = 2000.0
 myDamageType = 7
 
 [node name="texture" type="Polygon2D" parent="projectiles/tracingBullet"]
@@ -684,8 +685,8 @@ collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 2.0
-lifeTime = 100.0
-damage = 17
+lifeTime = 250.0
+damage = 23
 penetrate = 1.0
 myDamageType = 0
 
@@ -714,7 +715,7 @@ collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 0.0
-lifeTime = 10.0
+lifeTime = 50.0
 penetrate = 1.0
 myDamageType = 6
 
@@ -1250,14 +1251,12 @@ collision_layer = 2
 collision_mask = 2
 gravity_scale = 0.0
 linear_damp = 1.2
-script = ExtResource("1_iydk2")
+script = ExtResource("54_ep18l")
 enableAi = true
 playerControlled = true
 damageFromPlayer = true
-attackLimit = 250.0
-healthMax = 150.0
+healthMax = 50.0
 shootOffset = 3.0
-level = 0
 
 [node name="texture" type="Sprite2D" parent="player"]
 texture = ExtResource("2_8pxho")
