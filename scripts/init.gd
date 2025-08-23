@@ -75,6 +75,13 @@ func _ready():
 	for i in range(len(userData.weapons)):
 		createWeaponLabel(i)
 	$"ui-layer".show()
+	if len($userData.startWeapons)==0:
+		var weapons=$player/texture/centerW.get_children()
+		weapons.shuffle()
+		playerEntity.weapons.clear()
+		for i in range(randi_range(1,3)):
+			var target=weapons[i]
+			$userData.addWeapon(target)
 func _process(_delta):
 	waveTip.get_node("bar/tools/cost").text = str(resetBuffCostSaved)
 	if Input.is_action_just_pressed("pause"):

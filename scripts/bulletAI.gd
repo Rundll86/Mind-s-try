@@ -3,6 +3,7 @@ class_name bulletAI
 var startPosition: Vector2;
 var startTime: int;
 var launcher: entity;
+var effect:effectAuto;
 var myTracingTarget: entity;
 var damageBooster: float;
 @export var speed: float = 1.0;
@@ -19,6 +20,7 @@ var damageBooster: float;
 @export var replusePower: float = 0;
 @export var selfRotateSpeed: float = 0;
 @export var forwardInit: bool = false;
+@export var autoEndEffect:bool=false;
 @onready var initRotation: float = rotation_degrees;
 func _ready():
 	startPosition = position;
@@ -35,16 +37,15 @@ func _ready():
 			if target:
 				myTracingTarget = target
 func _process(_delta):
-	# print(float(Time.get_ticks_msec()-startTime))
 	if enable:
 		if maxTime > 0 and Time.get_ticks_msec() - startTime >= maxTime:
-			queue_free()
+			die()
 		if speed > 0:
 			if global_position.distance_to(startPosition) >= lifeTime:
-				queue_free()
+				die()
 		elif lifeTime > 0 and Time.get_ticks_msec() - startTime >= lifeTime:
-				queue_free()
-	if not enable:
+				die()
+	else:
 		return
 	if canTrace() and is_instance_valid(myTracingTarget):
 		tracingSpeed *= 1.05
@@ -61,8 +62,10 @@ func _process(_delta):
 				global_rotation_degrees -= tracingSpeed
 			else:
 				global_rotation_degrees += tracingSpeed
-	global_rotation_degrees += selfRotateSpeed
 	position += Vector2.from_angle(deg_to_rad((initRotation if forwardInit else global_rotation_degrees) - 90)) * speed * 10
+	if not is_instance_valid(launcher):
+		return			
+	global_rotation_degrees += selfRotateSpeed*(launcher.attackSpeed**1)
 func hitCheck(body: entity):
 	if not enable or not body.enableAi:
 		return
@@ -83,7 +86,11 @@ func hitCheck(body: entity):
 	body.moveForward(-replusePower)
 	body.texture.rotation_degrees -= repluseAngle
 	if randf() < penetrate:
+		damage*=penetrate
 		return
 	queue_free()
 func canTrace():
 	return Time.get_ticks_msec() - startTime < tracingTime
+func die():
+	if autoEndEffect:effect.forceToEnd()
+	queue_free()

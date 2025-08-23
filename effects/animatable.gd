@@ -11,3 +11,6 @@ func isEnd():
 			result=false
 			break
 	return result
+func forceToEnd():
+	for i in animators:
+		i.stop()

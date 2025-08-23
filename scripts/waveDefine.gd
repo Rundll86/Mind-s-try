@@ -1,8 +1,8 @@
 extends Node2D
 class_name waveDefine
 @export var target: entity;
-@export var rateBoost: float = 0;
-@export var maxCount: int = 10;
+@export var minCount: float = 1;
+@export var maxCount: int = 3;
 @export var spawnAsBoss: bool = false;
 @export var fromWave: int = 1; # 从第一波到以后无限波
 @export var toWave: int = -1; # 无限

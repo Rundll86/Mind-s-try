@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=4 uid="uid://5ih0ql0ybs0i"]
+[gd_scene load_steps=96 format=4 uid="uid://5ih0ql0ybs0i"]
 
 [ext_resource type="Script" path="res://scripts/init.gd" id="1_luxnj"]
 [ext_resource type="Texture2D" uid="uid://djhfolsmykquq" path="res://resources/maps/outputs/mao.png" id="1_oe6ch"]
@@ -75,6 +75,10 @@ radius = 1.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nj1f1"]
 radius = 20.0
+height = 1400.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1loei"]
+radius = 12.5
 height = 500.0
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_b56g3"]
@@ -420,9 +424,8 @@ loadSave = false
 metadata/_edit_horizontal_guides_ = [351.0, 356.0, 253.0, 258.0, 317.0, 293.0, -80.0, 20.0, -288.0, -263.0]
 metadata/_edit_vertical_guides_ = [-379.0, -617.0, -564.0, -511.0, 0.0, 4.0, 32.0, 36.0, -344.0]
 
-[node name="userData" type="Node" parent="." node_paths=PackedStringArray("startWeapons")]
+[node name="userData" type="Node" parent="."]
 script = ExtResource("3_fu3qe")
-startWeapons = [NodePath("../player/texture/leftW"), NodePath("../player/texture/rightW")]
 
 [node name="damageType" type="Node" parent="."]
 script = ExtResource("3_jqkn2")
@@ -430,37 +433,33 @@ script = ExtResource("3_jqkn2")
 [node name="waves" type="Node" parent="."]
 process_mode = 4
 
-[node name="1" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
+[node name="stell" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/stell")
-rateBoost = 0.3
 fromWave = 2
 
-[node name="2" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
+[node name="dagger" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/dagger")
-rateBoost = 0.3
 
-[node name="3" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
+[node name="mace" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/mace")
-rateBoost = 0.25
 fromWave = 4
 
-[node name="4" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
+[node name="elude" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/elude")
 spawnAsBoss = true
 fromWave = 12
 perWaves = 8
 
-[node name="5" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
+[node name="crawler" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/crawler")
-rateBoost = 0.25
 fromWave = 5
 
-[node name="6" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
+[node name="pangxie" type="Node2D" parent="waves" node_paths=PackedStringArray("target")]
 script = ExtResource("2_pf3la")
 target = NodePath("../../units/pangxie")
 spawnAsBoss = true
@@ -526,10 +525,9 @@ script = ExtResource("4_n3crq")
 displayName = "超级处理器"
 texture = ExtResource("27_yd85k")
 healthMax = 0.0
-attackDamage = 10.0
 critRate = 7.0
 critDamage = 6.0
-evasion = 2.0
+evasion = 3.0
 costItems = [NodePath("../../items/copper"), NodePath("../../items/silicon"), NodePath("../../items/wolfram")]
 costCounts = Array[int]([20, 40, 5])
 
@@ -543,8 +541,8 @@ costCounts = Array[int]([40, 20, 15])
 coolant = 15.0
 oil = 10.0
 slag = 7.0
-bulletBoost = 0.25
-shootOffset = 7.2
+bulletBoost = 0.3
+shootOffset = 3.0
 
 [node name="tank" type="Node" parent="buffs" node_paths=PackedStringArray("costItems")]
 script = ExtResource("4_n3crq")
@@ -556,8 +554,8 @@ costCounts = Array[int]([60, 30, 45])
 coolant = 65.0
 oil = 43.0
 slag = 21.0
-bulletBoost = 0.4
-shootOffset = 5.0
+bulletBoost = 0.45
+shootOffset = 6.0
 
 [node name="duo" type="Node" parent="buffs" node_paths=PackedStringArray("costItems", "addWeapon")]
 script = ExtResource("4_n3crq")
@@ -600,6 +598,8 @@ script = ExtResource("4_n3crq")
 displayName = "差扰"
 texture = ExtResource("18_bf3dg")
 healthMax = 0.0
+attackSpeed = 15.0
+attackDamage = 12.0
 costItems = [NodePath("../../items/silicon"), NodePath("../../items/graphite"), NodePath("../../items/wolfram")]
 costCounts = Array[int]([15, 30, 30])
 addWeapon = NodePath("../../player/texture/centerW/parallax")
@@ -622,6 +622,17 @@ costItems = [NodePath("../../items/squirrel")]
 costCounts = Array[int]([5])
 addWeapon = NodePath("../../player/texture/centerW/squirrel")
 
+[node name="pangxie" type="Node" parent="buffs" node_paths=PackedStringArray("costItems")]
+script = ExtResource("4_n3crq")
+displayName = "螃蟹"
+texture = ExtResource("36_jdek1")
+healthMax = 0.0
+attackDamage = 7.0
+critDamage = 11.0
+costItems = [NodePath("../../items/pangxie")]
+costCounts = Array[int]([10])
+shootOffset = -3.5
+
 [node name="projectiles" type="Node2D" parent="."]
 process_mode = 4
 
@@ -629,7 +640,7 @@ process_mode = 4
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
-damage = 9
+penetrate = 0.1
 
 [node name="texture" type="Polygon2D" parent="projectiles/basicBullet"]
 color = Color(0.953079, 0.822954, 0.62124, 1)
@@ -645,7 +656,7 @@ polygon = PackedVector2Array(0, 0, 5, 5, 5, 20, 0, 25, -5, 20, -5, 5)
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
-damage = 7
+damage = 5
 tracingTime = 2000.0
 myDamageType = 7
 
@@ -666,7 +677,8 @@ collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 2.0
 lifeTime = 1200.0
-damage = 12
+damage = 20
+penetrate = 0.5
 
 [node name="texture" type="Polygon2D" parent="projectiles/hailBullet"]
 scale = Vector2(0.8, 0.8)
@@ -685,7 +697,7 @@ collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 2.0
-lifeTime = 275.0
+lifeTime = 250.0
 damage = 20
 penetrate = 1.0
 myDamageType = 0
@@ -703,8 +715,8 @@ collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 2.0
-lifeTime = 350.0
-damage = 20
+lifeTime = 300.0
+damage = 15
 penetrate = 1.0
 myDamageType = 0
 
@@ -748,12 +760,13 @@ collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 0.0
 lifeTime = 300.0
-damage = 7
+damage = 2
 penetrate = 1.0
 myDamageType = 1
+replusePower = 12500.0
 
 [node name="hitbox" type="CollisionShape2D" parent="projectiles/parallax"]
-position = Vector2(0, -250)
+position = Vector2(0, -700)
 shape = SubResource("CapsuleShape2D_nj1f1")
 
 [node name="meltdown" type="Area2D" parent="projectiles"]
@@ -762,12 +775,14 @@ collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 0.0
+lifeTime = 100.0
+damage = 7
 penetrate = 1.0
 myDamageType = 0
 
 [node name="hitbox" type="CollisionShape2D" parent="projectiles/meltdown"]
 position = Vector2(0, -250)
-shape = SubResource("CapsuleShape2D_nj1f1")
+shape = SubResource("CapsuleShape2D_1loei")
 
 [node name="squirrel" type="Area2D" parent="projectiles"]
 position = Vector2(432, 216)
@@ -776,10 +791,10 @@ collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 0.2
 maxTime = 7000.0
-damage = 5
-penetrate = 1.0
+damage = 4
+penetrate = 0.8
 myDamageType = 5
-selfRotateSpeed = 5.0
+selfRotateSpeed = 2.0
 forwardInit = true
 
 [node name="hitbox1" type="CollisionShape2D" parent="projectiles/squirrel"]
@@ -815,9 +830,9 @@ gravity_scale = 0.0
 linear_damp = 1.2
 script = ExtResource("10_aym84")
 attackLimit = 700.0
-drops = [NodePath("../../items/copper"), NodePath("../../items/oil"), NodePath("../../items/silicon")]
-dropMinCounts = Array[int]([5, 0, 0])
-dropMaxCounts = Array[int]([20, 3, 3])
+drops = [NodePath("../../items/copper"), NodePath("../../items/silicon")]
+dropMinCounts = Array[int]([5, 0])
+dropMaxCounts = Array[int]([20, 3])
 weapons = [NodePath("texture/bulletSpawner")]
 displayName = "围护"
 healthMax = 30.0
@@ -849,8 +864,8 @@ linear_damp = 1.2
 script = ExtResource("20_h1nwg")
 attackLimit = 650.0
 drops = [NodePath("../../items/copper"), NodePath("../../items/coolant"), NodePath("../../items/silicon")]
-dropMinCounts = Array[int]([3, 2, 0])
-dropMaxCounts = Array[int]([15, 4, 1])
+dropMinCounts = Array[int]([3, 0, 0])
+dropMaxCounts = Array[int]([15, 2, 1])
 weapons = [NodePath("texture/leftW"), NodePath("texture/rightW")]
 displayName = "尖刀"
 healthMax = 19.0
@@ -968,10 +983,9 @@ collision_mask = 2
 gravity_scale = 0.0
 linear_damp = 1.2
 script = ExtResource("28_qwxqq")
-attackLimit = 50.0
-drops = [NodePath("../../items/copper"), NodePath("../../items/silicon"), NodePath("../../items/graphite"), NodePath("../../items/wolfram"), NodePath("../../items/steel"), NodePath("../../items/alloy"), NodePath("../../items/oil"), NodePath("../../items/coolant"), NodePath("../../items/squirrel")]
-dropMinCounts = Array[int]([15, 8, 2, 0, 1, 1, 2, 3, 5])
-dropMaxCounts = Array[int]([50, 25, 7, 3, 5, 15, 7, 6, 10])
+drops = [NodePath("../../items/copper"), NodePath("../../items/silicon"), NodePath("../../items/graphite"), NodePath("../../items/wolfram"), NodePath("../../items/steel"), NodePath("../../items/alloy"), NodePath("../../items/coolant"), NodePath("../../items/squirrel")]
+dropMinCounts = Array[int]([15, 8, 2, 5, 1, 1, 4, 5])
+dropMaxCounts = Array[int]([50, 25, 7, 15, 5, 15, 15, 10])
 weapons = [NodePath("texture/bulletSpawner")]
 displayName = "挣脱"
 healthMax = 50.0
@@ -1010,9 +1024,9 @@ gravity_scale = 0.0
 linear_damp = 1.2
 script = ExtResource("36_g5mu3")
 attackLimit = 3000.0
-drops = [NodePath("../../items/copper"), NodePath("../../items/silicon"), NodePath("../../items/graphite"), NodePath("../../items/wolfram"), NodePath("../../items/steel"), NodePath("../../items/alloy"), NodePath("../../items/oil"), NodePath("../../items/coolant"), NodePath("../../items/pangxie")]
-dropMinCounts = Array[int]([15, 8, 2, 0, 1, 1, 2, 3, 5])
-dropMaxCounts = Array[int]([50, 25, 7, 3, 5, 15, 7, 6, 10])
+drops = [NodePath("../../items/copper"), NodePath("../../items/silicon"), NodePath("../../items/graphite"), NodePath("../../items/wolfram"), NodePath("../../items/steel"), NodePath("../../items/alloy"), NodePath("../../items/coolant"), NodePath("../../items/pangxie")]
+dropMinCounts = Array[int]([15, 8, 2, 0, 1, 1, 3, 7])
+dropMaxCounts = Array[int]([50, 25, 7, 8, 5, 15, 6, 15])
 displayName = "蟹宇轩"
 healthMax = 40.0
 moveSpeed = 0.25
@@ -1168,7 +1182,7 @@ amount = 30
 process_material = SubResource("ParticleProcessMaterial_skcgb")
 one_shot = true
 speed_scale = 2.0
-explosiveness = 0.5
+explosiveness = 1.0
 script = ExtResource("35_loevs")
 
 [node name="thunder" type="GPUParticles2D" parent="effects"]
@@ -1182,7 +1196,7 @@ onWorld = true
 [node name="parallax" type="GPUParticles2D" parent="effects"]
 process_material = ExtResource("42_53mc8")
 script = ExtResource("43_2xbh3")
-length = 700.0
+length = 1400.0
 color = Color(0.210938, 0.704102, 1, 1)
 toWidth = 10
 alpha = 0.25
@@ -1190,7 +1204,6 @@ alpha = 0.25
 [node name="meltdown" type="GPUParticles2D" parent="effects"]
 process_material = ExtResource("42_53mc8")
 script = ExtResource("43_2xbh3")
-length = 350.0
 color = Color(1, 0.585938, 0, 1)
 toWidth = 25
 alpha = 0.5
@@ -1341,8 +1354,8 @@ bullet = NodePath("../../../../projectiles/parallax")
 shootEffect = NodePath("../../../../effects/parallax")
 displayName = "差扰"
 icon = ExtResource("18_bf3dg")
-sustTimes = 5
-shootingLimit = 300.0
+sustTimes = 10
+shootingLimit = 100.0
 loopSound = true
 
 [node name="asp" type="AudioStreamPlayer2D" parent="player/texture/centerW/parallax"]
@@ -1355,8 +1368,8 @@ bullet = NodePath("../../../../projectiles/meltdown")
 shootEffect = NodePath("../../../../effects/meltdown")
 displayName = "熔毁"
 icon = ExtResource("51_ebf4q")
-sustTimes = 25
-shootingLimit = 200.0
+sustTimes = 30
+shootingLimit = 100.0
 audioAcceleration = true
 
 [node name="asp" type="AudioStreamPlayer2D" parent="player/texture/centerW/meltdown"]

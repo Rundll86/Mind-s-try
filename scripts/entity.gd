@@ -83,9 +83,9 @@ var attackDamageSaved: float = 0;
 @export var overclockNeedsHeat: float = 25;
 @export var overclockNeedsMrj: float = 10;
 #关于极限超频
-@export var superclockMovementSpeedBoost: float = 0.35; # 移速提升35%
-@export var superclockAttackSpeedBoost: float = 0.6; # 攻速提升60%
-@export var superclockAttackDamageBoost: float = -0.05; # 伤害降低5%
+@export var superclockMovementSpeedBoost: float = 0.3;
+@export var superclockAttackSpeedBoost: float = 1;
+@export var superclockAttackDamageBoost: float = 0.2;
 @export var superclockNeedsHeatPercent: float = 1.0;
 @export var superclockNeedsMrjPercent: float = 1.0;
 func _ready():
@@ -249,6 +249,7 @@ func _process(_delta):
 				cloned.global_position = global_position
 				cloned.global_rotation = texture.global_rotation
 			($/root/world if cloned.onWorld else currentWeapon).add_child(cloned)
+			bullet.effect=cloned
 		if currentWeapon.sustTimes > 0:
 			sustIndex += 1
 			if sustIndex >= currentWeapon.sustTimes:
@@ -264,7 +265,7 @@ func _process(_delta):
 func setLevel(newLevel):
 	var healthRatio = health / healthMax
 	level = newLevel
-	healthMax = level * 0.5 * healthMaxSaved + healthMaxSaved
+	healthMax = 1.1**level * healthMaxSaved + healthMaxSaved
 	health = healthRatio * healthMax
 	attackDamage = level * 0.05 + attackDamageSaved
 func readBullet(bullet: String):
@@ -299,12 +300,13 @@ func canAttack():
 		(currentWeaponIndex == len(weapons) or currentWeaponIndex == -1) and
 		(Time.get_ticks_msec() - lastAttackTime > attackLimit * len(weapons) / attackSpeed)
 		)
-func launchBullet(bulletSubstance: bulletAI, spawner: Node2D, damageBooster: float = 0):
+func launchBullet(bulletSubstance: bulletAI, spawner: Node2D, damageBooster: float = 0,effect:effectAuto=null):
 	# print("launchBullet",bulletSubstance.name)
 	var bullet = bulletSubstance.duplicate() as bulletAI
 	bullet.position = spawner.global_position
 	bullet.global_rotation_degrees = texture.global_rotation_degrees + randf_range(-shootOffset, shootOffset)
 	bullet.enable = true
+	bullet.effect=effect
 	bullet.launcher = self
 	bullet.damageBooster = damageBooster
 	bullet.damageFromPlayer = damageFromPlayer

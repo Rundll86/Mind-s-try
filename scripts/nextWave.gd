@@ -12,7 +12,7 @@ func pressed():
 			i.visible and
 			(init.wave - i.fromWave)%i.perWaves == 0
 		):
-			var count = init.shrimpRate(i.rateBoost, i.maxCount)
+			var count = randi_range(i.minCount, i.maxCount*(1.1**init.wave))
 			if i.spawnAsBoss:
 				count = 1
 			for j in range(count):
