@@ -118,7 +118,7 @@ func _ready():
 		coolant = coolantMax
 		oil = oilMax
 		heat = heatMax
-		mrj=mrjMax
+		mrj = mrjMax
 	if enableAi:
 		hitbox.scale = Vector2(1, 1)
 func _process(_delta):
@@ -149,15 +149,15 @@ func _process(_delta):
 		heatBar.maxValue = heatMax
 		mrjBar.currentValue = mrj
 		mrjBar.maxValue = mrjMax
-		heat += 0.02*slag/slagMax
+		heat += 0.02 * slag / slagMax
 		if not init.isSelectingBuff:
-			var mover=Vector2(
-				Input.get_axis("moveleft","moveright"),
-				-Input.get_axis("movedown","moveup")
+			var mover = Vector2(
+				Input.get_axis("moveleft", "moveright"),
+				- Input.get_axis("movedown", "moveup")
 			).rotated(deg_to_rad(90))
 			if Input.is_action_pressed("moving"):
 				panelDefine.checkTipOpenedAndClose(0)
-				texture.rotation=lerp_angle(texture.rotation,mover.angle(),animationSpeed)
+				texture.rotation = lerp_angle(texture.rotation, mover.angle(), animationSpeed)
 				moveForward()
 			elif Input.is_action_pressed("attack"):
 				panelDefine.checkTipOpenedAndClose(0)
@@ -194,9 +194,9 @@ func _process(_delta):
 			heat -= 0.1
 			mrj -= 0.02
 			if heat <= 0 or mrj <= 0:
-				moveSpeedBoost /= 1+superclockMovementSpeedBoost
-				attackSpeed /= 1+superclockAttackSpeedBoost
-				attackDamage /= 1+superclockAttackDamageBoost
+				moveSpeedBoost /= 1 + superclockMovementSpeedBoost
+				attackSpeed /= 1 + superclockAttackSpeedBoost
+				attackDamage /= 1 + superclockAttackDamageBoost
 				superclocking = false
 	if enableAi && init.isPlayerAlive: CustomAi()
 	if (
@@ -234,7 +234,7 @@ func _process(_delta):
 				cloned.global_position = global_position
 				cloned.global_rotation = texture.global_rotation
 			($/root/world if cloned.onWorld else currentWeapon).add_child(cloned)
-			bullet.effect=cloned
+			bullet.effect = cloned
 		if currentWeapon.sustTimes > 0:
 			sustIndex += 1
 			if sustIndex >= currentWeapon.sustTimes:
@@ -250,9 +250,9 @@ func _process(_delta):
 func setLevel(newLevel):
 	var healthRatio = health / healthMax
 	level = newLevel
-	healthMax = 1.1**level * healthMaxSaved + healthMaxSaved
+	healthMax = healthMaxSaved * (level ** 1.1)
 	health = healthRatio * healthMax
-	attackDamage = level * 0.05 + attackDamageSaved
+	attackDamage = level * 0.04 + attackDamageSaved
 func readBullet(bullet: String):
 	return get_node("/root/world/projectiles/" + bullet) as bulletAI
 func weaponsConsume():
@@ -285,13 +285,13 @@ func canAttack():
 		(currentWeaponIndex == len(weapons) or currentWeaponIndex == -1) and
 		(Time.get_ticks_msec() - lastAttackTime > attackLimit * len(weapons) / attackSpeed)
 		)
-func launchBullet(bulletSubstance: bulletAI, spawner: Node2D, damageBooster: float = 0,effect:effectAuto=null):
+func launchBullet(bulletSubstance: bulletAI, spawner: Node2D, damageBooster: float = 0, effect: effectAuto = null):
 	# print("launchBullet",bulletSubstance.name)
 	var bullet = bulletSubstance.duplicate() as bulletAI
 	bullet.position = spawner.global_position
 	bullet.global_rotation_degrees = texture.global_rotation_degrees + randf_range(-shootOffset, shootOffset)
 	bullet.enable = true
-	bullet.effect=effect
+	bullet.effect = effect
 	bullet.launcher = self
 	bullet.damageBooster = damageBooster
 	bullet.damageFromPlayer = damageFromPlayer
@@ -308,9 +308,9 @@ func superclock():
 	print("superclock")
 	if heat / heatMax >= superclockNeedsHeatPercent and mrj / mrjMax >= superclockNeedsMrjPercent:
 		print("success")
-		moveSpeedBoost *=1+ superclockMovementSpeedBoost
-		attackSpeed *=1+ superclockAttackSpeedBoost
-		attackDamage *=1+ superclockAttackDamageBoost
+		moveSpeedBoost *= 1 + superclockMovementSpeedBoost
+		attackSpeed *= 1 + superclockAttackSpeedBoost
+		attackDamage *= 1 + superclockAttackDamageBoost
 		superclocking = true
 func launchWeapon():
 	currentWeaponIndex = 0
@@ -344,9 +344,9 @@ func hit(damage: float, crit: bool, damageBoost: float, myDamageType: damageType
 		randf_range(-20, 20)
 	)
 	var labelComponet = currentDamageLabel.get_node("label") as Label
-	if damage==0:
-		labelComponet.text="MISS"
-		labelComponet.add_theme_color_override("font_color",Color(100,100,100))
+	if damage == 0:
+		labelComponet.text = "MISS"
+		labelComponet.add_theme_color_override("font_color", Color(100, 100, 100))
 	else:
 		labelComponet.text = str(ceil(damage)) + ("!!!" if crit else "")
 		labelComponet.add_theme_color_override("font_color", damageType.colorMapper[myDamageType])

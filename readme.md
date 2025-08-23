@@ -22,52 +22,60 @@
 *只需要执行一次就行了！*
 
 #### 游戏性问题
+
 若你认为游戏难度过低/过高，可在检查器中调整 `player` 节点的属性词条或者修改 `units` 、 `projectiles` 等节点下的属性词条。
 
-**单位词条注解**
+##### 单位词条
 
-|变量名|类型|默认值|注明|
-|-|-|-|-|
-|displayName|String|未知单位|单位名称，不要写空字符串，可能会出现一些意料之外的bug
-|healthMax|float|100|生命值上限|
-|shootOffset|float|10|射击偏差，单位为角度|
-|moveSpeed|float|1|移动加速度基值，百分比记录，100%时为每帧600单位|
-|critRate|float|0.05|暴击率，百分比|
-|critDamageBoost|float|1|暴击伤害，百分比，暴击时伤害提高此比|
-|level|int|1|单位等级，等级越高，生命值上限和伤害就越高|
-|evasion|float|0|闪避率，实体每次受到伤害时都有概率触发闪避|
-|attackSpeed|float|1|攻击速度，百分比|
-|attackDamage|float|1|伤害，百分比|
-|moveSpeedBoost|float|0|移动加速度加成|
-|penetrateBoost|float|0|子弹穿透率加成，百分比，每种子弹自身有穿透率基值，若子弹穿透率已为100%，那么此词条无效|
-|attackLimit|float|300|武器序列攻击完后的重载时长，单位为毫秒|
-|weaponLaunchLimit|float|100|武器序列中切换武器的间隔，单位为毫秒|
-|⚠useGodMode|bool|false|是否启用上帝模式，启用后生命值上限、攻速、伤害均会翻至999倍，不管加到我方单位还是敌方单位上均会影响游戏体验，慎用|
+| 变量名            | 类型   | 默认值   | 注明                                                                                                              |
+|-------------------|--------|----------|-------------------------------------------------------------------------------------------------------------------|
+| displayName       | String | 未知单位 | 单位名称，不要写空字符串，可能会出现一些意料之外的bug                                                             |
+| healthMax         | float  | 100      | 生命值上限                                                                                                        |
+| shootOffset       | float  | 10       | 射击偏差，单位为角度                                                                                              |
+| moveSpeed         | float  | 1        | 移动加速度基值，百分比记录，100%时为每帧600单位                                                                   |
+| critRate          | float  | 0.05     | 暴击率，百分比                                                                                                    |
+| critDamageBoost   | float  | 1        | 暴击伤害，百分比，暴击时伤害提高此比                                                                              |
+| level             | int    | 1        | 单位等级，等级越高，生命值上限和伤害就越高                                                                        |
+| evasion           | float  | 0        | 闪避率，实体每次受到伤害时都有概率触发闪避                                                                        |
+| attackSpeed       | float  | 1        | 攻击速度，百分比                                                                                                  |
+| attackDamage      | float  | 1        | 伤害，百分比                                                                                                      |
+| moveSpeedBoost    | float  | 0        | 移动加速度加成                                                                                                    |
+| penetrateBoost    | float  | 0        | 子弹穿透率加成，百分比，每种子弹自身有穿透率基值，若子弹穿透率已为100%，那么此词条无效                            |
+| attackLimit       | float  | 300      | 武器序列攻击完后的重载时长，单位为毫秒                                                                            |
+| weaponLaunchLimit | float  | 100      | 武器序列中切换武器的间隔，单位为毫秒                                                                              |
+| bulletBoost       | float  | 0        | 子弹数量加成，每100%就子弹数量+1，剩余未到100%的按概率+1                                                          |
+| ⚠useGodMode       | bool   | false    | 是否启用上帝模式，启用后生命值上限、攻速、伤害均会翻至999倍，不管加到我方单位还是敌方单位上均会影响游戏体验，慎用 |
 
-**子弹词条注解**
+##### 子弹词条
 
-|变量名|类型|默认值|注明|
-|-|-|-|-|
-|damage|float|1|伤害|
-|speed|float|1|速度，单位为像素每帧|
-|lifetime|float|700|生命周期，单位为像素，子弹当前位置距离发射位置大于此值后将会被销毁|
-|penetrate|float|0|穿透率基值，百分比|
-|tracingTime|float|0|子弹追踪的持续时长，单位毫秒，若0则为不可追踪|
-|tracingSpeed|float|1|子弹追踪的速度，单位像素，若0则为不可追踪|
-|myDamageType|damageType.Enums|~.COLLITE|子弹的伤害类型，详见下文|
+| 变量名          | 类型             | 默认值    | 注明                                                               |
+|-----------------|------------------|-----------|--------------------------------------------------------------------|
+| damage          | float            | 1         | 伤害                                                               |
+| speed           | float            | 1         | 速度，单位为像素每帧                                               |
+| lifetime        | float            | 700       | 生命周期，单位为像素，子弹当前位置距离发射位置大于此值后将会被销毁 |
+| penetrate       | float            | 0         | 穿透率基值，百分比                                                 |
+| tracingTime     | float            | 0         | 子弹追踪的持续时长，单位毫秒，若0则为不可追踪                      |
+| tracingSpeed    | float            | 1         | 子弹追踪的速度，单位像素，若0则为不可追踪                          |
+| myDamageType    | damageType.Enums | ~.COLLITE | 子弹的伤害类型，详见下文                                           |
+| replusePower    | float            | 0         | 击退力度，按物理引擎单位计算，为0则无击退                          |
+| repluseAngle    | float            | 0         | 击退角度，单位为角度，默认为向后（即0°）                           |
+| selfRotateSpeed | float            | 0         | 子弹自身旋转速度，单位为角度每帧，为0则不旋转                      |
+| forwardInit     | bool             | false     | 子弹是否根据初始方向自动前进                                       |
+| autoEndEffect   | bool             | false     | 子弹是否在销毁时自动强制销毁特效                                   |
+| facingCursor    | bool             | false     | 子弹是否根据鼠标方向自动旋转                                       |
 
-**伤害类型表**
+##### 伤害类型
 
-|类型|注明|
-|-|-|
-|HIGH_T|高温伤害|
-|LOW_T|低温伤害|
-|COLLITE|动能伤害|
-|OVERLOADED|过载伤害|
-|SOFTWARE|软件伤害|
-|BIOEROSION|生物侵蚀伤害|
-|THUNDER|电击伤害|
-|MAGIC|魔法伤害|
+| 类型       | 注明         |
+|------------|--------------|
+| HIGH_T     | 高温伤害     |
+| LOW_T      | 低温伤害     |
+| COLLITE    | 动能伤害     |
+| OVERLOADED | 过载伤害     |
+| SOFTWARE   | 软件伤害     |
+| BIOEROSION | 生物侵蚀伤害 |
+| THUNDER    | 电击伤害     |
+| MAGIC      | 魔法伤害     |
 
 ---
 

@@ -699,7 +699,6 @@ collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 2.0
 lifeTime = 250.0
-damage = 20
 penetrate = 1.0
 myDamageType = 0
 
