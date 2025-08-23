@@ -627,11 +627,12 @@ script = ExtResource("4_n3crq")
 displayName = "螃蟹"
 texture = ExtResource("36_jdek1")
 healthMax = 0.0
-attackDamage = 7.0
-critDamage = 11.0
+attackSpeed = 18.0
+attackDamage = 13.0
+critDamage = 7.0
 costItems = [NodePath("../../items/pangxie")]
 costCounts = Array[int]([10])
-shootOffset = -3.5
+shootOffset = -10.0
 
 [node name="projectiles" type="Node2D" parent="."]
 process_mode = 4
@@ -677,7 +678,7 @@ collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 2.0
 lifeTime = 1200.0
-damage = 20
+damage = 15
 penetrate = 0.5
 
 [node name="texture" type="Polygon2D" parent="projectiles/hailBullet"]
@@ -715,7 +716,7 @@ collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 2.0
-lifeTime = 300.0
+lifeTime = 400.0
 damage = 15
 penetrate = 1.0
 myDamageType = 0
@@ -764,6 +765,7 @@ damage = 2
 penetrate = 1.0
 myDamageType = 1
 replusePower = 12500.0
+facingCursor = true
 
 [node name="hitbox" type="CollisionShape2D" parent="projectiles/parallax"]
 position = Vector2(0, -700)
@@ -776,9 +778,10 @@ collision_mask = 3
 script = ExtResource("7_5ybsd")
 speed = 0.0
 lifeTime = 100.0
-damage = 7
+damage = 8
 penetrate = 1.0
 myDamageType = 0
+facingCursor = true
 
 [node name="hitbox" type="CollisionShape2D" parent="projectiles/meltdown"]
 position = Vector2(0, -250)
@@ -794,7 +797,7 @@ maxTime = 7000.0
 damage = 4
 penetrate = 0.8
 myDamageType = 5
-selfRotateSpeed = 2.0
+selfRotateSpeed = 5.0
 forwardInit = true
 
 [node name="hitbox1" type="CollisionShape2D" parent="projectiles/squirrel"]
@@ -1200,6 +1203,7 @@ length = 1400.0
 color = Color(0.210938, 0.704102, 1, 1)
 toWidth = 10
 alpha = 0.25
+facingCursor = true
 
 [node name="meltdown" type="GPUParticles2D" parent="effects"]
 process_material = ExtResource("42_53mc8")
@@ -1207,6 +1211,7 @@ script = ExtResource("43_2xbh3")
 color = Color(1, 0.585938, 0, 1)
 toWidth = 25
 alpha = 0.5
+facingCursor = true
 
 [node name="squirrel" type="GPUParticles2D" parent="effects" node_paths=PackedStringArray("animators")]
 position = Vector2(271, 210)

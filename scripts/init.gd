@@ -80,7 +80,7 @@ func _ready():
 		weapons.shuffle()
 		playerEntity.weapons.clear()
 		for i in range(randi_range(1,3)):
-			var target=weapons[i]
+			var target=weapons[0]
 			$userData.addWeapon(target)
 func _process(_delta):
 	waveTip.get_node("bar/tools/cost").text = str(resetBuffCostSaved)
@@ -244,7 +244,7 @@ static func generateUnit(target: String, pos: Vector2, boss: bool = false):
 	unit.enableAi = true
 	unit.isBoss = boss
 	unit.name = "enemy_" + target + str(randf_range(100, 999999) + randf_range(100, 999999)) + str(randf_range(10, 200))
-	unit.level = ceil((wave * randf_range(0.7, 1.3) + randi_range(0, 1)) * (4.0 if boss else 1.0))
+	unit.level = ceil((wave * randf_range(0.7, 1.3) + randi_range(0, 1)) * (randf_range(1.5,4.0) if boss else 1.0))
 	if boss:
 		var currentBar = staticFuncCaller.bossBarExample.duplicate()
 		var currentTransformer = currentBar.get_node("bar/transformer")

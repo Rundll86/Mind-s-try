@@ -6,7 +6,9 @@ var direct = 1;
 @export var color: Color;
 @export var toWidth = 20;
 @export var alpha: float = 1;
+@export var facingCursor:bool=false;
 func drawer():
+	if facingCursor:global_rotation=(get_global_mouse_position()-global_position).rotated(deg_to_rad(90)).angle()
 	color.a = ((width - 1.0) / toWidth) * alpha
 	drawLaser(length, color, width)
 	width += direct

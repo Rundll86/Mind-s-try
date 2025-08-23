@@ -21,6 +21,7 @@ var damageBooster: float;
 @export var selfRotateSpeed: float = 0;
 @export var forwardInit: bool = false;
 @export var autoEndEffect:bool=false;
+@export var facingCursor:bool=false;
 @onready var initRotation: float = rotation_degrees;
 func _ready():
 	startPosition = position;
@@ -66,21 +67,21 @@ func _process(_delta):
 	if not is_instance_valid(launcher):
 		return			
 	global_rotation_degrees += selfRotateSpeed*(launcher.attackSpeed**1)
+	if facingCursor:
+		global_rotation=(get_global_mouse_position()-global_position).rotated(deg_to_rad(90)).angle()
 func hitCheck(body: entity):
 	if not enable or not body.enableAi:
 		return
-	if body.playerControlled:
-		if damageFromPlayer:
-			return
-	else:
-		if !damageFromPlayer:
-			return
+	if body.playerControlled==damageFromPlayer:
+		return
 	var damageResult = damage * (1 + randf_range(-0.3, 0.3)) * (1 + damageBooster)
 	var crit = false
 	if is_instance_valid(launcher):
 		crit = randf() < launcher.critRate;
 		if crit:
 			damageResult *= 1 + launcher.critDamageBoost
+	if not damageFromPlayer and body.linear_velocity.length()>1000:
+		damageResult=0
 	body.hit(damageResult, crit, damageBooster, myDamageType)
 	body.texture.rotation_degrees += repluseAngle
 	body.moveForward(-replusePower)

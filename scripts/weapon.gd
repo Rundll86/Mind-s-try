@@ -24,6 +24,6 @@ func thisWeaponConsume(playerLimit: float, playerSpeed: float):
 		return playerLimit / playerSpeed
 func thisWeaponDamage(playerDamage: float):
 	if sustTimes > 0:
-		return sustTimes * bullet.damage * playerDamage
+		return sustTimes * bullet.damage * playerDamage*(1+bullet.penetrate)**(1/2)
 	else:
 		return bullet.damage * playerDamage

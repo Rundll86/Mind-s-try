@@ -79,13 +79,13 @@ var attackDamageSaved: float = 0;
 @export var moveSpeedBoost: float = 0;
 @export var bulletBoost: float = 0; # 子弹数量提升
 #关于普通超频
-@export var overclockPushForce: float = 40000;
-@export var overclockNeedsHeat: float = 25;
-@export var overclockNeedsMrj: float = 10;
+@export var overclockPushForce: float = 80000;
+@export var overclockNeedsHeat: float = 5;
+@export var overclockNeedsMrj: float = 2;
 #关于极限超频
-@export var superclockMovementSpeedBoost: float = 0.3;
-@export var superclockAttackSpeedBoost: float = 1;
-@export var superclockAttackDamageBoost: float = 0.2;
+@export var superclockMovementSpeedBoost: float = 0.15;
+@export var superclockAttackSpeedBoost: float = 0.5;
+@export var superclockAttackDamageBoost: float = 0.1;
 @export var superclockNeedsHeatPercent: float = 1.0;
 @export var superclockNeedsMrjPercent: float = 1.0;
 func _ready():
@@ -118,6 +118,7 @@ func _ready():
 		coolant = coolantMax
 		oil = oilMax
 		heat = heatMax
+		mrj=mrjMax
 	if enableAi:
 		hitbox.scale = Vector2(1, 1)
 func _process(_delta):
@@ -148,31 +149,15 @@ func _process(_delta):
 		heatBar.maxValue = heatMax
 		mrjBar.currentValue = mrj
 		mrjBar.maxValue = mrjMax
-		heat += slag * 0.01
+		heat += 0.02*slag/slagMax
 		if not init.isSelectingBuff:
-			var movingUp = Input.is_action_pressed("moveup")
-			var movingDown = Input.is_action_pressed("movedown")
-			var movingLeft = Input.is_action_pressed("moveleft")
-			var movingRight = Input.is_action_pressed("moveright")
-			var moved = Input.is_action_pressed("moving")
-			if moved:
+			var mover=Vector2(
+				Input.get_axis("moveleft","moveright"),
+				-Input.get_axis("movedown","moveup")
+			).rotated(deg_to_rad(90))
+			if Input.is_action_pressed("moving"):
 				panelDefine.checkTipOpenedAndClose(0)
-				if movingUp and movingLeft:
-					texture.rotation_degrees += (-45 - texture.rotation_degrees) * animationSpeed
-				elif movingUp and movingRight:
-					texture.rotation_degrees += (45 - texture.rotation_degrees) * animationSpeed
-				elif movingDown and movingLeft:
-					texture.rotation_degrees += (-135 - texture.rotation_degrees) * animationSpeed
-				elif movingDown and movingRight:
-					texture.rotation_degrees += (135 - texture.rotation_degrees) * animationSpeed
-				elif movingUp:
-					texture.rotation_degrees += (0 - texture.rotation_degrees) * animationSpeed
-				elif movingDown:
-					texture.rotation_degrees += (180 - texture.rotation_degrees) * animationSpeed
-				elif movingLeft:
-					texture.rotation_degrees += (-90 - texture.rotation_degrees) * animationSpeed
-				elif movingRight:
-					texture.rotation_degrees += (90 - texture.rotation_degrees) * animationSpeed
+				texture.rotation=lerp_angle(texture.rotation,mover.angle(),animationSpeed)
 				moveForward()
 			elif Input.is_action_pressed("attack"):
 				panelDefine.checkTipOpenedAndClose(0)
@@ -206,12 +191,12 @@ func _process(_delta):
 				hit(health * 0.02, false, 0, damageType.Enums.BIOEROSION)
 				lastOilDamageTime = Time.get_ticks_msec()
 		if superclocking:
-			heat -= 0.03
-			mrj -= 0.03
+			heat -= 0.1
+			mrj -= 0.02
 			if heat <= 0 or mrj <= 0:
-				moveSpeedBoost -= superclockMovementSpeedBoost
-				attackSpeed -= superclockAttackSpeedBoost
-				attackDamage -= superclockAttackDamageBoost
+				moveSpeedBoost /= 1+superclockMovementSpeedBoost
+				attackSpeed /= 1+superclockAttackSpeedBoost
+				attackDamage /= 1+superclockAttackDamageBoost
 				superclocking = false
 	if enableAi && init.isPlayerAlive: CustomAi()
 	if (
@@ -323,9 +308,9 @@ func superclock():
 	print("superclock")
 	if heat / heatMax >= superclockNeedsHeatPercent and mrj / mrjMax >= superclockNeedsMrjPercent:
 		print("success")
-		moveSpeedBoost += superclockMovementSpeedBoost
-		attackSpeed += superclockAttackSpeedBoost
-		attackDamage += superclockAttackDamageBoost
+		moveSpeedBoost *=1+ superclockMovementSpeedBoost
+		attackSpeed *=1+ superclockAttackSpeedBoost
+		attackDamage *=1+ superclockAttackDamageBoost
 		superclocking = true
 func launchWeapon():
 	currentWeaponIndex = 0
@@ -359,8 +344,12 @@ func hit(damage: float, crit: bool, damageBoost: float, myDamageType: damageType
 		randf_range(-20, 20)
 	)
 	var labelComponet = currentDamageLabel.get_node("label") as Label
-	labelComponet.text = str(ceil(damage)) + ("!!!" if crit else "")
-	labelComponet.add_theme_color_override("font_color", damageType.colorMapper[myDamageType])
+	if damage==0:
+		labelComponet.text="MISS"
+		labelComponet.add_theme_color_override("font_color",Color(100,100,100))
+	else:
+		labelComponet.text = str(ceil(damage)) + ("!!!" if crit else "")
+		labelComponet.add_theme_color_override("font_color", damageType.colorMapper[myDamageType])
 	var labelBoostComponet = labelComponet.get_node("boost")
 	labelBoostComponet.text = str("%.1f" % (damageBoost * 100)) + "%"
 	get_node("/root/world").add_child(currentDamageLabel)
